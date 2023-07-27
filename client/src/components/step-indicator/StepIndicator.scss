@@ -1,0 +1,97 @@
+.step-indicator {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	/* Increase the width of the container to add spacing between circles */
+	width: 100%;
+	max-width: 600px; /* You can adjust the max-width as needed */
+
+	.step-container {
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+		width: 100%;
+		position: relative;
+
+		.step {
+			position: relative;
+			width: 35px;
+			height: 35px;
+			border-radius: 50%;
+			border: 2px solid #ccc;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 16px;
+			color: #000;
+			cursor: pointer;
+			.step-number,
+			.active-step-number {
+				background-color: white;
+				width: 100%;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				z-index: 999;
+				height: 100%;
+			}
+			.active-step-number {
+				background-color: #5d13e7;
+			}
+			&::before {
+				content: '';
+				position: absolute;
+				top: 50%;
+				width: 58px;
+				height: 2px;
+				background-color: #ccc;
+			}
+
+			&::after {
+				content: '';
+				position: absolute;
+				top: 50%;
+				width: 52px;
+				left: -2px;
+				height: 2px;
+				background-color: #ccc;
+			}
+
+			&::before {
+				left: -90%;
+				transform: translateX(-50%);
+			}
+
+			&::after {
+				right: -90%;
+				transform: translateX(50%);
+			}
+		}
+
+		// .step.active {
+		// 	background-color: #5d13e7;
+		// 	color: #fff;
+		// 	border: 2px solid #5d13e7;
+		// }
+
+		.step.passed {
+			background-color: #5d13e7;
+			color: #fff;
+			border: 2px solid #5d13e7;
+
+			&::before,
+			&::after {
+				background-color: #5d13e7;
+				z-index: 999;
+			}
+		}
+
+		/* Hide the lines before the first step and after the last step */
+		.step:first-child::before,
+		.step:last-child::after {
+			display: none;
+		}
+	}
+}
