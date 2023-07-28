@@ -19,6 +19,23 @@ export const validateEmail = async (req, res) => {
 	}
 };
 
+/* VALIDATE USERNAME */
+export const validateUsername = async (req, res) => {
+	try {
+		const { username } = req.body;
+
+		const existingUser = await User.findOne({ username });
+
+		if (existingUser) {
+			return res.json({ exists: true });
+		}
+
+		res.json({ exists: false });
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
+};
+
 /* REGISTER USER */
 export const register = async (req, res) => {
 	try {

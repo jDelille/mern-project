@@ -11,4 +11,11 @@
 	&:hover {
 		background-color: lighten(#5d13e7, 5%);
 	}
+	&:disabled {
+		background-color: lighten(#5d13e7, 15%);
+		cursor: default;
+		&:hover {
+			background-color: lighten(#5d13e7, 15%);
+		}
+	}
 }

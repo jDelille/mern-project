@@ -9,7 +9,8 @@ type Props = {
  placeholder: string;
  hasError?: boolean;
  errorMsg?: string;
- setState: (value: string) => void
+ setState: (value: string) => void;
+ value: string;
 };
 
 const Input: React.FC<Props> = ({
@@ -19,7 +20,8 @@ const Input: React.FC<Props> = ({
  placeholder,
  hasError,
  errorMsg,
- setState
+ setState,
+ value
 }) => {
  return (
   <div className='input-wrapper'>
@@ -32,6 +34,7 @@ const Input: React.FC<Props> = ({
     placeholder={placeholder}
     className={hasError ? 'error-input' : 'input'}
     onChange={(e) => setState(e.target.value)}
+    value={value}
    />
    {hasError && (
     <p className='error-message'>

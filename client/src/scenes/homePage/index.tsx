@@ -1,5 +1,9 @@
+import Navbar from "../../components/navbar/Navbar";
+
 const HomePage: React.FC = () => {
-	return <div>Home Page</div>;
+	return <div>
+		<Navbar />
+	</div>;
 };
 
 export default HomePage;
