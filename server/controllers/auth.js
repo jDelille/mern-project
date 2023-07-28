@@ -2,6 +2,23 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
+/* VALIDATE EMAIL */
+export const validateEmail = async (req, res) => {
+	try {
+		const { email } = req.body;
+
+		const existingUser = await User.findOne({ email });
+
+		if (existingUser) {
+			return res.json({ exists: true });
+		}
+
+		res.json({ exists: false });
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
+};
+
 /* REGISTER USER */
 export const register = async (req, res) => {
 	try {
@@ -12,12 +29,14 @@ export const register = async (req, res) => {
 			password,
 			username,
 			picturePath,
-			followers,
-			following,
 			specialties,
 			location,
+			followers,
+			following,
 			bio,
 		} = req.body;
+
+		console.log(email);
 
 		const salt = await bcrypt.genSalt();
 		const passwordHash = await bcrypt.hash(password, salt);

@@ -2,11 +2,12 @@ import './Button.scss';
 
 type Props = {
  actionLabel: string;
+ onClick: () => void;
 }
 
-const Button: React.FC<Props> = ({ actionLabel }) => {
+const Button: React.FC<Props> = ({ actionLabel, onClick }) => {
  return (
-  <button className='button'>{actionLabel}</button>
+  <button className='button' onClick={onClick}>{actionLabel}</button>
  );
 }
 
