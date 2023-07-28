@@ -1,3 +1,5 @@
+@use '../../scss/variables' as *;
+
 .register-page {
 	height: 100vh;
 	width: 100vw;
@@ -5,7 +7,7 @@
 	align-items: center;
 	justify-content: center;
 	.content {
-		background-color: #fff;
+		background-color: $mystic;
 		width: 600px;
 		height: 90vh;
 		display: flex;
@@ -32,7 +34,7 @@
 				font-size: 14px;
 				.backTo {
 					cursor: pointer;
-					color: #5d13e7;
+					color: $chetwodeBlue;
 					&:hover {
 						text-decoration: underline;
 					}
@@ -41,7 +43,7 @@
 			.check-mark {
 				width: 50px;
 				height: 50px;
-				background-color: #5d13e7;
+				background-color: $chetwodeBlue;
 				border-radius: 50%;
 				margin: 1rem 0;
 				display: flex;

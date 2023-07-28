@@ -16,7 +16,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from 'redux-persist/integration/react';
-import './index.css'
+import './scss/global.scss';
 
 
 

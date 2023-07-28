@@ -1,0 +1,39 @@
+@use '../../../scss/variables' as *;
+
+.post-card {
+	min-height: 194.14px;
+	background-color: $alabaster;
+	border: 1px solid $heather;
+	border-top: 0;
+	padding: 15px;
+	color: $charade;
+	.post-card-header {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+		margin-bottom: 10px;
+		height: 56px;
+		img {
+			width: 46px;
+			height: 46px;
+			border-radius: 6px;
+			object-fit: cover;
+		}
+		.display-name {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			.username {
+				font-size: 15px;
+				font-weight: 600;
+			}
+			span {
+				color: $comet;
+				font-size: 13px;
+			}
+		}
+	}
+	.body {
+		font-size: 14px;
+	}
+}

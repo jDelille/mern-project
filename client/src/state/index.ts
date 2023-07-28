@@ -1,6 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Post } from 'types/@Post';
+import { User } from 'types/@User';
 
-const initialState = {
+interface AuthState {
+	mode: 'dark' | 'light';
+	user: User | null;
+	token: string | null;
+	posts: Post[];
+}
+
+const initialState: AuthState = {
 	mode: 'light',
 	user: null,
 	token: null,
@@ -33,12 +42,12 @@ export const authSlice = createSlice({
 			state.posts = action.payload.posts;
 		},
 		setPost: (state, action) => {
-			const updatedPosts = state.posts.map((post) => {
+			const updatedPosts = state.posts.map((post: Post) => {
 				if (post._id === action.payload.post_id) {
 					return post;
 				}
 			});
-			state.posts = updatedPosts;
+			state.posts = updatedPosts as Post[];
 		},
 	},
 });

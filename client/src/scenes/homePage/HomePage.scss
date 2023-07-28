@@ -1,0 +1,11 @@
+@use '../../scss/variables' as *;
+
+.home-page {
+	min-height: 100vh;
+	background-color: $mystic;
+	.content {
+		width: 1170px;
+		margin: 0 auto;
+		border: 1px solid $heather;
+	}
+}
