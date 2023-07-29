@@ -17,16 +17,13 @@ html {
 	width: 1170px;
 	margin: 0 auto;
 	display: flex;
-	// border: 1px solid $heather;
 	gap: 10px;
 	.main-content {
 		width: 580px;
-		// background-color: rebeccapurple;
 		height: 100vh;
 	}
 	.left-sidebar,
 	.right-sidebar {
 		width: 285px;
-		background-color: royalblue;
 	}
 }

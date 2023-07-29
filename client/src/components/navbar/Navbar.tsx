@@ -8,7 +8,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user)
 
-
   const handleLogin = () => {
     navigate('/login')
   }
@@ -20,7 +19,7 @@ const Navbar = () => {
       <div className="logo">
         <a href="/"> Wagerly </a>
       </div>
-      <ul className="nav-links">
+      <ul className="primary-links">
         <li>
           <a href="/explore">Explore</a>
         </li>
@@ -33,6 +32,9 @@ const Navbar = () => {
         <li>
           <a href="/about">About</a>
         </li>
+      </ul>
+
+      <ul className="auth-links">
         {user ? (
           <>
             <button onClick={() => dispatch(setLogout())}>
@@ -40,11 +42,13 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <div onClick={handleLogin}>Login</div>
-            <div onClick={handleRegister}>Sign up</div>
+            <div onClick={handleLogin} className="auth-button">Login</div>
+            <div onClick={handleRegister} className="secondary-auth-button">Sign up</div>
           </>
         )}
       </ul>
+
+
     </nav >
   );
 }
