@@ -2,10 +2,11 @@
 
 .login-page {
 	height: 100vh;
-	width: 100vw;
+	width: 1170px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	margin: 0 auto;
 	.content {
 		background-color: $mystic;
 		width: 600px;

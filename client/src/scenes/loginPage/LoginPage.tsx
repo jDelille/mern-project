@@ -3,7 +3,7 @@ import Button from '../../ui/button/Button';
 import './LoginPage.scss';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setLogin } from '../../state';
+import { setCurrentUser } from '../../state';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
@@ -35,7 +35,7 @@ const LoginPage: React.FC = () => {
 
   if (loggedIn) {
    dispatch(
-    setLogin({
+    setCurrentUser({
      user: loggedIn.user,
      token: loggedIn.token,
     })

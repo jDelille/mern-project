@@ -6,7 +6,7 @@ import PostCard from '../post-card/PostCard';
 import { Post } from '../../../types/@Post';
 
 type Props = {
- userId: string;
+ userId?: string;
  isProfile?: boolean;
 }
 
@@ -15,10 +15,12 @@ const PostFeed: React.FC<Props> = ({ userId, isProfile = false }) => {
  const posts = useSelector((state) => state.posts);
  const token = useSelector((state) => state.token);
 
+ console.log(posts)
+
  const getPosts = async () => {
   const response = await fetch("http://localhost:3001/posts", {
    method: "GET",
-   headers: { Authorization: `Bearer ${token}` },
+   headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
   dispatch(setPosts({ posts: data }));
@@ -29,7 +31,7 @@ const PostFeed: React.FC<Props> = ({ userId, isProfile = false }) => {
    `http://localhost:3001/posts/${userId}/posts`,
    {
     method: "GET",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { "Content-Type": "application/json" },
    }
   );
   const data = await response.json();

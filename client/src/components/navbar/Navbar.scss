@@ -1,42 +1,46 @@
 @use '../../scss/variables' as *;
 
 .navbar {
-	width: 1170px;
-	margin: 0 auto;
-	background-color: $mystic;
-	height: 65px;
-	.navbar-content {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	height: 100%;
+	color: $charade;
+	background-color: pink;
+	.logo {
+		background-color: rebeccapurple;
+		width: 100%;
+		height: 65px;
 		display: flex;
 		align-items: center;
+		a {
+			text-decoration: none;
+			color: $charade;
+			font-size: 20px;
+			font-weight: 800;
+		}
+	}
+	.nav-links {
+		list-style-type: none;
+		margin-left: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+
+		width: 100%;
 		height: 100%;
-		color: $charade;
-		.logo {
+		background-color: green;
+		li {
 			a {
-				text-decoration: none;
 				color: $charade;
-				font-size: 20px;
-				font-weight: 800;
+				text-decoration: none;
+				font-size: 16px;
 			}
 		}
-		.nav-links {
-			list-style-type: none;
-			margin-left: auto;
-			display: flex;
-			gap: 10px;
-			align-items: center;
-			height: 100%;
-			li {
-				a {
-					color: $charade;
-					text-decoration: none;
-					font-size: 16px;
-				}
-			}
-		}
-		.user-settings {
-			margin-left: auto;
-			display: flex;
-			gap: 1rem;
-		}
+	}
+	.user-settings {
+		margin-left: auto;
+		display: flex;
+		gap: 1rem;
 	}
 }

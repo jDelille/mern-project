@@ -4,22 +4,38 @@ import LoginPage from './scenes/loginPage';
 import ProfilePage from './scenes/profilePage';
 import RegisterPage from './scenes/registerPage';
 import Navbar from './components/navbar/Navbar';
+import CurrentUserBox from './components/current-user-box/CurrentUserBox';
+import { useSelector } from 'react-redux';
+import './scss/global.scss';
 
 
 function AppRouter() {
   const location = useLocation();
-  const hiddenNavbarPaths = ['/login', '/register'];
-  const hideNavbar = hiddenNavbarPaths.includes(location.pathname);
+  const hiddenSidebarPaths = ['/login', '/register'];
+  const hideSidebar = hiddenSidebarPaths.includes(location.pathname);
+
   return (
-    <>
-      {!hideNavbar && <Navbar />}
-      <Routes>
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/home' element={<HomePage />} />
-        <Route path='/profile/:userId' element={<ProfilePage />} />
-      </Routes>
-    </>
+    <div className='App'>
+      {!hideSidebar &&
+        <div className='left-sidebar'>
+          <CurrentUserBox />
+        </div>
+      }
+      <div className='main-content'>
+        <Routes>
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/' element={<HomePage />} />
+          <Route path='/profile/:userId' element={<ProfilePage />} />
+        </Routes>
+      </div>
+
+      {!hideSidebar &&
+        <div className='right-sidebar'>
+          <Navbar />
+        </div>
+      }
+    </div>
   );
 }
 

@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from 'react-redux';
+import Avatar from '../../../ui/avatar/Avatar';
+
 import './PostCard.scss';
-import { useNavigate } from 'react-router-dom';
 
 type Props = {
  body: string;
@@ -11,9 +11,8 @@ type Props = {
 
 const PostCard: React.FC<Props> = ({ body, username, picturePath, userId }) => {
 
- const dispatch = useDispatch();
- const navigate = useNavigate();
- const token = useSelector((state) => state.token);
+ // const dispatch = useDispatch();
+ // const token = useSelector((state) => state.token);
 
  // const patchFriend = async () => {
  //  const response = await fetch(
@@ -33,10 +32,11 @@ const PostCard: React.FC<Props> = ({ body, username, picturePath, userId }) => {
  return (
   <div className='post-card'>
    <div className='post-card-header'>
-    <img src={`http://localhost:3001/assets/${picturePath}`} alt="" onClick={() => {
-     navigate(`/profile/${userId}`);
-     navigate(0);
-    }} />
+    <Avatar
+     src={`http://localhost:3001/assets/${picturePath}`}
+     alt='profile-image'
+     userId={userId}
+    />
     <div className='display-name'>
      <p className='username'>{username}</p>
      <span>@username</span>
