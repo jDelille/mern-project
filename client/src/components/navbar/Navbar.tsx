@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setLogout } from "../../state";
+import { FaHashtag, FaFlagCheckered, FaAward, FaInfoCircle } from 'react-icons/fa'
 import './Navbar.scss';
 
 const Navbar = () => {
@@ -21,16 +22,28 @@ const Navbar = () => {
       </div>
       <ul className="primary-links">
         <li>
-          <a href="/explore">Explore</a>
+          <a href="/explore">
+            <FaHashtag />
+            Explore
+          </a>
         </li>
         <li>
-          <a href="/sportsbook">Sportsbook</a>
+          <a href="/sportsbook">
+            <FaFlagCheckered />
+            Sportsbook
+          </a>
         </li>
         <li>
-          <a href="/leaderboard">Leaderboard</a>
+          <a href="/leaderboard">
+            <FaAward />
+            Leaderboard
+          </a>
         </li>
         <li>
-          <a href="/about">About</a>
+          <a href="/about">
+            <FaInfoCircle />
+            About
+          </a>
         </li>
       </ul>
 

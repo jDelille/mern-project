@@ -5,7 +5,7 @@ import ProfilePage from './scenes/profilePage';
 import RegisterPage from './scenes/registerPage';
 import Navbar from './components/navbar/Navbar';
 import CurrentUserBox from './components/current-user-box/CurrentUserBox';
-import { useSelector } from 'react-redux';
+import LinkFooter from './components/link-footer/LinkFooter';
 import './scss/global.scss';
 
 
@@ -19,6 +19,10 @@ function AppRouter() {
       {!hideSidebar &&
         <div className='left-sidebar'>
           <CurrentUserBox />
+
+          <div className='link-footer-container'>
+            <LinkFooter />
+          </div>
         </div>
       }
       <div className='main-content'>

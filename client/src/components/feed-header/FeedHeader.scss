@@ -1,0 +1,19 @@
+@use '../../scss/variables' as *;
+
+.feed-header-container {
+	padding-top: 10px;
+	position: sticky;
+	top: 0px;
+	background-color: $mystic;
+	.feed-header {
+		background-color: $alabaster;
+		height: 50px;
+
+		border: 1px solid $heather;
+		display: flex;
+		align-items: center;
+		padding: 15px;
+		font-weight: 500;
+		gap: 5px;
+	}
+}

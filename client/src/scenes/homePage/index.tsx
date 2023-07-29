@@ -1,7 +1,8 @@
 import PostFeed from "../../components/posts/post-feed/PostFeed";
-import { useSelector } from "react-redux";
+import FeedHeader from "../../components/feed-header/FeedHeader";
+import { FaHashtag } from 'react-icons/fa'
 import './HomePage.scss';
-import { AppState } from "../../types/@AppState";
+
 
 const HomePage: React.FC = () => {
 	// const { _id } = useSelector((state: AppState) => state.user);
@@ -9,7 +10,8 @@ const HomePage: React.FC = () => {
 	return <div className="home-page">
 		{/* <Navbar /> */}
 		<div className="content">
-			<PostFeed  />
+			<FeedHeader label="Explore" icon={FaHashtag} />
+			<PostFeed />
 		</div>
 	</div>;
 };

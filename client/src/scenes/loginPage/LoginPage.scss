@@ -1,12 +1,11 @@
 @use '../../scss/variables' as *;
 
 .login-page {
-	height: 100vh;
+	max-height: 100vh;
 	width: 1170px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin: 0 auto;
 	.content {
 		background-color: $mystic;
 		width: 600px;
@@ -16,6 +15,8 @@
 		align-items: center;
 		color: #000;
 		gap: 1rem;
+		padding-top: 2rem;
+
 		.site-name {
 			font-size: 32px;
 		}

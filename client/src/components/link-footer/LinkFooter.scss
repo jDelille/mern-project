@@ -1,0 +1,14 @@
+@use '../../scss/variables' as *;
+
+.link-footer {
+	font-size: 11px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	color: $charade;
+	p {
+		a {
+			color: $charade;
+		}
+	}
+}
