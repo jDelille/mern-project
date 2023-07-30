@@ -32,7 +32,7 @@ const PostCard: React.FC<Props> = ({ body, username, picturePath, userId }) => {
 
  const mentionedUsernames = extractMentions(body);
 
- const renderPostBodyWithLinks = (postBody: string, mentionedUsernames: any) => {
+ const renderPostBodyWithLinks = (postBody: string, mentionedUsernames: string[]) => {
   const parts = postBody?.split(/(@\w+)/g);
 
   return parts?.map((part, index) => {

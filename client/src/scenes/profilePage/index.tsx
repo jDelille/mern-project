@@ -1,14 +1,14 @@
 import { useSelector } from 'react-redux';
 import PostFeed from '../../components/posts/post-feed/PostFeed';
-import './ProfilePage.scss';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Navbar from '../../components/navbar/Navbar';
 import ProfileHeader from '../../components/profile-header/ProfileHeader';
-import FeedHeader from '../../components/feed-header/FeedHeader';
+import { AppState } from 'types/@AppState';
+import './ProfilePage.scss';
+
 
 const ProfilePage: React.FC = () => {
- const token = useSelector((state) => state.token);
+ const token = useSelector((state: AppState) => state.token);
  const [user, setUser] = useState(null);
  const { userId } = useParams();
 

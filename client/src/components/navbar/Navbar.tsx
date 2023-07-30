@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { setLogout } from "../../state";
 import { FaHashtag, FaFlagCheckered, FaAward, FaInfoCircle } from 'react-icons/fa'
 import './Navbar.scss';
+import { AppState } from "types/@AppState";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user)
+  const currentUser = useSelector((state: AppState) => state.user)
 
   const handleLogin = () => {
     navigate('/login')
@@ -48,7 +49,7 @@ const Navbar = () => {
       </ul>
 
       <ul className="auth-links">
-        {user ? (
+        {currentUser ? (
           <>
             <button onClick={() => dispatch(setLogout())}>
               Log Out</button>

@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { setPosts } from '../../../state';
 import PostCard from '../post-card/PostCard';
 import { Post } from '../../../types/@Post';
+import { AppState } from 'types/@AppState';
 
 type Props = {
  userId?: string;
@@ -12,8 +13,8 @@ type Props = {
 
 const PostFeed: React.FC<Props> = ({ userId, isProfile = false }) => {
  const dispatch = useDispatch();
- const posts = useSelector((state) => state.posts);
- const token = useSelector((state) => state.token);
+ const posts = useSelector((state: AppState) => state.posts);
+ // const token = useSelector((state) => state.token);
 
  const getPosts = async () => {
   const response = await fetch("http://localhost:3001/posts", {

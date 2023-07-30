@@ -1,10 +1,10 @@
 import Input from '../../ui/input/Input';
 import Button from '../../ui/button/Button';
-import './LoginPage.scss';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '../../state';
 import { useNavigate } from 'react-router-dom';
+import './LoginPage.scss';
 
 const LoginPage: React.FC = () => {
  const [email, setEmail] = useState('');

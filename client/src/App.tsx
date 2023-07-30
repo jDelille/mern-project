@@ -11,6 +11,8 @@ import FeedHeader from './components/feed-header/FeedHeader';
 import { FaHashtag } from 'react-icons/fa'
 import './scss/global.scss';
 import TextAndMentionInput from './components/text-and-mention-input/TextAndMentionInput';
+import { useSelector } from 'react-redux';
+import { AppState } from 'types/@AppState';
 
 
 function AppRouter() {
@@ -18,6 +20,7 @@ function AppRouter() {
   const hiddenSidebarPaths = ['/login', '/register'];
   const profilePathRegex = /^\/profile\/\w+$/;
   const hideSidebar = hiddenSidebarPaths.includes(location.pathname);
+  const currentUser = useSelector((state: AppState) => state.user)
 
   const isProfilePage = profilePathRegex.test(location.pathname)
 
@@ -29,7 +32,13 @@ function AppRouter() {
         <div className='left-sidebar'>
           <SearchBar />
           <CurrentUserBox />
-          <TextAndMentionInput />
+
+          {currentUser && (
+            <>
+              <TextAndMentionInput />
+            </>
+          )}
+
           <div className='link-footer-container'>
             <LinkFooter />
           </div>

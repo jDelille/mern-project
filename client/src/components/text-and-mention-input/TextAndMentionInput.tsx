@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Mention, MentionItem, MentionsInput, OnChangeHandlerFunc, SuggestionDataItem } from 'react-mentions'
-import { setPosts, setUsers } from "../../state";
+import { useSelector } from "react-redux";
+import { Mention, MentionsInput, SuggestionDataItem } from 'react-mentions'
+// import { setPosts, setUsers } from "../../state";
 import Avatar from "../../ui/avatar/Avatar";
 import { User } from "types/@User.js";
 import mentionsInputStyle from "./mentionsInputStyle";
 import Button from "../../ui/button/Button";
 import './TextAndMentionInput.scss';
+import { AppState } from "types/@AppState";
 
 interface ExtendedSuggestionDataItem extends SuggestionDataItem {
  username?: string;
@@ -19,27 +20,13 @@ const TextAndMentionInput: React.FC = () => {
  const textareaRef = useRef<HTMLTextAreaElement>(null);
  const [suggestions, setSuggestions] = useState<ExtendedSuggestionDataItem[]>([])
 
- const dispatch = useDispatch();
- const currentUser = useSelector((state) => state.user);
- const token = useSelector((state) => state.token);
- const [post, setPost] = useState("");
+ // const dispatch = useDispatch();
+ const currentUser = useSelector((state: AppState) => state.user);
+ const token = useSelector((state: AppState) => state.token);
+ // const [post, setPost] = useState("");
  const [users, setUsers] = useState<User[]>()
  const [postBody, setPostBody] = useState("");
 
- const {
-  _id,
-  firstName,
-  lastName,
-  username,
-  location,
-  viewedProfile,
-  followers,
-  following,
-  impressions,
-  picturePath
- } = currentUser
-
- console.log(currentUser)
 
 
 
@@ -79,7 +66,7 @@ const TextAndMentionInput: React.FC = () => {
   event: { target: { value: string } },
  ) => {
   let value = event.target.value;
-  value = value.replace(/\@\[(\w+)\]\(\w+\)/g, '@$1');
+  value = value.replace(/@\[(\w+)\]\(\w+\)/g, '@$1');
   setPostBody(value);
  };
 
@@ -91,21 +78,23 @@ const TextAndMentionInput: React.FC = () => {
 
  const handlePost = async () => {
 
-  const formData = new FormData();
-  formData.append('userId', _id);
-  formData.append('description', postBody);
+  if (currentUser) {
+   const formData = new FormData();
+   formData.append('userId', currentUser._id);
+   formData.append('description', postBody);
 
+   const response = await fetch(`http://localhost:3001/posts`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: formData
+   })
 
+   const posts = await response.json();
+   // dispatch(setPosts({ posts }));
+   console.log(posts)
+   // setPost("");
+  }
 
-  const response = await fetch(`http://localhost:3001/posts`, {
-   method: "POST",
-   headers: { Authorization: `Bearer ${token}` },
-   body: formData
-  })
-  const posts = await response.json();
-  // dispatch(setPosts({ posts }));
-  console.log(posts)
-  setPost("");
  }
 
  return (
