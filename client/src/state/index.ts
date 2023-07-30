@@ -47,12 +47,15 @@ export const authSlice = createSlice({
 			state.posts = action.payload.posts;
 		},
 		setPost: (state, action) => {
-			const updatedPosts = state.posts.map((post: Post) => {
-				if (post._id === action.payload.post_id) {
-					return post;
-				}
-			});
-			state.posts = updatedPosts as Post[];
+			const { post } = action.payload;
+
+			// Find the index of the post in the state array
+			const postIndex = state.posts.findIndex((p) => p._id === post._id);
+
+			// If the post is found in the state array, update it
+			if (postIndex !== -1) {
+				state.posts[postIndex] = post;
+			}
 		},
 	},
 });

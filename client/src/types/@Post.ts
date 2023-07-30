@@ -1,3 +1,7 @@
+type LikesObject = {
+	[userId: string]: boolean;
+};
+
 export type Post = {
 	_id: string;
 	userId: string;
@@ -6,7 +10,7 @@ export type Post = {
 	location: string;
 	body: string;
 	avatar: string;
-	likes: string[];
+	likes: LikesObject;
 	comments: string[];
 	createdAt: string;
 	updatedAt: string;

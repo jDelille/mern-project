@@ -58,6 +58,8 @@ const PostFeed: React.FC<Props> = ({ username, isProfile = false }) => {
      username={post.username}
      avatar={post.avatar}
      createdAt={post.createdAt}
+     likes={post.likes}
+     postId={post._id}
     />
    ))}
   </div>

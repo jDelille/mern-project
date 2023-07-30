@@ -4,6 +4,13 @@ import { FaGlobeAmericas } from 'react-icons/fa'
 import { useMemo } from 'react';
 import './PostCard.scss';
 import { createdAtFormatter } from '../../../utils/date';
+import { useSelector } from 'react-redux';
+import { AppState } from 'types/@AppState';
+import PostCardFooter from './post-card-footer/PostCardFooter';
+
+type LikesObject = {
+ [userId: string]: boolean;
+}
 
 type Props = {
  body: string;
@@ -11,27 +18,13 @@ type Props = {
  name: string;
  avatar: string;
  createdAt: string;
+ likes: LikesObject;
+ postId: string;
 }
 
-const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt }) => {
-
- // const dispatch = useDispatch();
- // const token = useSelector((state) => state.token);
-
- // const patchFriend = async () => {
- //  const response = await fetch(
- //   `http://localhost:3001/users/${_id}/${friendId}`,
- //   {
- //    method: "PATCH",
- //    headers: {
- //     Authorization: `Bearer ${token}`,
- //     "Content-Type": "application/json",
- //    },
- //   }
- //  );
- //  const data = await response.json();
- //  dispatch(setFriends({ friends: data }));
- // };
+const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, likes, postId }) => {
+ const currentUser = useSelector((state: AppState) => state.user)
+ const token = useSelector((state: AppState) => state.token)
 
  const mentionedUsernames = extractMentions(body);
 
@@ -78,6 +71,14 @@ const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt }) 
     </div>
    </div>
    <p className='body'>{renderedPostBody}</p>
+
+   <PostCardFooter
+    postId={postId}
+    token={token as string}
+    currentUserId={currentUser?._id as string}
+    likes={likes}
+   />
+
   </div>
  );
 }

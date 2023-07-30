@@ -5,4 +5,5 @@ export type AppState = {
 	user: User | null;
 	token: string | null;
 	posts: Post[];
+	_id: string;
 };

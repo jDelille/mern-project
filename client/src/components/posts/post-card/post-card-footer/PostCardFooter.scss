@@ -1,0 +1,17 @@
+.post-card-footer {
+	display: flex;
+	align-items: center;
+	margin-top: 10px;
+	position: relative;
+	height: 30px;
+	.like {
+		display: flex;
+		gap: 5px;
+		font-size: 14px;
+		align-items: center;
+		position: relative;
+		svg {
+			cursor: pointer;
+		}
+	}
+}
