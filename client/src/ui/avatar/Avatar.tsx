@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import './Avatar.scss';
 
 type Props = {
  src: string;

@@ -1,0 +1,37 @@
+@use '../../scss/variables' as *;
+
+.create-post-container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	.textarea {
+		padding: 10px;
+		min-width: 100%;
+		min-height: 100px;
+		height: fit-content;
+		resize: none;
+		border: none;
+		outline: none;
+		max-height: 300px;
+		position: relative;
+		margin-top: 1rem;
+		textarea {
+			width: 100%;
+			min-height: 100px;
+			resize: none;
+			border: none;
+			outline: none;
+			position: relative;
+			background-color: white !important;
+			border: 1px solid $heather !important;
+			font-family: 'Poppins', sans-serif !important;
+		}
+	}
+	button {
+		width: fit-content;
+		padding: 2px 26px;
+		margin-left: auto;
+		font-size: 15px;
+		height: 40px;
+	}
+}

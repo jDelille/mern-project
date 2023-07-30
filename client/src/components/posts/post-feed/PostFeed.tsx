@@ -15,14 +15,14 @@ const PostFeed: React.FC<Props> = ({ userId, isProfile = false }) => {
  const posts = useSelector((state) => state.posts);
  const token = useSelector((state) => state.token);
 
- console.log(posts)
-
  const getPosts = async () => {
   const response = await fetch("http://localhost:3001/posts", {
    method: "GET",
    headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
+  data.sort((a: Post, b: Post) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
   dispatch(setPosts({ posts: data }));
  };
 

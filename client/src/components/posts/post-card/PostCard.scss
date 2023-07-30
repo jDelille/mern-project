@@ -36,5 +36,9 @@
 	}
 	.body {
 		font-size: 14px;
+		.tagged-username {
+			color: $chetwodeBlue;
+			text-decoration: none;
+		}
 	}
 }

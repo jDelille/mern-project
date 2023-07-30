@@ -37,7 +37,7 @@ const RegisterPage: React.FC = () => {
    const data = await response.json();
    setIsEmailValid(!data.exists);
   } catch (error) {
-   console.log("error validating email: " + error)
+   setError("Error validating email")
   }
  }
 

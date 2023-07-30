@@ -1,3 +1,4 @@
+import extractMentions from '../../../utils/extractMentions';
 import Avatar from '../../../ui/avatar/Avatar';
 
 import './PostCard.scss';
@@ -29,6 +30,27 @@ const PostCard: React.FC<Props> = ({ body, username, picturePath, userId }) => {
  //  dispatch(setFriends({ friends: data }));
  // };
 
+ const mentionedUsernames = extractMentions(body);
+
+ const renderPostBodyWithLinks = (postBody: string, mentionedUsernames: any) => {
+  const parts = postBody?.split(/(@\w+)/g);
+
+  return parts?.map((part, index) => {
+   if (mentionedUsernames.includes(part.slice(1))) {
+    return (
+     <a href={`/user/${part.slice(1)}`} key={index} className='tagged-username'>
+      {part}
+     </a>
+    );
+   } else {
+    return <span key={index}>{part}</span>;
+   }
+  });
+ };
+
+ const renderedPostBody = renderPostBodyWithLinks(body, mentionedUsernames);
+
+
  return (
   <div className='post-card'>
    <div className='post-card-header'>
@@ -42,7 +64,7 @@ const PostCard: React.FC<Props> = ({ body, username, picturePath, userId }) => {
      <span>@username</span>
     </div>
    </div>
-   <p className='body'>{body}</p>
+   <p className='body'>{renderedPostBody}</p>
   </div>
  );
 }

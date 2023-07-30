@@ -1,5 +1,4 @@
-/* eslint-disable import/no-anonymous-default-export */
-export default {
+const mentionsInputStyle = {
 	control: {
 		fontSize: 16,
 		minHeight: '100px',
@@ -62,3 +61,5 @@ export default {
 		},
 	},
 };
+
+export default mentionsInputStyle;

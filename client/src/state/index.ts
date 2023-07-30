@@ -7,6 +7,7 @@ interface AuthState {
 	user: User | null;
 	token: string | null;
 	posts: Post[];
+	users: User[];
 }
 
 const initialState: AuthState = {
@@ -14,6 +15,7 @@ const initialState: AuthState = {
 	user: null,
 	token: null,
 	posts: [],
+	users: [],
 };
 
 export const authSlice = createSlice({
@@ -26,6 +28,9 @@ export const authSlice = createSlice({
 		setCurrentUser: (state, action) => {
 			state.user = action.payload.user;
 			state.token = action.payload.token;
+		},
+		setUsers: (state, action) => {
+			state.users = action.payload.users;
 		},
 		setLogout: (state) => {
 			state.user = null;
@@ -59,6 +64,7 @@ export const {
 	setFollowing,
 	setPost,
 	setPosts,
+	setUsers,
 } = authSlice.actions;
 
 export default authSlice.reducer;
