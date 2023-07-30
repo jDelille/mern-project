@@ -1,7 +1,51 @@
+@use '../../scss/variables' as *;
+
+.no-current-user {
+	margin: 20px 0;
+	p {
+		font-size: 13px;
+	}
+}
+
 .current-user-box {
-	img {
-		width: 45px;
-		height: 45px;
-		border-radius: 4px;
+	display: flex;
+	gap: 10px;
+	margin: 20px 0;
+	flex-direction: column;
+	.user {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		img {
+			width: 45px;
+			height: 45px;
+			border-radius: 4px;
+		}
+		.display-name {
+			display: flex;
+			flex-direction: column;
+			color: $charade;
+			a {
+				text-decoration: none;
+				font-size: 13px;
+				color: $chetwodeBlue;
+			}
+		}
+	}
+	.user-info {
+		display: flex;
+		flex-direction: column;
+		margin-top: 1rem;
+		ul {
+			list-style-type: none;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+		li {
+			color: $charade;
+			font-size: 12px;
+			text-transform: uppercase;
+		}
 	}
 }

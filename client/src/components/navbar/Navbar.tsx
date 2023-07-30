@@ -22,7 +22,7 @@ const Navbar = () => {
       </div>
       <ul className="primary-links">
         <li>
-          <a href="/explore">
+          <a href="/">
             <FaHashtag />
             Explore
           </a>

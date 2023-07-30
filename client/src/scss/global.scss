@@ -29,6 +29,7 @@ body::-webkit-scrollbar-thumb {
 	gap: 10px;
 	.main-content {
 		width: 580px;
+		margin-top: 10px;
 	}
 	.left-sidebar,
 	.right-sidebar {
@@ -36,10 +37,13 @@ body::-webkit-scrollbar-thumb {
 		position: sticky;
 		top: 10px;
 		max-height: calc(100vh - 10px);
+		min-height: calc(100vh - 10px);
+
+		margin-top: 10px;
+		padding: 0 10px;
 		.link-footer-container {
 			position: absolute;
-			bottom: 1rem;
-			padding: 0 10px;
+			bottom: 2rem;
 		}
 	}
 }

@@ -1,0 +1,16 @@
+@use '../../scss/variables' as *;
+
+.search-bar {
+	height: 48px;
+	background-color: $darkerMystic;
+	display: flex;
+	align-items: center;
+	padding: 0 20px;
+	font-size: 14px;
+	.search-icon {
+		margin-left: auto;
+		height: 100%;
+		display: flex;
+		align-items: center;
+	}
+}

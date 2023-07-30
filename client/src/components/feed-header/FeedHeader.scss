@@ -1,19 +1,25 @@
 @use '../../scss/variables' as *;
 
 .feed-header-container {
-	padding-top: 10px;
 	position: sticky;
-	top: 0px;
+	top: 10px;
 	background-color: $mystic;
+	height: 58px;
+	position: fixed;
+	top: 0;
+	width: 580px;
+	z-index: 9999;
+
 	.feed-header {
 		background-color: $alabaster;
-		height: 50px;
-
+		height: 48px;
 		border: 1px solid $heather;
 		display: flex;
 		align-items: center;
 		padding: 15px;
 		font-weight: 500;
 		gap: 5px;
+		position: relative;
+		top: 10px;
 	}
 }

@@ -4,6 +4,8 @@ import './ProfilePage.scss';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
+import ProfileHeader from '../../components/profile-header/ProfileHeader';
+import FeedHeader from '../../components/feed-header/FeedHeader';
 
 const ProfilePage: React.FC = () => {
  const token = useSelector((state) => state.token);
@@ -30,6 +32,7 @@ const ProfilePage: React.FC = () => {
    {/* <Navbar /> */}
 
    <div className='content'>
+    <ProfileHeader />
     <PostFeed userId={userId as string} isProfile />
 
    </div>

@@ -31,19 +31,28 @@ const CurrentUserBoxComponent: React.FC = () => {
   picturePath
  } = currentUser
 
-
-
-
-
  return (
-  <div className='current-user-box'>
-   <Avatar
-    src={picturePath || '/images/placeholder.png'}
-    alt='profile-picture'
-    userId={_id}
-   />
-   <h1>{username}</h1>
-  </div>
+  !currentUser ? (
+   <div className='no-current-user'>
+    <p>Login to follow profiles or hashtags, favorite, share and reply to posts. You can also interact from your account on a different server.</p>
+   </div>
+  ) : (
+   <div className='current-user-box'>
+    <div className='user'>
+     <Avatar
+      src={picturePath || '/images/placeholder.png'
+      }
+      alt='profile-picture'
+      userId={_id}
+     />
+     <div className='display-name'>
+      <span>{username}</span>
+      <a href={`/profile/${_id}`}>My profile</a>
+     </div>
+    </div>
+   </div >
+
+  )
  );
 }
 

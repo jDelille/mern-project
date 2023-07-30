@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 type Props = {
  src: string;
  alt: string;
- userId: string;
+ userId?: string;
 }
 
 const Avatar: React.FC<Props> = ({ src, alt, userId }) => {
