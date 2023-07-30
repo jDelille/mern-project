@@ -89,9 +89,9 @@ const TextAndMentionInput: React.FC = () => {
     body: formData
    })
 
+
    const posts = await response.json();
    // dispatch(setPosts({ posts }));
-   console.log(posts)
    // setPost("");
   }
 

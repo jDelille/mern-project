@@ -4,17 +4,16 @@ import User from '../models/User.js';
 /* CREATE */
 export const createPost = async (req, res) => {
 	try {
-		const { userId, description, picturePath } = req.body;
-		console.log(req.body);
+		const { userId, body, picturePath } = req.body;
 		const user = await User.findById(userId);
 		const newPost = new Post({
 			userId,
-			firstName: user.firstName,
-			lastName: user.lastName,
+			name: user.name,
+			username: user.username,
 			location: user.location,
-			description,
+			avatar: user.avatar,
+			body,
 			picturePath,
-			userPicturePatch: user.picturePath,
 			likes: {},
 			comments: [],
 		});
@@ -40,8 +39,8 @@ export const getFeedPosts = async (req, res) => {
 
 export const getUserPosts = async (req, res) => {
 	try {
-		const { userId } = req.params;
-		const post = await Post.find({ userId });
+		const { username } = req.params;
+		const post = await Post.find({ username });
 		res.status(200).json(post);
 	} catch (error) {
 		res.status(404).json({ message: error.message });

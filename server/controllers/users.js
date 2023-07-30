@@ -38,8 +38,8 @@ export const getUserFollowing = async (req, res) => {
 		);
 
 		const formattedFollowing = following.map(
-			({ _id, firstName, lastName, username, picturePath }) => {
-				return { _id, firstName, lastName, username, picturePath };
+			({ _id, name, username, avatar }) => {
+				return { _id, name, username, avatar };
 			}
 		);
 
@@ -73,8 +73,8 @@ export const addRemoveFollowing = async (req, res) => {
 		);
 
 		const formattedFollowing = following.map(
-			({ _id, firstName, lastName, username, picturePath }) => {
-				return { _id, firstName, lastName, username, picturePath };
+			({ _id, name, username, avatar }) => {
+				return { _id, name, username, avatar };
 			}
 		);
 

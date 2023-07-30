@@ -23,7 +23,6 @@ const CurrentUserBoxComponent: React.FC = () => {
  }
 
  const {
-  _id,
   username,
   avatar,
  } = currentUser
@@ -35,11 +34,11 @@ const CurrentUserBoxComponent: React.FC = () => {
      src={avatar || '/images/placeholder.png'
      }
      alt='profile-picture'
-     userId={_id}
+     username={username}
     />
     <div className='display-name'>
      <span>{username}</span>
-     <a href={`/profile/${_id}`}>My profile</a>
+     <a href={`/profile/${username}`}>My profile</a>
     </div>
    </div>
   </div >

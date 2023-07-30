@@ -10,16 +10,18 @@ import './ProfilePage.scss';
 const ProfilePage: React.FC = () => {
  const token = useSelector((state: AppState) => state.token);
  const [user, setUser] = useState(null);
- const { userId } = useParams();
+ const { username } = useParams();
+ console.log(username)
 
  const getUser = async () => {
-  const response = await fetch(`http://localhost:3001/users/${userId}`, {
+  const response = await fetch(`http://localhost:3001/users/${username}`, {
    method: "GET",
    headers: { Authorization: `Bearer ${token}` },
   });
   const data = await response.json();
   setUser(data);
  };
+
 
  useEffect(() => {
   getUser();
@@ -33,7 +35,7 @@ const ProfilePage: React.FC = () => {
 
    <div className='content'>
     <ProfileHeader />
-    <PostFeed userId={userId as string} isProfile />
+    <PostFeed username={username} isProfile />
 
    </div>
 

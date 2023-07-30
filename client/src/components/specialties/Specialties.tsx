@@ -1,9 +1,13 @@
-import { useState } from 'react';
 
+import { Dispatch, SetStateAction } from 'react';
 import './Specialties.scss';
 
-const Specialties: React.FC = () => {
- const [selectedLeagues, setSelectedLeagues] = useState<string[]>([]);
+type Props = {
+ selectedLeagues: string[];
+ setSelectedLeagues: Dispatch<SetStateAction<string[]>>
+}
+
+const Specialties: React.FC<Props> = ({ selectedLeagues, setSelectedLeagues }) => {
 
  const leagues = [
   {

@@ -7,11 +7,11 @@ import { Post } from '../../../types/@Post';
 import { AppState } from 'types/@AppState';
 
 type Props = {
- userId?: string;
+ username?: string;
  isProfile?: boolean;
 }
 
-const PostFeed: React.FC<Props> = ({ userId, isProfile = false }) => {
+const PostFeed: React.FC<Props> = ({ username, isProfile = false }) => {
  const dispatch = useDispatch();
  const posts = useSelector((state: AppState) => state.posts);
  // const token = useSelector((state) => state.token);
@@ -29,7 +29,7 @@ const PostFeed: React.FC<Props> = ({ userId, isProfile = false }) => {
 
  const getUserPosts = async () => {
   const response = await fetch(
-   `http://localhost:3001/posts/${userId}/posts`,
+   `http://localhost:3001/posts/${username}/posts`,
    {
     method: "GET",
     headers: { "Content-Type": "application/json" },

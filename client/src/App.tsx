@@ -52,7 +52,7 @@ function AppRouter() {
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/' element={<HomePage />} />
-          <Route path='/profile/:userId' element={<ProfilePage />} />
+          <Route path='/profile/:username' element={<ProfilePage />} />
         </Routes>
       </div>
 

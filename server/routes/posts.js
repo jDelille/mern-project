@@ -6,7 +6,7 @@ const router = express.Router();
 
 /* READ */
 router.get('/', getFeedPosts);
-router.get('/:userId/posts', getUserPosts);
+router.get('/:username/posts', getUserPosts);
 
 /* UPDATE */
 router.patch('/:id/like', verifyToken, likePost);

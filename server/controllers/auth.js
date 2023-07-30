@@ -40,38 +40,32 @@ export const validateUsername = async (req, res) => {
 export const register = async (req, res) => {
 	try {
 		const {
-			firstName,
-			lastName,
+			name,
 			email,
 			password,
 			username,
-			picturePath,
-			specialties,
+			avatar,
 			location,
 			followers,
 			following,
+			specialties,
 			bio,
 		} = req.body;
-
-		console.log(email);
 
 		const salt = await bcrypt.genSalt();
 		const passwordHash = await bcrypt.hash(password, salt);
 
 		const newUser = new User({
-			firstName,
-			lastName,
+			name,
 			email,
 			password: passwordHash,
 			username,
-			picturePath,
+			avatar,
 			followers,
 			following,
-			specialties,
 			location,
+			specialties,
 			bio,
-			viewedProfile: 0,
-			impressions: 0,
 		});
 
 		const savedUser = await newUser.save();

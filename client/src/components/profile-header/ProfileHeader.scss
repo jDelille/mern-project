@@ -1,6 +1,78 @@
 @use '../../scss/variables' as *;
 
 .profile-header {
-	height: 240px;
-	background-color: $comet;
+	height: fit-content;
+	background-color: $alabaster;
+	margin-top: 48px;
+	padding: 15px;
+	border: 1px solid $heather;
+	border-top: 0;
+	padding-bottom: 0;
+	.user {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+		img {
+			width: 65px !important;
+			height: 65px !important;
+			border-radius: 4px;
+		}
+		.display-name {
+			display: flex;
+			flex-direction: column;
+			strong {
+				font-size: 24px;
+			}
+		}
+	}
+	.bio {
+		margin: 1rem 0;
+	}
+	.specialties {
+		display: flex;
+		flex-direction: column;
+		height: fit-content;
+		margin: 1rem 0;
+		width: 100%;
+		.specialties-label {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			strong {
+				font-weight: 500;
+			}
+			span {
+				color: $chetwodeBlue;
+				font-size: 14px;
+				cursor: pointer;
+			}
+		}
+		ul {
+			list-style-type: none;
+			display: flex;
+			gap: 10px;
+			li {
+				padding: 2px 12px;
+				border-radius: 12px;
+				font-size: 14px;
+				color: white;
+				background-color: $chetwodeBlue;
+			}
+		}
+	}
+	.user-stats {
+		display: flex;
+		width: 100%;
+		margin: 1rem 0;
+		align-items: center;
+		ul {
+			list-style-type: none;
+			display: flex;
+			width: 100%;
+			gap: 15px;
+			li {
+				font-size: 14px;
+			}
+		}
+	}
 }

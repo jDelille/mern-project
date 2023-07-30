@@ -38,7 +38,7 @@ const PostCard: React.FC<Props> = ({ body, username, avatar, name }) => {
   return parts?.map((part, index) => {
    if (mentionedUsernames.includes(part.slice(1))) {
     return (
-     <a href={`/user/${part.slice(1)}`} key={index} className='tagged-username'>
+     <a href={`/profile/${part.slice(1)}`} key={index} className='tagged-username'>
       {part}
      </a>
     );

@@ -5,6 +5,7 @@ import './RegisterPage.scss';
 import Button from '../../ui/button/Button';
 import Input from '../../ui/input/Input';
 import Specialties from '../../components/specialties/Specialties';
+import ImageUpload from '../../components/image-upload/ImageUpload';
 
 enum STEPS {
  First,
@@ -21,9 +22,11 @@ const RegisterPage: React.FC = () => {
  const [password, setPassword] = useState('');
  const [passwordConfirm, setPasswordConfirm] = useState('');
  const [username, setUsername] = useState('');
+ const [avatar, setAvatar] = useState('');
 
  const [isEmailValid, setIsEmailValid] = useState(true)
  const [isUsernameValid, setIsUsernameValid] = useState(true)
+ const [selectedLeagues, setSelectedLeagues] = useState<string[]>([]);
 
 
  const validateEmail = async () => {
@@ -92,9 +95,9 @@ const RegisterPage: React.FC = () => {
    email: email,
    password: password,
    username: username,
-   avatar: "",
+   avatar: avatar,
    location: 'Scottsdale, AZ',
-   specialties: ['NFL', 'NBA', 'MLB'],
+   specialties: selectedLeagues,
    followers: [],
    following: [],
    bio: "Testing bio",
@@ -109,9 +112,8 @@ const RegisterPage: React.FC = () => {
 
   const savedUser = await savedUserResponse.json();
 
-  if (savedUser) {
-   console.log(savedUser)
-  }
+  // if (savedUser) {
+  // }
  }
 
  const handleNextStep = () => {
@@ -192,6 +194,10 @@ const RegisterPage: React.FC = () => {
      errorMsg='Username already taken'
      value={username}
     />
+    <ImageUpload
+     onChange={setAvatar}
+     value={avatar}
+    />
     <Button
      actionLabel='Continue'
      onClick={handleNextStep}
@@ -209,7 +215,7 @@ const RegisterPage: React.FC = () => {
    <>
     <h2>Choose your specialties</h2>
     <h3>What sports do you bet on?</h3>
-    <Specialties />
+    <Specialties selectedLeagues={selectedLeagues} setSelectedLeagues={setSelectedLeagues} />
     <Button actionLabel='Continue' onClick={handleNextStep} />
     <div className='redirect-link'>
      <p onClick={() => setStep(STEPS.Second)} className='backTo'>Go back to step 2</p>
