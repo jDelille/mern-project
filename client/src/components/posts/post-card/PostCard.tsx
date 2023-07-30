@@ -1,16 +1,19 @@
 import extractMentions from '../../../utils/extractMentions';
 import Avatar from '../../../ui/avatar/Avatar';
-
+import { FaGlobeAmericas } from 'react-icons/fa'
+import { useMemo } from 'react';
 import './PostCard.scss';
+import { createdAtFormatter } from '../../../utils/date';
 
 type Props = {
  body: string;
  username: string;
  name: string;
  avatar: string;
+ createdAt: string;
 }
 
-const PostCard: React.FC<Props> = ({ body, username, avatar, name }) => {
+const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt }) => {
 
  // const dispatch = useDispatch();
  // const token = useSelector((state) => state.token);
@@ -50,6 +53,10 @@ const PostCard: React.FC<Props> = ({ body, username, avatar, name }) => {
 
  const renderedPostBody = renderPostBodyWithLinks(body, mentionedUsernames);
 
+ const postCreationDate = useMemo(() => {
+  return createdAtFormatter(createdAt);
+ }, [createdAt]);
+
 
  return (
   <div className='post-card'>
@@ -62,6 +69,12 @@ const PostCard: React.FC<Props> = ({ body, username, avatar, name }) => {
     <div className='display-name'>
      <p className='username'>{name}</p>
      <span>@{username}</span>
+    </div>
+
+    <div className='post-info'>
+     <FaGlobeAmericas color="#606984" size
+      ={14} />
+     <span>{postCreationDate}</span>
     </div>
    </div>
    <p className='body'>{renderedPostBody}</p>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Mention, MentionsInput, SuggestionDataItem } from 'react-mentions'
 // import { setPosts, setUsers } from "../../state";
 import Avatar from "../../ui/avatar/Avatar";
@@ -8,6 +8,8 @@ import mentionsInputStyle from "./mentionsInputStyle";
 import Button from "../../ui/button/Button";
 import './TextAndMentionInput.scss';
 import { AppState } from "types/@AppState";
+import { setPosts } from "../../state";
+import { Post } from "types/@Post";
 
 interface ExtendedSuggestionDataItem extends SuggestionDataItem {
  username?: string;
@@ -20,7 +22,7 @@ const TextAndMentionInput: React.FC = () => {
  const textareaRef = useRef<HTMLTextAreaElement>(null);
  const [suggestions, setSuggestions] = useState<ExtendedSuggestionDataItem[]>([])
 
- // const dispatch = useDispatch();
+ const dispatch = useDispatch();
  const currentUser = useSelector((state: AppState) => state.user);
  const token = useSelector((state: AppState) => state.token);
  // const [post, setPost] = useState("");
@@ -91,8 +93,9 @@ const TextAndMentionInput: React.FC = () => {
 
 
    const posts = await response.json();
-   // dispatch(setPosts({ posts }));
-   // setPost("");
+   posts.sort((a: Post, b: Post) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+   dispatch(setPosts({ posts }));
+   setPostBody("");
   }
 
  }

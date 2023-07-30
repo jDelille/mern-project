@@ -57,6 +57,7 @@ const PostFeed: React.FC<Props> = ({ username, isProfile = false }) => {
      name={post.name}
      username={post.username}
      avatar={post.avatar}
+     createdAt={post.createdAt}
     />
    ))}
   </div>

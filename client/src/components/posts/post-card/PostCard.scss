@@ -1,11 +1,11 @@
 @use '../../../scss/variables' as *;
 
 .post-card {
-	min-height: 194.14px;
+	min-height: 164.14px;
 	background-color: $alabaster;
 	border-bottom: 1px solid $heather;
 	border-top: 0;
-	padding: 15px;
+	padding: 10px;
 	color: $charade;
 	.post-card-header {
 		display: flex;
@@ -13,6 +13,7 @@
 		align-items: center;
 		margin-bottom: 10px;
 		height: 56px;
+		position: relative;
 		img {
 			width: 46px;
 			height: 46px;
@@ -31,6 +32,17 @@
 			span {
 				color: $comet;
 				font-size: 13px;
+			}
+		}
+		.post-info {
+			position: absolute;
+			right: 10px;
+			top: 7px;
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			span {
+				font-size: 12px;
 			}
 		}
 	}
