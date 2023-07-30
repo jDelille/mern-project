@@ -52,10 +52,10 @@ const PostFeed: React.FC<Props> = ({ userId, isProfile = false }) => {
    {posts.map((post: Post) => (
     <PostCard
      key={post._id}
-     body={post.description}
-     username={post.firstName}
-     picturePath={post.picturePath}
-     userId={post.userId}
+     body={post.body}
+     name={post.name}
+     username={post.username}
+     avatar={post.avatar}
     />
    ))}
   </div>

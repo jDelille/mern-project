@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setLogout } from "../../state";
 import { FaHashtag, FaFlagCheckered, FaAward, FaInfoCircle } from 'react-icons/fa'
-import './Navbar.scss';
 import { AppState } from "types/@AppState";
+import './Navbar.scss';
 
 const Navbar = () => {
   const dispatch = useDispatch();

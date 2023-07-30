@@ -11,7 +11,7 @@ import { AppState } from "types/@AppState";
 
 interface ExtendedSuggestionDataItem extends SuggestionDataItem {
  username?: string;
- picturePath?: string;
+ avatar?: string;
  // isVerified?: boolean;
 }
 
@@ -51,8 +51,8 @@ const TextAndMentionInput: React.FC = () => {
    const userSuggestions: ExtendedSuggestionDataItem[] = (users ?? [])?.map((user) => ({
     id: user._id,
     display: user.username,
-    picturePath: user.picturePath,
-    // name: user.name,
+    avatar: user.avatar,
+    name: user.name,
     // isVerified: user.isVerified
    }));
    setSuggestions(userSuggestions ?? []);
@@ -81,7 +81,7 @@ const TextAndMentionInput: React.FC = () => {
   if (currentUser) {
    const formData = new FormData();
    formData.append('userId', currentUser._id);
-   formData.append('description', postBody);
+   formData.append('body', postBody);
 
    const response = await fetch(`http://localhost:3001/posts`, {
     method: "POST",
@@ -121,7 +121,7 @@ const TextAndMentionInput: React.FC = () => {
      displayTransform={(_, display) => `@${display}`}
      renderSuggestion={(data: ExtendedSuggestionDataItem) => (
       <div className='suggestion-box'>
-       <Avatar src={data.picturePath || '/images/placeholder.png'} alt="profile-picture" />
+       <Avatar src={data.avatar || '/images/placeholder.png'} alt="profile-picture" />
        <div className='display-name'>
         <span>@{data.display}</span>
        </div>

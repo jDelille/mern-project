@@ -4,16 +4,16 @@ import './Avatar.scss';
 type Props = {
  src: string;
  alt: string;
- userId?: string;
+ username?: string;
 }
 
-const Avatar: React.FC<Props> = ({ src, alt, userId }) => {
+const Avatar: React.FC<Props> = ({ src, alt, username }) => {
  const navigate = useNavigate();
 
  return (
   <>
    <img src={src} alt={alt} onClick={() => {
-    navigate(`/profile/${userId}`);
+    navigate(`/profile/${username}`);
     navigate(0);
    }} />
   </>

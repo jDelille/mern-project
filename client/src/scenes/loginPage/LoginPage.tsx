@@ -40,7 +40,7 @@ const LoginPage: React.FC = () => {
      token: loggedIn.token,
     })
    );
-   navigate("/home");
+   navigate("/");
   }
  };
 

@@ -6,11 +6,11 @@ import './PostCard.scss';
 type Props = {
  body: string;
  username: string;
- picturePath: string;
- userId: string;
+ name: string;
+ avatar: string;
 }
 
-const PostCard: React.FC<Props> = ({ body, username, picturePath, userId }) => {
+const PostCard: React.FC<Props> = ({ body, username, avatar, name }) => {
 
  // const dispatch = useDispatch();
  // const token = useSelector((state) => state.token);
@@ -55,13 +55,13 @@ const PostCard: React.FC<Props> = ({ body, username, picturePath, userId }) => {
   <div className='post-card'>
    <div className='post-card-header'>
     <Avatar
-     src={`http://localhost:3001/assets/${picturePath}`}
+     src={avatar}
      alt='profile-image'
-     userId={userId}
+     username={username}
     />
     <div className='display-name'>
-     <p className='username'>{username}</p>
-     <span>@username</span>
+     <p className='username'>{name}</p>
+     <span>@{username}</span>
     </div>
    </div>
    <p className='body'>{renderedPostBody}</p>

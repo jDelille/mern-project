@@ -1,12 +1,11 @@
 export type Post = {
 	_id: string;
 	userId: string;
-	firstName: string;
-	lastName: string;
+	name: string;
 	username: string;
 	location: string;
-	description: string;
-	picturePath: string;
+	body: string;
+	avatar: string;
 	likes: string[];
 	comments: string[];
 	createdAt: string;

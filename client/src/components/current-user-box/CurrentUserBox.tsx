@@ -25,14 +25,14 @@ const CurrentUserBoxComponent: React.FC = () => {
  const {
   _id,
   username,
-  picturePath
+  avatar,
  } = currentUser
 
  return (
   <div className='current-user-box'>
    <div className='user'>
     <Avatar
-     src={picturePath || '/images/placeholder.png'
+     src={avatar || '/images/placeholder.png'
      }
      alt='profile-picture'
      userId={_id}

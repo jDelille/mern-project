@@ -11,7 +11,7 @@ const router = express.Router();
 
 /* READ */
 router.get('/', getUsers);
-router.get('/:id', verifyToken, getUser);
+router.get('/:username', verifyToken, getUser);
 router.get('/:id/following', verifyToken, getUserFollowing);
 
 /* UPDATE */

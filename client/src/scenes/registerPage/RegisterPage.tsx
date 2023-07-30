@@ -17,8 +17,7 @@ const RegisterPage: React.FC = () => {
  const [step, setStep] = useState(STEPS.First);
  const [error, setError] = useState("");
  const [email, setEmail] = useState('');
- const [firstName, setFistName] = useState('');
- const [lastName, setLastName] = useState('');
+ const [name, setName] = useState('');
  const [password, setPassword] = useState('');
  const [passwordConfirm, setPasswordConfirm] = useState('');
  const [username, setUsername] = useState('');
@@ -70,7 +69,7 @@ const RegisterPage: React.FC = () => {
  const disableButton = () => {
 
   if (step === STEPS.First) {
-   if (!email || !isEmailValid || !validatePasswordConfirm() || !password || !passwordConfirm || !firstName || !lastName) {
+   if (!email || !isEmailValid || !validatePasswordConfirm() || !password || !passwordConfirm || !name) {
     return true;
    }
   }
@@ -89,12 +88,11 @@ const RegisterPage: React.FC = () => {
  const register = async () => {
 
   const newUser = {
-   firstName: firstName,
-   lastName: lastName,
+   name: name,
    email: email,
    password: password,
    username: username,
-   picturePath: "",
+   avatar: "",
    location: 'Scottsdale, AZ',
    specialties: ['NFL', 'NBA', 'MLB'],
    followers: [],
@@ -140,24 +138,14 @@ const RegisterPage: React.FC = () => {
     errorMsg='Email already in use'
     value={email}
    />
-
    <Input
-    label='First Name'
-    htmlFor='firstName'
+    label='Name'
+    htmlFor='name'
     type='text'
-    value={firstName}
-    placeholder='Your first name'
-    setState={setFistName}
+    value={name}
+    placeholder='Your name'
+    setState={setName}
    />
-   <Input
-    label='Last Name'
-    htmlFor='lastName'
-    type='text'
-    placeholder='Your last name'
-    setState={setLastName}
-    value={lastName}
-   />
-
    <Input
     label='Password'
     htmlFor='password'
