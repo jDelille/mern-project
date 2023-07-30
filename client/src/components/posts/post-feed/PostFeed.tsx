@@ -36,6 +36,7 @@ const PostFeed: React.FC<Props> = ({ username, isProfile = false }) => {
    }
   );
   const data = await response.json();
+  data.sort((a: Post, b: Post) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   dispatch(setPosts({ posts: data }));
  };
 
