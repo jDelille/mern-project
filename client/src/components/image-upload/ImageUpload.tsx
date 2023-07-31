@@ -1,13 +1,15 @@
 import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { MdPhotoLibrary } from 'react-icons/md'
 
 type Props = {
  onChange: (base64: string) => void;
  value: string;
+ isPost?: boolean;
 }
 
 
-const ImageUpload: React.FC<Props> = ({ onChange, value }) => {
+const ImageUpload: React.FC<Props> = ({ onChange, value, isPost }) => {
  const [base64, setBase64] = useState(value);
 
  const handleChange = useCallback((base64: string) => {
@@ -43,13 +45,21 @@ const ImageUpload: React.FC<Props> = ({ onChange, value }) => {
  return (
   <>
    <div {...getRootProps({})}>
-    <input
-     {...getInputProps()}
-     placeholder='upload image'
-     width={'100px'}
-     height={'50px'}
-    />
-    <img src={base64} alt="profile-picture" width={'50px'} height={'50px'} style={{ objectFit: 'contain' }} />
+    {!isPost ? (
+     <>
+      <input
+       {...getInputProps()}
+       placeholder='upload image'
+       width={'100px'}
+       height={'50px'}
+      />
+      <img src={base64} alt="profile-picture" width={'50px'} height={'50px'} style={{ objectFit: 'contain' }} />
+     </>
+    ) : (
+     <div className='icon'>
+      <MdPhotoLibrary size={24} color="#606984" />
+     </div>
+    )}
    </div>
   </>
  );

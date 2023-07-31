@@ -3,7 +3,6 @@
 .create-post-container {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
 	.textarea {
 		padding: 10px;
 		min-width: 100%;
@@ -25,6 +24,62 @@
 			background-color: white !important;
 			border: 1px solid $heather !important;
 			font-family: 'Poppins', sans-serif !important;
+		}
+	}
+	.image-preview {
+		padding: 0px 7px;
+		background: white;
+		border: 1px solid $heather;
+		border-top: 0;
+		display: flex;
+		align-items: center;
+		position: relative;
+		svg {
+			position: absolute;
+			right: 15px;
+			top: 15px;
+			cursor: pointer;
+		}
+		img {
+			width: 100%;
+			height: 155px;
+			object-fit: contain;
+		}
+	}
+	.icon-bar {
+		background-color: darken($alabaster, 2%);
+		border: 1px solid $heather;
+		border-top: 0;
+		height: 50px;
+		margin-bottom: 1rem;
+		display: flex;
+		align-items: center;
+		padding: 5px;
+		.icon {
+			display: flex;
+			align-items: center;
+			padding: 5px;
+			position: relative;
+			cursor: pointer;
+			&:nth-of-type(1) {
+				&:hover {
+					&::after {
+						content: '';
+						position: absolute;
+						background-color: $charade;
+						color: white;
+						font-size: 12px;
+						display: flex;
+						align-items: center;
+						padding: 3px 5px;
+						border-radius: 2px;
+						width: 75px;
+						bottom: -20px;
+						content: 'Add a photo';
+						opacity: 0.8;
+					}
+				}
+			}
 		}
 	}
 	button {

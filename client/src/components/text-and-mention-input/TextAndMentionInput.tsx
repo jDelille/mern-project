@@ -10,6 +10,8 @@ import './TextAndMentionInput.scss';
 import { AppState } from "types/@AppState";
 import { setPosts } from "../../state";
 import { Post } from "types/@Post";
+import ImageUpload from "../../components/image-upload/ImageUpload";
+import { FaWindowClose } from 'react-icons/fa'
 
 interface ExtendedSuggestionDataItem extends SuggestionDataItem {
  username?: string;
@@ -28,7 +30,7 @@ const TextAndMentionInput: React.FC = () => {
  // const [post, setPost] = useState("");
  const [users, setUsers] = useState<User[]>()
  const [postBody, setPostBody] = useState("");
-
+ const [image, setImage] = useState('');
 
 
 
@@ -45,6 +47,8 @@ const TextAndMentionInput: React.FC = () => {
  useEffect(() => {
   getUsers();
  }, [])
+
+ console.log(image)
 
 
  useEffect(() => {
@@ -85,18 +89,27 @@ const TextAndMentionInput: React.FC = () => {
    formData.append('userId', currentUser._id);
    formData.append('body', postBody);
 
+   if (image) {
+    formData.append('picture', image);
+    formData.append('picturePath', image);
+   }
+
    const response = await fetch(`http://localhost:3001/posts`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
     body: formData
    })
 
+   console.log(formData)
+
 
    const posts = await response.json();
    posts.sort((a: Post, b: Post) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
    dispatch(setPosts({ posts }));
+   setImage('');
    setPostBody("");
   }
+
 
  }
 
@@ -132,8 +145,17 @@ const TextAndMentionInput: React.FC = () => {
      )}
     />
    </MentionsInput>
-
+   {image && (
+    <div className='image-preview'>
+     <FaWindowClose color="white" size={20} onClick={() => setImage("")} />
+     <img src={image} alt="image" />
+    </div>
+   )}
+   <div className="icon-bar">
+    <ImageUpload onChange={setImage} value={image} isPost />
+   </div>
    <Button actionLabel="Post" onClick={handlePost} isDisabled={postBody.length === 0} />
+
   </div>
 
  );

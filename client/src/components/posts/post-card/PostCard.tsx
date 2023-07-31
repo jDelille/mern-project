@@ -20,13 +20,15 @@ type Props = {
  createdAt: string;
  likes: LikesObject;
  postId: string;
+ picturePath?: string;
 }
 
-const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, likes, postId }) => {
+const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, likes, postId, picturePath }) => {
  const currentUser = useSelector((state: AppState) => state.user)
  const token = useSelector((state: AppState) => state.token)
 
  const mentionedUsernames = extractMentions(body);
+
 
  const renderPostBodyWithLinks = (postBody: string, mentionedUsernames: string[]) => {
   const parts = postBody?.split(/(@\w+)/g);
@@ -76,6 +78,13 @@ const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, li
    <div className='body'>
     <p>{renderedPostBody}</p>
    </div>
+
+   {picturePath && (
+    <div className='image'>
+     <img src={picturePath} alt="" />
+    </div>
+   )}
+
 
 
    <PostCardFooter

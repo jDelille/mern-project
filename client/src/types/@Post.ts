@@ -14,4 +14,5 @@ export type Post = {
 	comments: string[];
 	createdAt: string;
 	updatedAt: string;
+	picturePath: string;
 };
