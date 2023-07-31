@@ -60,8 +60,11 @@ const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, li
      username={username}
     />
     <div className='display-name'>
-     <p className='username'>{name}</p>
-     <span>@{username}</span>
+     <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <p className='username'>{name}</p>
+      <span>@{username}</span>
+     </div>
+
     </div>
 
     <div className='post-info'>
@@ -70,7 +73,10 @@ const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, li
      <span>{postCreationDate}</span>
     </div>
    </div>
-   <p className='body'>{renderedPostBody}</p>
+   <div className='body'>
+    <p>{renderedPostBody}</p>
+   </div>
+
 
    <PostCardFooter
     postId={postId}

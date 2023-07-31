@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import { setPost } from "../../../../state";
-import { AiFillStar } from 'react-icons/ai';
-
+import { FaRegComment, FaFire, FaRetweet, FaShare } from 'react-icons/fa'
 import './PostCardFooter.scss';
 
 type LikesObject = {
@@ -42,11 +41,20 @@ const PostCardFooter: React.FC<Props> = ({ postId, token, currentUserId, likes }
 
  return (
   <div className="post-card-footer">
-   <div className="like">
-    <AiFillStar onClick={patchLike} color={isLiked ? '#4a4de7' : "#606984"} size={18} />
-    <p>{likeCount}</p>
+   <div className="control">
+    <FaRegComment onClick={patchLike} color={isLiked ? '#4a4de7' : "#606984"} size={16} />
    </div>
+   <div className="control">
+    <FaRetweet onClick={patchLike} color={isLiked ? '#4a4de7' : "#606984"} size={19} />
+   </div>
+   <div className="control">
+    <FaFire onClick={patchLike} color={isLiked ? '#4a4de7' : "#606984"} size={16} />
+    {/* <p>{likeCount}</p> */}
+   </div>
+   <div className="control">
+    <FaShare onClick={patchLike} color={isLiked ? '#4a4de7' : "#606984"} size={16} />
 
+   </div>
   </div>
  );
 }

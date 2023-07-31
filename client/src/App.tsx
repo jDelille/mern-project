@@ -13,6 +13,7 @@ import './scss/global.scss';
 import TextAndMentionInput from './components/text-and-mention-input/TextAndMentionInput';
 import { useSelector } from 'react-redux';
 import { AppState } from 'types/@AppState';
+import Gamebar from './components/gamebar/Gamebar';
 
 
 function AppRouter() {
@@ -46,8 +47,16 @@ function AppRouter() {
       }
       <div className='main-content'>
         {!hideSidebar && (
-          <FeedHeader label={headerLabel} icon={FaHashtag} />
+          <>
+            <FeedHeader label={headerLabel} icon={FaHashtag} />
+            {!isProfilePage && (
+              <Gamebar />
+            )}
+          </>
+
         )}
+
+
         <Routes>
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/login' element={<LoginPage />} />

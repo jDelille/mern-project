@@ -1,0 +1,15 @@
+@use '../../scss/variables' as *;
+
+.gamebar {
+	background-color: white;
+	height: 95px;
+	width: 580px;
+	margin-top: 48px;
+	border: 1px solid $heather;
+	border-top: none;
+	display: flex;
+	overflow-x: auto;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
