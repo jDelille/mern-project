@@ -30,8 +30,6 @@ const MatchPage: React.FC = () => {
   fetchData();
  }, [])
 
- console.log(match?.competitions[0].competitors[0])
-
  const lowerTeam = {
   name: match?.competitions[0].competitors[0].team.name,
   longName: match?.competitions[0].competitors[0].team.name,

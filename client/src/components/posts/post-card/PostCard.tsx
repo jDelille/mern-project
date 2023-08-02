@@ -1,12 +1,15 @@
 import extractMentions from '../../../utils/extractMentions';
 import Avatar from '../../../ui/avatar/Avatar';
 import { FaGlobeAmericas } from 'react-icons/fa'
-import { useMemo, useState } from 'react';
-import './PostCard.scss';
+import { useEffect, useMemo, useState } from 'react';
 import { createdAtFormatter } from '../../../utils/date';
 import { useSelector } from 'react-redux';
 import { AppState } from 'types/@AppState';
+import { Comment } from 'types/@Comment';
 import PostCardFooter from './post-card-footer/PostCardFooter';
+import './PostCard.scss';
+import CommentCard from './comment-card/CommentCard';
+import { Post } from 'types/@Post';
 
 type LikesObject = {
  [userId: string]: boolean;
@@ -21,19 +24,36 @@ type Props = {
  likes: LikesObject;
  postId: string;
  picturePath?: string;
+ comments: string[];
+ post: Post
 }
 
-const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, likes, postId, picturePath }) => {
-
- const [commentBody, setCommentBody] = useState('')
+const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, likes, postId, picturePath, comments, post }) => {
 
  const currentUser = useSelector((state: AppState) => state.user)
  const token = useSelector((state: AppState) => state.token)
 
+ const [postComments, setPostComments] = useState<Comment[]>([])
+
+
+ const getPostComments = async () => {
+  try {
+   const response = await fetch(`http://localhost:3001/comments/${comments}`);
+
+   if (response.ok) {
+    const commentsData = await response.json();
+    setPostComments(commentsData)
+   }
+  } catch (error) {
+   console.log(error)
+  }
+ }
+
+ useEffect(() => {
+  getPostComments();
+ }, [])
+
  const mentionedUsernames = extractMentions(body);
-
-
-
 
  const renderPostBodyWithLinks = (postBody: string, mentionedUsernames: string[]) => {
   const parts = postBody?.split(/(@\w+)/g);
@@ -57,85 +77,59 @@ const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, li
   return createdAtFormatter(createdAt);
  }, [createdAt]);
 
-
- const handleComment = async () => {
-
-  console.log(commentBody)
-
-  if (currentUser) {
-   const formData = new FormData();
-   formData.append('userId', currentUser._id);
-   formData.append('body', commentBody)
-
-
-   try {
-    const response = await fetch(`http://localhost:3001/posts/${postId}/comment`, {
-     method: 'POST',
-     headers: { Authorization: `Bearer ${token}` },
-     body: formData
-    })
-
-    if (response.ok) {
-     const data = await response.json();
-     const { comment, post } = data;
-     console.log('new comment: ', comment)
-     console.log('new post: ', post)
-    }
-   } catch (error: any) {
-    console.log('error', error.message)
-   }
-  }
- }
-
-
  return (
-  <div className='post-card'>
-   <div className='post-card-header'>
-    <Avatar
-     src={avatar}
-     alt='profile-image'
-     username={username}
-    />
-    <div className='display-name'>
-     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <p className='username'>{name}</p>
-      <span>@{username}</span>
+  <>
+   <div className='post-card'>
+    {/* {comments && (
+    <div className='comment-line'></div>
+   )} */}
+    <div className='post-card-header'>
+     <Avatar
+      src={avatar}
+      alt='profile-image'
+      username={username}
+     />
+     <div className='display-name'>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+       <p className='username'>{name}</p>
+       <span>@{username}</span>
+      </div>
+
      </div>
 
+     <div className='post-info'>
+      <FaGlobeAmericas color="#606984" size
+       ={14} />
+      <span>{postCreationDate}</span>
+     </div>
+    </div>
+    <div className='body'>
+     <p>{renderedPostBody}</p>
     </div>
 
-    <div className='post-info'>
-     <FaGlobeAmericas color="#606984" size
-      ={14} />
-     <span>{postCreationDate}</span>
-    </div>
-   </div>
-   <div className='body'>
-    <p>{renderedPostBody}</p>
-   </div>
+    {picturePath && (
+     <div className='image'>
+      <img src={picturePath} alt="" />
+     </div>
+    )}
+    <PostCardFooter
+     postId={postId}
+     token={token as string}
+     currentUserId={currentUser?._id as string}
+     likes={likes}
+     comments={comments}
+     post={post}
+    />
 
-   {picturePath && (
-    <div className='image'>
-     <img src={picturePath} alt="" />
-    </div>
-   )}
-
-
-
-   <PostCardFooter
-    postId={postId}
-    token={token as string}
-    currentUserId={currentUser?._id as string}
-    likes={likes}
-   />
-
-   <div className='comment'>
-    <input type="text" placeholder='add comment' onChange={(e) => setCommentBody(e.target.value)} />
-    <button onClick={handleComment}>Post</button>
 
    </div>
+   <div className='comments'>
+    {postComments.map((comment) => (
+     <CommentCard key={comment._id} comment={comment} />
+    ))}
+   </div>
+  </>
 
-  </div>
  );
 }
 

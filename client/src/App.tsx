@@ -16,6 +16,7 @@ import { AppState } from 'types/@AppState';
 import Gamebar from './components/gamebar/Gamebar';
 import SportsBookPage from './scenes/sportsbookPage/SportsbookPage';
 import MatchPage from './scenes/matchPage/MatchPage';
+import CommentModal from './components/modal/comment-modal/CommentModal';
 
 
 function AppRouter() {
@@ -49,6 +50,7 @@ function AppRouter() {
         </div>
       }
       <div className='main-content'>
+        <CommentModal />
         {!hideSidebar && (
           <>
             <FeedHeader label={headerLabel} icon={FaHashtag} />

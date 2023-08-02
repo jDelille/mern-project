@@ -1,25 +1,33 @@
 import { useDispatch } from "react-redux";
-import { setPost } from "../../../../state";
+import { setActivePost, setPost, setPostId } from "../../../../state";
 import { FaRegComment, FaFire, FaRetweet, FaShare } from 'react-icons/fa'
 import './PostCardFooter.scss';
+import useCommentModal from "../../../../hooks/useCommentModal";
+import { Post } from "types/@Post";
 
 type LikesObject = {
  [userId: string]: boolean;
 }
+
+
 
 type Props = {
  postId: string;
  token: string;
  currentUserId: string;
  likes: LikesObject;
+ comments: string[];
+ post: Post
 }
 
 
 
-const PostCardFooter: React.FC<Props> = ({ postId, token, currentUserId, likes }) => {
+const PostCardFooter: React.FC<Props> = ({ postId, token, currentUserId, likes, comments, post }) => {
 
  const dispatch = useDispatch();
  const isLiked = Boolean(likes[currentUserId])
+
+ const commentModal = useCommentModal();
 
 
  const patchLike = async () => {
@@ -36,11 +44,20 @@ const PostCardFooter: React.FC<Props> = ({ postId, token, currentUserId, likes }
   dispatch(setPost({ post: updatedPost }))
  }
 
+ const openCommentModal = () => {
+  dispatch(setPostId({ postId: postId }))
+  console.log(post)
+  dispatch(setActivePost({ activePost: post }))
+
+  commentModal.onOpen();
+ }
+
 
  return (
   <div className="post-card-footer">
    <div className="control">
-    <FaRegComment onClick={patchLike} color="#606984" size={16} />
+    <FaRegComment onClick={openCommentModal} color="#606984" size={16} />
+    <p>{comments.length}</p>
    </div>
    <div className="control">
     <FaRetweet onClick={patchLike} color="#606984" size={19} />
@@ -51,7 +68,6 @@ const PostCardFooter: React.FC<Props> = ({ postId, token, currentUserId, likes }
    </div>
    <div className="control">
     <FaShare onClick={patchLike} color="#606984" size={16} />
-
    </div>
   </div>
  );

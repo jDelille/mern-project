@@ -37,3 +37,16 @@ export const createComment = async (req, res) => {
 		res.status(409).json({ message: error.message });
 	}
 };
+
+/* READ */
+export const getCommentsById = async (req, res) => {
+	try {
+		const commentIds = req.params.ids.split(',');
+		console.log(commentIds);
+		const comments = await Comment.find({ _id: { $in: commentIds } });
+		res.status(200).json(comments);
+		console.log('hey');
+	} catch (error) {
+		res.status(404).json({ message: error.message });
+	}
+};

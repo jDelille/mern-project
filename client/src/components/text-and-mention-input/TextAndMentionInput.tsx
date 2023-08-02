@@ -48,8 +48,6 @@ const TextAndMentionInput: React.FC = () => {
   getUsers();
  }, [])
 
- console.log(image)
-
 
  useEffect(() => {
   // Transform the usernames into SuggestionDataItem objects

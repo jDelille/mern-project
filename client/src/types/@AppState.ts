@@ -6,4 +6,6 @@ export type AppState = {
 	token: string | null;
 	posts: Post[];
 	_id: string;
+	postId: string;
+	activePost: Post | null;
 };

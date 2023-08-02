@@ -24,8 +24,6 @@ const ProfileHeader: React.FC = () => {
   getUser();
  }, [])
 
- console.log(user)
-
  return (
   <div className='profile-header'>
    <div className='cover-image'>

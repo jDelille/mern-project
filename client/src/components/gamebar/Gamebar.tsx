@@ -27,7 +27,6 @@ const Gamebar: React.FC = () => {
   fetchData();
  }, [])
 
- console.log(matches)
 
  return (
   <div className='gamebar'>

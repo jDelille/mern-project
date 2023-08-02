@@ -8,6 +8,8 @@ interface AuthState {
 	token: string | null;
 	posts: Post[];
 	users: User[];
+	postId: string;
+	activePost: Post | null;
 }
 
 const initialState: AuthState = {
@@ -16,6 +18,8 @@ const initialState: AuthState = {
 	token: null,
 	posts: [],
 	users: [],
+	postId: '',
+	activePost: null,
 };
 
 export const authSlice = createSlice({
@@ -46,6 +50,9 @@ export const authSlice = createSlice({
 		setPosts: (state, action) => {
 			state.posts = action.payload.posts;
 		},
+		setActivePost: (state, action) => {
+			state.activePost = action.payload.activePost;
+		},
 		setPost: (state, action) => {
 			const { post } = action.payload;
 
@@ -56,6 +63,9 @@ export const authSlice = createSlice({
 			if (postIndex !== -1) {
 				state.posts[postIndex] = post;
 			}
+		},
+		setPostId: (state, action) => {
+			state.postId = action.payload.postId;
 		},
 	},
 });
@@ -68,6 +78,8 @@ export const {
 	setPost,
 	setPosts,
 	setUsers,
+	setPostId,
+	setActivePost,
 } = authSlice.actions;
 
 export default authSlice.reducer;

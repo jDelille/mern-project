@@ -11,7 +11,6 @@ const ProfilePage: React.FC = () => {
  const token = useSelector((state: AppState) => state.token);
  const [user, setUser] = useState(null);
  const { username } = useParams();
- console.log(username)
 
  const getUser = async () => {
   const response = await fetch(`http://localhost:3001/users/${username}`, {
