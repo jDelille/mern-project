@@ -1,7 +1,7 @@
 import extractMentions from '../../../utils/extractMentions';
 import Avatar from '../../../ui/avatar/Avatar';
 import { FaGlobeAmericas } from 'react-icons/fa'
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import './PostCard.scss';
 import { createdAtFormatter } from '../../../utils/date';
 import { useSelector } from 'react-redux';
@@ -24,10 +24,15 @@ type Props = {
 }
 
 const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, likes, postId, picturePath }) => {
+
+ const [commentBody, setCommentBody] = useState('')
+
  const currentUser = useSelector((state: AppState) => state.user)
  const token = useSelector((state: AppState) => state.token)
 
  const mentionedUsernames = extractMentions(body);
+
+
 
 
  const renderPostBodyWithLinks = (postBody: string, mentionedUsernames: string[]) => {
@@ -51,6 +56,36 @@ const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, li
  const postCreationDate = useMemo(() => {
   return createdAtFormatter(createdAt);
  }, [createdAt]);
+
+
+ const handleComment = async () => {
+
+  console.log(commentBody)
+
+  if (currentUser) {
+   const formData = new FormData();
+   formData.append('userId', currentUser._id);
+   formData.append('body', commentBody)
+
+
+   try {
+    const response = await fetch(`http://localhost:3001/posts/${postId}/comment`, {
+     method: 'POST',
+     headers: { Authorization: `Bearer ${token}` },
+     body: formData
+    })
+
+    if (response.ok) {
+     const data = await response.json();
+     const { comment, post } = data;
+     console.log('new comment: ', comment)
+     console.log('new post: ', post)
+    }
+   } catch (error: any) {
+    console.log('error', error.message)
+   }
+  }
+ }
 
 
  return (
@@ -93,6 +128,12 @@ const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, li
     currentUserId={currentUser?._id as string}
     likes={likes}
    />
+
+   <div className='comment'>
+    <input type="text" placeholder='add comment' onChange={(e) => setCommentBody(e.target.value)} />
+    <button onClick={handleComment}>Post</button>
+
+   </div>
 
   </div>
  );

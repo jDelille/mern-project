@@ -1,0 +1,99 @@
+@use '../../scss/variables' as *;
+
+.sportsbook-card {
+	min-width: 50%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	justify-content: space-evenly;
+	border-top: 0;
+	border-bottom: 0;
+	border-left: 0;
+	position: relative;
+	transition: all 200ms ease-in-out;
+	text-decoration: none;
+	color: $charade;
+	padding: 15px 15px;
+	flex: 1;
+	border-bottom: 1px solid $heather;
+
+	.league,
+	.status {
+		font-size: 10px;
+		font-weight: 600;
+		color: gray;
+		.pre-status {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+	}
+	&::after {
+		position: absolute;
+		content: '';
+		display: block;
+		background: $heather;
+		width: 1px;
+		right: 0;
+		top: 15px;
+		bottom: 15px;
+	}
+	&:nth-last-child(1) {
+		&::after {
+			display: none;
+		}
+	}
+
+	&:nth-of-type(even) {
+		&::after {
+			display: none;
+		}
+	}
+	.content {
+		display: flex;
+		height: 100%;
+		gap: 20px;
+		padding: 10px;
+		&:hover {
+			background-color: darken($white, 4%);
+			cursor: pointer;
+		}
+		.display-name {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			.upper,
+			.lower {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+				height: 45px;
+				img {
+					max-width: 20px;
+					max-height: 20px;
+				}
+			}
+		}
+		.info {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			width: 10px;
+			gap: 15px;
+			strong {
+				font-size: 16px;
+				font-weight: 600;
+			}
+			span {
+				font-size: 10px;
+				font-weight: 500;
+				color: gray;
+			}
+			.score {
+				margin-left: auto;
+			}
+		}
+	}
+}

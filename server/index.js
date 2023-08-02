@@ -17,6 +17,7 @@ import { verifyToken } from './middleware/auth.js';
 import User from './models/User.js';
 import Post from './models/Post.js';
 import { users, posts } from './data/index.js';
+import { createComment } from './controllers/comment.js';
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -46,6 +47,12 @@ const upload = multer({ storage });
 /* ROUTES WITH FILES */
 app.post('/auth/register', upload.single('picture'), register);
 app.post('/posts', verifyToken, upload.single('picture'), createPost);
+app.post(
+	'/posts/:id/comment',
+	verifyToken,
+	upload.single('picture'),
+	createComment
+);
 
 /* ROUTES */
 app.use('/auth', authRoutes);

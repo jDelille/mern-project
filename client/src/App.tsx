@@ -14,17 +14,20 @@ import TextAndMentionInput from './components/text-and-mention-input/TextAndMent
 import { useSelector } from 'react-redux';
 import { AppState } from 'types/@AppState';
 import Gamebar from './components/gamebar/Gamebar';
+import SportsBookPage from './scenes/sportsbookPage/SportsbookPage';
+import MatchPage from './scenes/matchPage/MatchPage';
 
 
 function AppRouter() {
   const location = useLocation();
   const hiddenSidebarPaths = ['/login', '/register'];
   const profilePathRegex = /^\/profile\/\w+$/;
+  const matchPath = ['/sportsbook'];
+
   const hideSidebar = hiddenSidebarPaths.includes(location.pathname);
   const currentUser = useSelector((state: AppState) => state.user)
-
+  const hideGamebar = matchPath.includes(location.pathname)
   const isProfilePage = profilePathRegex.test(location.pathname)
-
   const headerLabel = isProfilePage ? 'Profile' : 'Explore'
 
   return (
@@ -49,7 +52,7 @@ function AppRouter() {
         {!hideSidebar && (
           <>
             <FeedHeader label={headerLabel} icon={FaHashtag} />
-            {!isProfilePage && (
+            {!isProfilePage && !hideGamebar && (
               <Gamebar />
             )}
           </>
@@ -62,6 +65,9 @@ function AppRouter() {
           <Route path='/login' element={<LoginPage />} />
           <Route path='/' element={<HomePage />} />
           <Route path='/profile/:username' element={<ProfilePage />} />
+          <Route path='/sportsbook' element={<SportsBookPage />} />
+          <Route path='/sportsbook/:matchId' element={<MatchPage />} />
+
         </Routes>
       </div>
 

@@ -1,0 +1,30 @@
+@use '../../scss/variables' as *;
+
+.sportsbook-page {
+	min-height: 100vh;
+	background-color: white;
+	border: 1px solid $heather;
+	border-top: 0;
+	padding-top: 48px;
+	.sports {
+		border-bottom: 1px solid $heather;
+		ul {
+			list-style-type: none;
+			height: 65px;
+			display: flex;
+			align-items: center;
+			padding: 20px;
+			justify-content: space-between;
+			width: 100%;
+			li {
+				font-size: 20px;
+				font-weight: 600;
+			}
+		}
+	}
+	.content {
+		display: flex;
+		flex-flow: row wrap;
+		flex: 1;
+	}
+}

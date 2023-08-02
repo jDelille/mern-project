@@ -12,7 +12,7 @@ import { setPosts } from "../../state";
 import { Post } from "types/@Post";
 import ImageUpload from "../../components/image-upload/ImageUpload";
 import { FaWindowClose } from 'react-icons/fa'
-
+import { HiGif } from 'react-icons/hi2'
 interface ExtendedSuggestionDataItem extends SuggestionDataItem {
  username?: string;
  avatar?: string;
@@ -100,7 +100,6 @@ const TextAndMentionInput: React.FC = () => {
     body: formData
    })
 
-   console.log(formData)
 
 
    const posts = await response.json();
@@ -151,8 +150,14 @@ const TextAndMentionInput: React.FC = () => {
      <img src={image} alt="image" />
     </div>
    )}
+   {/* {!isGifOpen && (
+    <Gifs />
+   )} */}
    <div className="icon-bar">
     <ImageUpload onChange={setImage} value={image} isPost />
+    <div className="icon"  >
+     <HiGif size={26} color="#606984" />
+    </div>
    </div>
    <Button actionLabel="Post" onClick={handlePost} isDisabled={postBody.length === 0} />
 

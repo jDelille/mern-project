@@ -19,7 +19,6 @@ type Props = {
 const PostCardFooter: React.FC<Props> = ({ postId, token, currentUserId, likes }) => {
 
  const dispatch = useDispatch();
- const likeCount = Object.keys(likes).length;
  const isLiked = Boolean(likes[currentUserId])
 
 
@@ -35,24 +34,23 @@ const PostCardFooter: React.FC<Props> = ({ postId, token, currentUserId, likes }
 
   const updatedPost = await response.json();
   dispatch(setPost({ post: updatedPost }))
-
  }
 
 
  return (
   <div className="post-card-footer">
    <div className="control">
-    <FaRegComment onClick={patchLike} color={isLiked ? '#4a4de7' : "#606984"} size={16} />
+    <FaRegComment onClick={patchLike} color="#606984" size={16} />
    </div>
    <div className="control">
-    <FaRetweet onClick={patchLike} color={isLiked ? '#4a4de7' : "#606984"} size={19} />
+    <FaRetweet onClick={patchLike} color="#606984" size={19} />
    </div>
    <div className="control">
-    <FaFire onClick={patchLike} color={isLiked ? '#4a4de7' : "#606984"} size={16} />
+    <FaFire onClick={patchLike} color={isLiked ? '#e2434b' : "#606984"} size={16} />
     {/* <p>{likeCount}</p> */}
    </div>
    <div className="control">
-    <FaShare onClick={patchLike} color={isLiked ? '#4a4de7' : "#606984"} size={16} />
+    <FaShare onClick={patchLike} color="#606984" size={16} />
 
    </div>
   </div>
