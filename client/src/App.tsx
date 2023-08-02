@@ -10,13 +10,14 @@ import SearchBar from './components/search-bar/SearchBar';
 import FeedHeader from './components/feed-header/FeedHeader';
 import { FaHashtag } from 'react-icons/fa'
 import './scss/global.scss';
-import TextAndMentionInput from './components/text-and-mention-input/TextAndMentionInput';
+
 import { useSelector } from 'react-redux';
 import { AppState } from 'types/@AppState';
 import Gamebar from './components/gamebar/Gamebar';
 import SportsBookPage from './scenes/sportsbookPage/SportsbookPage';
 import MatchPage from './scenes/matchPage/MatchPage';
 import CommentModal from './components/modal/comment-modal/CommentModal';
+import CreatePost from './components/create-post/CreatePost';
 
 
 function AppRouter() {
@@ -40,7 +41,7 @@ function AppRouter() {
 
           {currentUser && (
             <>
-              <TextAndMentionInput />
+              <CreatePost />
             </>
           )}
 

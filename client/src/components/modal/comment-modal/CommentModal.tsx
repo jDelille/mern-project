@@ -8,8 +8,10 @@ import Avatar from '../../../ui/avatar/Avatar';
 import { createdAtFormatter } from '../../../utils/date';
 import { MdPhotoLibrary, MdPoll, MdGifBox } from 'react-icons/md'
 import extractMentions from '../../../utils/extractMentions';
+import TextAndMentionInput from '../../../components/text-and-mention-input/TextAndMentionInput';
 
 import './CommentModal.scss';
+
 
 const CommentModal: React.FC = () => {
 
@@ -17,6 +19,7 @@ const CommentModal: React.FC = () => {
  const dispatch = useDispatch();
 
  const [commentBody, setCommentBody] = useState('')
+ const [image, setImage] = useState('')
 
  const currentUser = useSelector((state: AppState) => state.user)
  const token = useSelector((state: AppState) => state.token)
@@ -29,6 +32,7 @@ const CommentModal: React.FC = () => {
 
  const onClose = () => {
   commentModal.onClose();
+  setCommentBody('');
  }
 
  const handleComment = async () => {
@@ -91,7 +95,8 @@ const CommentModal: React.FC = () => {
    </div>
    <div className='add-comment'>
     <Avatar src={currentUser?.avatar as string} alt='profile picture' />
-    <textarea placeholder={`Reply to ${post?.username}`} onChange={(e) => setCommentBody(e.target.value)} />
+    {/* <textarea placeholder={`Reply to ${post?.username}`} onChange={(e) => setCommentBody(e.target.value)} /> */}
+    <TextAndMentionInput postBody={commentBody} setPostBody={setCommentBody} image={image} setImage={setImage} placeholder={`Reply to ${post?.username}`} />
    </div>
    <div className='attach-to-comment'>
     <span>Attach:</span>

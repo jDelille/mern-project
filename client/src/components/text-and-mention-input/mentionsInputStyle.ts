@@ -36,7 +36,7 @@ const mentionsInputStyle = {
 
 	suggestions: {
 		list: {
-			backgroundColor: 'white',
+			backgroundColor: 'transparent',
 			fontSize: 14,
 			width: '243px',
 			zIndex: 9999,
@@ -45,18 +45,22 @@ const mentionsInputStyle = {
 			height: 'fit-content',
 			marginTop: '20px',
 			overflowX: 'hidden',
-			position: 'fixed',
+			position: 'relative',
+			left: '-50px',
 			borderRadius: '4px',
 			maxHeight: '400px',
 		},
 		item: {
-			width: '243px',
+			width: '100%',
 			borderBottom: '1px solid #dadada',
 			padding: '6px 10px',
 			fontWeight: 400,
+			display: 'flex',
+			backgroundColor: 'red',
 			'&focused': {
 				backgroundColor: '#7289da',
 				color: '#fff',
+				display: 'flex',
 			},
 		},
 	},

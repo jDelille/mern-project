@@ -4,6 +4,7 @@
 	padding: 10px;
 	padding-bottom: 0;
 	position: relative;
+
 	.post-preview {
 		height: fit-content;
 		position: relative;
@@ -19,7 +20,7 @@
 		.post-preview-header {
 			display: flex;
 			gap: 1rem;
-			img {
+			.avatar {
 				width: 40px;
 				height: 40px;
 				border-radius: 4px;
@@ -52,7 +53,8 @@
 		align-items: center;
 		gap: 1rem;
 		position: relative;
-		img {
+		width: 100%;
+		.avatar {
 			width: 40px;
 			height: 40px;
 			border-radius: 4px;
@@ -61,19 +63,17 @@
 			position: absolute;
 			top: 0;
 		}
-		textarea {
-			border: 0;
-			background-color: transparent;
-			font-size: 14px;
-			resize: none;
-			width: 100%;
+		.text-and-mentions-input {
+			margin-left: 48px;
+			max-width: calc(500px - 54px - 20px) !important;
 			position: relative;
-			top: 10px;
-			border: 0;
-			outline: 0;
+			bottom: 15px;
+			max-height: 220px;
 			min-height: 220px;
-			max-height: 240px;
-			margin-left: 56px;
+			textarea {
+				border: none !important;
+				background-color: $alabaster !important;
+			}
 		}
 	}
 	.attach-to-comment {

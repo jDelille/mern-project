@@ -15,7 +15,8 @@ const Avatar: React.FC<Props> = ({ src, alt, username }) => {
    <img src={src} alt={alt} onClick={() => {
     navigate(`/profile/${username}`);
     navigate(0);
-   }} />
+   }}
+    className="avatar" />
   </>
  );
 }
