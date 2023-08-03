@@ -1,6 +1,5 @@
 import extractMentions from '../../../utils/extractMentions';
 import Avatar from '../../../ui/avatar/Avatar';
-import { FaGlobeAmericas } from 'react-icons/fa'
 import { useEffect, useMemo, useState } from 'react';
 import { createdAtFormatter } from '../../../utils/date';
 import { useSelector } from 'react-redux';
@@ -11,6 +10,7 @@ import CommentCard from './comment-card/CommentCard';
 import { Post } from 'types/@Post';
 
 import './PostCard.scss';
+import renderPostBodyWithLinks from '../../../utils/renderPostBodyWithLinks';
 
 
 type Props = {
@@ -47,34 +47,56 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
 
  const mentionedUsernames = extractMentions(body);
 
- const renderPostBodyWithLinks = (postBody: string, mentionedUsernames: string[]) => {
-  const parts = postBody?.split(/(@\w+)/g);
-
-  return parts?.map((part, index) => {
-   if (mentionedUsernames.includes(part.slice(1))) {
-    return (
-     <a href={`/profile/${part.slice(1)}`} key={index} className='tagged-username'>
-      {part}
-     </a>
-    );
-   } else {
-    return <span key={index}>{part}</span>;
-   }
-  });
- };
-
- const renderedPostBody = renderPostBodyWithLinks(body, mentionedUsernames);
+ const renderedPostBody = renderPostBodyWithLinks(body, mentionedUsernames)
 
  const postCreationDate = useMemo(() => {
   return createdAtFormatter(createdAt);
  }, [createdAt]);
 
- return (
-  <>
+ let postContent = (
+  <div className={isPostPage || comments.length < 1 ? 'bordered-post-card' : 'post-card'} >
+   {comments.length >= 1 && !isPostPage && (
+    <div className='comment-line'></div>
+   )}
+   <div className='post-card-header'>
+    <Avatar
+     src={avatar}
+     alt='profile-image'
+     username={username}
+    />
+    <div className='display-name'>
+     <p className='username'>{name}</p>
+     <span>@{username}</span>
+     <span>• {postCreationDate}</span>
+    </div>
+    {/* <div className='post-info'>
+     <FaGlobeAmericas color="#606984" size
+      ={14} />
+     <span>{postCreationDate}</span>
+    </div> */}
+   </div>
+   <div className='body'>
+    <p>{renderedPostBody}</p>
+   </div>
+   {picturePath && (
+    <div className='image'>
+     <img src={picturePath} alt="" />
+    </div>
+   )}
+   <PostCardFooter
+    postId={_id}
+    token={token as string}
+    currentUserId={currentUser?._id as string}
+    likes={likes}
+    comments={comments}
+    post={post}
+   />
+  </div >
+ )
+
+ if (isPostPage) {
+  postContent = (
    <div className={isPostPage || comments.length < 1 ? 'bordered-post-card' : 'post-card'} >
-    {comments.length >= 1 && !isPostPage && (
-     <div className='comment-line'></div>
-    )}
     <div className='post-card-header'>
      <Avatar
       src={avatar}
@@ -86,24 +108,29 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
        <p className='username'>{name}</p>
        <span>@{username}</span>
       </div>
-
      </div>
-
      <div className='post-info'>
-      <FaGlobeAmericas color="#606984" size
-       ={14} />
-      <span>{postCreationDate}</span>
+
      </div>
     </div>
-    <div className='body'>
+    <div className='post-page-body'>
      <p>{renderedPostBody}</p>
     </div>
-
     {picturePath && (
      <div className='image'>
       <img src={picturePath} alt="" />
      </div>
     )}
+
+    <div className='timestamp'>
+     12:36PM - 8/2/23
+    </div>
+
+    <div className='post-stats'>
+     <div> <strong>3</strong> Rewteets</div>
+     <div><strong>26</strong> Reactions </div>
+    </div>
+
     <PostCardFooter
      postId={_id}
      token={token as string}
@@ -112,7 +139,14 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
      comments={comments}
      post={post}
     />
-   </div >
+   </div>
+  )
+ }
+
+
+ return (
+  <>
+   {postContent}
    <div className='comments'>
     {!isPostPage ? (
      postComments.map((comment, i) => {

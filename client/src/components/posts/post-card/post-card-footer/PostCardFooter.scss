@@ -3,6 +3,7 @@
 	align-items: center;
 	position: relative;
 	margin-left: 48px;
+	margin-right: 48px;
 	justify-content: space-between;
 	padding: 0 10px;
 
@@ -12,6 +13,9 @@
 		font-size: 14px;
 		align-items: center;
 		position: relative;
+		p {
+			font-size: 12px;
+		}
 		svg {
 			cursor: pointer;
 		}

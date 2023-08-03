@@ -2,7 +2,8 @@
 
 .post-page-content {
 	background-color: $alabaster;
-	min-height: calc(100vh - 153px);
+	min-height: calc(100vh - 10px);
 	border: 1px solid $heather;
 	border-top: none;
+	padding-top: 50px;
 }

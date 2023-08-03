@@ -1,6 +1,5 @@
 import { Comment } from 'types/@Comment';
 import Avatar from '../../../../ui/avatar/Avatar';
-import { FaGlobeAmericas } from 'react-icons/fa'
 import { createdAtFormatter } from '../../../../utils/date';
 import { useMemo } from 'react';
 import PostCardFooter from '../post-card-footer/PostCardFooter';
@@ -10,6 +9,8 @@ import { FaRegComment } from 'react-icons/fa'
 
 import './CommentCard.scss';
 import { useNavigate } from 'react-router-dom';
+import extractMentions from '../../../../utils/extractMentions';
+import renderPostBodyWithLinks from '../../../../utils/renderPostBodyWithLinks';
 
 type Props = {
  comment: Comment
@@ -44,6 +45,10 @@ const Comment: React.FC<Props> = ({ comment, hasSecondComment, isLastComment, ha
   return createdAtFormatter(createdAt);
  }, [createdAt]);
 
+ const mentionedUsernames = extractMentions(body);
+
+ const renderedPostBody = renderPostBodyWithLinks(body, mentionedUsernames)
+
  return (
   <div className={index === 1 || isOnlyComment ? 'bottom-border-comment-card' : isPostPage ? 'bordered-comment-card' : 'comment-card'}>
    {hasSecondComment && has3OrMoreReplies && (
@@ -56,20 +61,18 @@ const Comment: React.FC<Props> = ({ comment, hasSecondComment, isLastComment, ha
      username={username}
     />
     <div className='display-name'>
-     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <p className='username'>{name}</p>
-      <span>@{username}</span>
-     </div>
-
+     <p className='username'>{name}</p>
+     <span>@{username}</span>
+     <span>• {commentCreationDate}</span>
     </div>
-    <div className='post-info'>
+    {/* <div className='post-info'>
      <FaGlobeAmericas color="#606984" size
       ={14} />
      <span>{commentCreationDate}</span>
-    </div>
+    </div> */}
    </div>
    <div className='comment-body'>
-    <p>{body}</p>
+    <p>{renderedPostBody}</p>
    </div>
    <PostCardFooter
     postId={postId}

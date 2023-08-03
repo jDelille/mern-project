@@ -25,12 +25,14 @@ function AppRouter() {
   const location = useLocation();
   const hiddenSidebarPaths = ['/login', '/register'];
   const profilePathRegex = /^\/profile\/\w+$/;
+  const postPathRegex = /^\/post\/\w+$/;
   const matchPath = ['/sportsbook'];
 
   const hideSidebar = hiddenSidebarPaths.includes(location.pathname);
   const currentUser = useSelector((state: AppState) => state.user)
   const hideGamebar = matchPath.includes(location.pathname)
   const isProfilePage = profilePathRegex.test(location.pathname)
+  const isPostPage = postPathRegex.test(location.pathname)
   const headerLabel = isProfilePage ? 'Profile' : 'Explore'
 
   return (
@@ -56,13 +58,11 @@ function AppRouter() {
         {!hideSidebar && (
           <>
             <FeedHeader label={headerLabel} icon={FaHashtag} />
-            {!isProfilePage && !hideGamebar && (
+            {!isProfilePage && !hideGamebar && !isPostPage && (
               <Gamebar />
             )}
           </>
-
         )}
-
 
         <Routes>
           <Route path='/register' element={<RegisterPage />} />
