@@ -30,10 +30,8 @@ export const createPost = async (req, res) => {
 export const retweetPost = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const { userId } = req.body;
-		console.log(id);
+		const { userId, isQuoteRetweet, quoteBody } = req.body;
 		const originalPost = await Post.findById(id);
-
 		if (!originalPost) {
 			return res.status(404).json({ message: 'Original post not found' });
 		}
@@ -57,14 +55,18 @@ export const retweetPost = async (req, res) => {
 			body: originalPost.body,
 			picturePath: originalPost.picturePath,
 			avatar: originalPost.avatar,
-			isRetweet: true,
+			isRetweet: isQuoteRetweet ? false : true,
 			originalPost: originalPost._id,
 			retweeter: userId,
 			likes: {},
 			comments: [],
+			isQuoteRetweet,
+			quoteBody,
 		});
 
 		const savedRetweet = await retweet.save();
+		originalPost.retweetCount += 1;
+		await originalPost.save();
 
 		const retweetedPost = await Post.find();
 

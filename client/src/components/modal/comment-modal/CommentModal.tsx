@@ -70,6 +70,7 @@ const CommentModal: React.FC = () => {
      const data = await response.json();
      dispatch(setPost({ post: data }));
      getPosts();
+     setCommentBody('')
     }
    } catch (error) {
     console.log('error', error)

@@ -33,6 +33,11 @@ const PostSchema = new mongoose.Schema(
 			type: Boolean,
 			default: false,
 		},
+		isQuoteRetweet: {
+			type: Boolean,
+			default: false,
+		},
+		quoteBody: String,
 		originalPost: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Post',
@@ -40,6 +45,10 @@ const PostSchema = new mongoose.Schema(
 		retweeter: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User', // Replace 'User' with your actual User model name
+		},
+		retweetCount: {
+			type: Number,
+			default: 0,
 		},
 	},
 	{ timestamps: true }

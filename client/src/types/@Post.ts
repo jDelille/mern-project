@@ -16,4 +16,7 @@ export type Post = {
 	updatedAt: string;
 	picturePath: string;
 	isRetweet: string;
+	retweetCount: number;
+	isQuoteRetweet: boolean;
+	quoteBody: string;
 };

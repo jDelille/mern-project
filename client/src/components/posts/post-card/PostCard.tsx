@@ -26,7 +26,7 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
 
  const currentUser = useSelector((state: AppState) => state.user)
 
- const { body, username, avatar, name, createdAt, likes, _id, picturePath, comments, } = post
+ const { body, username, avatar, name, createdAt, likes, _id, picturePath, comments, quoteBody } = post
 
  const getPostComments = async () => {
   try {
@@ -43,11 +43,15 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
 
  useEffect(() => {
   getPostComments();
- }, [])
+ }, [post])
 
  const mentionedUsernames = extractMentions(body);
 
  const renderedPostBody = renderPostBodyWithLinks(body, mentionedUsernames)
+
+ const mentionedQuoteUsernames = extractMentions(quoteBody);
+
+ const renderedQuoteBody = renderPostBodyWithLinks(quoteBody, mentionedQuoteUsernames)
 
  const postCreationDate = useMemo(() => {
   return createdAtFormatter(createdAt);
@@ -76,9 +80,13 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
     </div>
    </div>
    <div className='body'>
-    <p>{renderedPostBody}</p>
+    {post.isQuoteRetweet ? (
+     <p>{renderedQuoteBody}</p>
+    ) : (
+     <p>{renderedPostBody}</p>
+    )}
    </div>
-   {post.isRetweet && (
+   {post.isRetweet || post.isQuoteRetweet && (
     <div className='retweeted-post'>
      <div className='retweeted-post-header'>
       <Avatar
