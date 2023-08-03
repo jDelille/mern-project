@@ -82,8 +82,6 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
 
  const isRetweetedPost = post.isRetweet || post.isQuoteRetweet
 
- console.log(user)
-
  let postContent = (
   <div className={isPostPage || comments.length < 1 ? 'bordered-post-card' : 'post-card'}  >
    {comments.length >= 1 && !isPostPage && (

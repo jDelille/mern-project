@@ -44,14 +44,12 @@ const TextAndMentionInput: React.FC<Props> = ({ postBody, setPostBody, image, se
 
 
  useEffect(() => {
-  // Transform the usernames into SuggestionDataItem objects
   if (users) {
    const userSuggestions: ExtendedSuggestionDataItem[] = (users ?? [])?.map((user) => ({
     id: user._id,
     display: user.username,
     avatar: user.avatar,
     name: user.name,
-    // isVerified: user.isVerified
    }));
    setSuggestions(userSuggestions ?? []);
 
@@ -64,6 +62,12 @@ const TextAndMentionInput: React.FC<Props> = ({ postBody, setPostBody, image, se
   let value = event.target.value;
   value = value.replace(/@\[(\w+)\]\(\w+\)/g, '@$1');
   setPostBody(value);
+
+  if (value.length <= 500) {
+   setPostBody(value)
+  } else {
+   setPostBody(value.slice(0, 500))
+  }
  };
 
  const handleOnAdd = (id: string | number, display: string) => {
@@ -106,7 +110,11 @@ const TextAndMentionInput: React.FC<Props> = ({ postBody, setPostBody, image, se
    </MentionsInput>
    {image && !isComment && (
     <div className='image-preview'>
-     <FaWindowClose color="white" size={20} onClick={() => setImage("")} />
+     <FaWindowClose
+      color="white"
+      size={20}
+      onClick={() => setImage("")}
+     />
      <img src={image} alt="image" />
     </div>
    )}

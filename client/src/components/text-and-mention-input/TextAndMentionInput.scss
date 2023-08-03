@@ -4,8 +4,6 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	background-color: lime;
-	border: 1px solid red;
 	overflow-y: hidden;
 	.textarea {
 		padding: 10px;
@@ -28,6 +26,7 @@
 			border: 1px solid $heather !important;
 			font-family: 'Poppins', sans-serif !important;
 			overflow: visible !important;
+
 			&::-webkit-scrollbar {
 				width: 5px;
 				border-radius: 12px;

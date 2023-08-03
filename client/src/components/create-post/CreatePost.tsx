@@ -8,6 +8,7 @@ import './CreatePost.scss';
 import Button from "../../ui/button/Button";
 import { setPosts } from "../../state";
 import { Post } from "types/@Post";
+import useInputLengthValidator from "../../utils/inputLengthValidator";
 
 
 const CreatePost = () => {
@@ -49,19 +50,40 @@ const CreatePost = () => {
 
  }
 
+ const error = useInputLengthValidator(postBody.length, 500)
+
  return (
   <div className="create-post-container">
-   <TextAndMentionInput postBody={postBody} setPostBody={setPostBody} image={image} setImage={setImage} placeholder={"What's on your mind?"} />
+   <TextAndMentionInput
+    postBody={postBody}
+    setPostBody={setPostBody}
+    image={image}
+    setImage={setImage}
+    placeholder={"What's on your mind?"}
+   />
    <div className="icon-bar">
-    <ImageUpload onChange={setImage} value={image} isPost />
+    <ImageUpload
+     onChange={setImage}
+     value={image}
+     isPost
+    />
     <div className="icon"  >
-     <HiGif size={26} color="#606984" />
+     <HiGif
+      size={26}
+      color="#606984"
+     />
     </div>
     <div className="post-body-count">
-     <p>{500 - postBody.length}</p>
+     <p className={error ? 'length-error' : ''}>
+      {500 - postBody.length}
+     </p>
     </div>
    </div>
-   <Button actionLabel="Post" onClick={handlePost} isDisabled={postBody.length === 0} />
+   <Button
+    actionLabel="Post"
+    onClick={handlePost}
+    isDisabled={postBody.length === 0}
+   />
   </div>
  );
 }
