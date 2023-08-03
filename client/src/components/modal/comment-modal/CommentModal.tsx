@@ -3,14 +3,16 @@ import useCommentModal from "../../../hooks/useCommentModal";
 import Modal from '../Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from 'types/@AppState';
-import { setPost } from '../../../state';
+import { setPost, setPosts } from '../../../state';
 import Avatar from '../../../ui/avatar/Avatar';
 import { createdAtFormatter } from '../../../utils/date';
-import { MdPhotoLibrary, MdPoll, MdGifBox } from 'react-icons/md'
+import { MdPoll, MdGifBox } from 'react-icons/md'
 import extractMentions from '../../../utils/extractMentions';
 import TextAndMentionInput from '../../../components/text-and-mention-input/TextAndMentionInput';
 
 import './CommentModal.scss';
+import { Post } from 'types/@Post';
+import ImageUpload from '../../../components/image-upload/ImageUpload';
 
 
 const CommentModal: React.FC = () => {
@@ -35,11 +37,28 @@ const CommentModal: React.FC = () => {
   setCommentBody('');
  }
 
+ const getPosts = async () => {
+  const response = await fetch("http://localhost:3001/posts", {
+   method: "GET",
+   headers: { "Content-Type": "application/json" },
+  });
+  const data = await response.json();
+  data.sort((a: Post, b: Post) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+  dispatch(setPosts({ posts: data }));
+ };
+
  const handleComment = async () => {
   if (currentUser) {
    const formData = new FormData();
    formData.append('userId', currentUser._id);
    formData.append('body', commentBody)
+
+   if (image) {
+    formData.append('picture', image);
+    formData.append('picturePath', image);
+   }
+
    try {
     const response = await fetch(`http://localhost:3001/posts/${postId}/comment`, {
      method: 'POST',
@@ -49,8 +68,8 @@ const CommentModal: React.FC = () => {
 
     if (response.ok) {
      const data = await response.json();
-     const { post } = data;
-     dispatch(setPost({ post: post }));
+     dispatch(setPost({ post: data }));
+     getPosts();
     }
    } catch (error) {
     console.log('error', error)
@@ -95,14 +114,18 @@ const CommentModal: React.FC = () => {
    </div>
    <div className='add-comment'>
     <Avatar src={currentUser?.avatar as string} alt='profile picture' />
-    {/* <textarea placeholder={`Reply to ${post?.username}`} onChange={(e) => setCommentBody(e.target.value)} /> */}
-    <TextAndMentionInput postBody={commentBody} setPostBody={setCommentBody} image={image} setImage={setImage} placeholder={`Reply to ${post?.username}`} />
+    <TextAndMentionInput postBody={commentBody} setPostBody={setCommentBody} image={image} setImage={setImage} placeholder={`Reply to ${post?.username}`} isComment />
+    {/* {image && (
+     <div className='image-preview'>
+      <img src={image} alt="image" />
+     </div>
+    )} */}
    </div>
    <div className='attach-to-comment'>
     <span>Attach:</span>
     <div className='icons'>
      <div className='icon'>
-      <MdPhotoLibrary color='#606984' size={30} />
+      <ImageUpload onChange={setImage} value={image} isComment />
       <span>Photo</span>
      </div>
      <div className='icon'>

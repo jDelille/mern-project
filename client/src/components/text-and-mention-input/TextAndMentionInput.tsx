@@ -3,6 +3,7 @@ import { Mention, MentionsInput, SuggestionDataItem } from 'react-mentions'
 import { User } from "types/@User.js";
 import mentionsInputStyle from "./mentionsInputStyle";
 import { FaWindowClose } from 'react-icons/fa'
+import { AiFillCloseCircle } from 'react-icons/ai'
 import './TextAndMentionInput.scss';
 
 
@@ -17,9 +18,10 @@ type Props = {
  image: string;
  setImage: (base64: string) => void;
  placeholder: string;
+ isComment?: boolean;
 }
 
-const TextAndMentionInput: React.FC<Props> = ({ postBody, setPostBody, image, setImage, placeholder }) => {
+const TextAndMentionInput: React.FC<Props> = ({ postBody, setPostBody, image, setImage, placeholder, isComment }) => {
 
  const textareaRef = useRef<HTMLTextAreaElement>(null);
  const [suggestions, setSuggestions] = useState<ExtendedSuggestionDataItem[]>([])
@@ -102,9 +104,16 @@ const TextAndMentionInput: React.FC<Props> = ({ postBody, setPostBody, image, se
      )}
     />
    </MentionsInput>
-   {image && (
+   {image && !isComment && (
     <div className='image-preview'>
      <FaWindowClose color="white" size={20} onClick={() => setImage("")} />
+     <img src={image} alt="image" />
+    </div>
+   )}
+
+   {image && isComment && (
+    <div className='comment-image-preview'>
+     <AiFillCloseCircle color="gray" size={20} onClick={() => setImage("")} />
      <img src={image} alt="image" />
     </div>
    )}

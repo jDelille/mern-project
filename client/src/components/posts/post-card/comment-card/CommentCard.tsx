@@ -27,7 +27,6 @@ const Comment: React.FC<Props> = ({ comment, hasSecondComment, isLastComment, ha
  const navigate = useNavigate();
 
  const currentUser = useSelector((state: AppState) => state.user)
- const token = useSelector((state: AppState) => state.token)
 
  const {
   name,
@@ -38,6 +37,7 @@ const Comment: React.FC<Props> = ({ comment, hasSecondComment, isLastComment, ha
   likes,
   comments,
   postId,
+  picturePath
  } = comment;
 
 
@@ -73,10 +73,14 @@ const Comment: React.FC<Props> = ({ comment, hasSecondComment, isLastComment, ha
    </div>
    <div className='comment-body'>
     <p>{renderedPostBody}</p>
+    {picturePath && (
+     <div className='comment-image'>
+      <img src={picturePath} alt="" />
+     </div>
+    )}
    </div>
    <PostCardFooter
     postId={postId}
-    token={token as string}
     currentUserId={currentUser?._id as string}
     likes={likes}
     comments={comments}

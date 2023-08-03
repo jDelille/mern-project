@@ -6,10 +6,11 @@ type Props = {
  onChange: (base64: string) => void;
  value: string;
  isPost?: boolean;
+ isComment?: boolean;
 }
 
 
-const ImageUpload: React.FC<Props> = ({ onChange, value, isPost }) => {
+const ImageUpload: React.FC<Props> = ({ onChange, value, isPost, isComment }) => {
  const [base64, setBase64] = useState(value);
 
  const handleChange = useCallback((base64: string) => {
@@ -42,10 +43,12 @@ const ImageUpload: React.FC<Props> = ({ onChange, value, isPost }) => {
   },
  });
 
+
+
  return (
   <>
    <div {...getRootProps({})}>
-    {!isPost ? (
+    {!isPost && !isComment ? (
      <>
       <input
        {...getInputProps()}
