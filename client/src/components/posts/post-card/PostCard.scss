@@ -95,7 +95,8 @@
 			border-radius: 5px;
 		}
 	}
-	.retweeted-post {
+	.retweeted-post,
+	.post-page-retweeted-post {
 		width: calc(100% - 52px);
 		height: fit-content;
 		border: 1px solid $heather;
@@ -152,6 +153,10 @@
 				}
 			}
 		}
+	}
+	.post-page-retweeted-post {
+		margin-left: 0;
+		width: 100%;
 	}
 	.timestamp {
 		font-size: 12px;

@@ -13,6 +13,8 @@ import renderPostBodyWithLinks from '../../../utils/renderPostBodyWithLinks';
 
 import './PostCard.scss';
 import PostCardMenu from './post-card-menu/PostCardMenu';
+import { User } from 'types/@User';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -23,10 +25,15 @@ type Props = {
 
 const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
  const [postComments, setPostComments] = useState<Comment[]>([])
+ const [user, setUser] = useState<User>();
+
+ const navigate = useNavigate();
 
  const currentUser = useSelector((state: AppState) => state.user)
 
- const { body, username, avatar, name, createdAt, likes, _id, picturePath, comments, quoteBody } = post
+ const { body, username, avatar, name, createdAt, likes, _id, picturePath, comments, quoteBody, retweeter } = post
+
+ console.log(post)
 
  const getPostComments = async () => {
   try {
@@ -45,6 +52,22 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
   getPostComments();
  }, [post])
 
+ const getUser = async () => {
+  const response = await fetch(`http://localhost:3001/users/${retweeter}`, {
+   method: "GET",
+   headers: { "Content-Type": "application/json" },
+  });
+  const data = await response.json();
+  setUser(data);
+  // dispatch(setUsers({ posts: data }))
+ }
+
+ useEffect(() => {
+  if (post) {
+   getUser();
+  }
+ }, [])
+
  const mentionedUsernames = extractMentions(body);
 
  const renderedPostBody = renderPostBodyWithLinks(body, mentionedUsernames)
@@ -57,20 +80,33 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
   return createdAtFormatter(createdAt);
  }, [createdAt]);
 
+ const isRetweetedPost = post.isRetweet || post.isQuoteRetweet
+
+ console.log(user)
+
  let postContent = (
-  <div className={isPostPage || comments.length < 1 ? 'bordered-post-card' : 'post-card'} >
+  <div className={isPostPage || comments.length < 1 ? 'bordered-post-card' : 'post-card'}  >
    {comments.length >= 1 && !isPostPage && (
     <div className='comment-line'></div>
    )}
    <div className='post-card-header'>
-    <Avatar
-     src={avatar}
-     alt='profile-image'
-     username={username}
-    />
+    {isRetweetedPost ? (
+     <Avatar
+      src={user?.avatar || '/images/placeholder.png'}
+      alt='profile-image'
+      username={user?.username}
+     />
+    ) : (
+     <Avatar
+      src={avatar || '/images/placeholder.png'}
+      alt='profile-image'
+      username={username}
+     />
+    )}
+
     <div className='display-name'>
-     <p className='username'>{name}</p>
-     <span>@{username}</span>
+     <p className='username'>{isRetweetedPost ? user?.name : name}</p>
+     <span>@{isRetweetedPost ? user?.username : username}</span>
      <span>• {postCreationDate}</span>
     </div>
     <div className='post-info'>
@@ -80,17 +116,44 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
     </div>
    </div>
    <div className='body'>
-    {post.isQuoteRetweet ? (
+    {post.isQuoteRetweet && (
      <p>{renderedQuoteBody}</p>
-    ) : (
+    )}
+
+    {!post.isRetweet && !post.isQuoteRetweet && (
      <p>{renderedPostBody}</p>
     )}
    </div>
-   {post.isRetweet || post.isQuoteRetweet && (
+   {post.isQuoteRetweet && (
+    <div className='retweeted-post' onClick={() => navigate(`/post/${post.originalPost}`)}>
+     <div className='retweeted-post-header'>
+      <Avatar
+       src={avatar || '/images/placeholder.png'}
+       alt='profile-image'
+       username={username}
+      />
+      <div className='display-name'>
+       <p className='username'>{name}</p>
+       <span>@{username}</span>
+       <span>• {postCreationDate}</span>
+      </div>
+     </div>
+     <div className='retweeted-post-body'>
+      <p>{post.body}</p>
+      {picturePath && (
+       <div className='retweeted-image'>
+        <img src={picturePath} alt="" />
+       </div>
+      )}
+     </div>
+
+    </div>
+   )}
+   {post.isRetweet && (
     <div className='retweeted-post'>
      <div className='retweeted-post-header'>
       <Avatar
-       src={avatar}
+       src={avatar || '/images/placeholder.png'}
        alt='profile-image'
        username={username}
       />
@@ -130,15 +193,23 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
   postContent = (
    <div className={isPostPage || comments.length < 1 ? 'bordered-post-card' : 'post-card'} >
     <div className='post-card-header'>
-     <Avatar
-      src={avatar}
-      alt='profile-image'
-      username={username}
-     />
+     {isRetweetedPost ? (
+      <Avatar
+       src={user?.avatar || '/images/placeholder.png'}
+       alt='profile-image'
+       username={user?.username}
+      />
+     ) : (
+      <Avatar
+       src={avatar || '/images/placeholder.png'}
+       alt='profile-image'
+       username={username}
+      />
+     )}
      <div className='display-name'>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-       <p className='username'>{name}</p>
-       <span>@{username}</span>
+       <p className='username'>{isRetweetedPost ? user?.name : name}</p>
+       <span>@{isRetweetedPost ? user?.username : username}</span>
       </div>
      </div>
      <div className='post-info'>
@@ -146,11 +217,43 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
      </div>
     </div>
     <div className='post-page-body'>
-     <p>{renderedPostBody}</p>
+     {post.isQuoteRetweet && (
+      <p>{renderedQuoteBody}</p>
+     )}
+
+     {!post.isRetweet && !post.isQuoteRetweet && (
+      <p>{renderedPostBody}</p>
+     )}
     </div>
     {picturePath && (
      <div className='image'>
       <img src={picturePath} alt="" />
+     </div>
+    )}
+
+    {post.isQuoteRetweet && (
+     <div className='post-page-retweeted-post'>
+      <div className='retweeted-post-header'>
+       <Avatar
+        src={avatar || '/images/placeholder.png'}
+        alt='profile-image'
+        username={username}
+       />
+       <div className='display-name'>
+        <p className='username'>{name}</p>
+        <span>@{username}</span>
+        <span>• {postCreationDate}</span>
+       </div>
+      </div>
+      <div className='retweeted-post-body'>
+       <p>{post.body}</p>
+       {picturePath && (
+        <div className='retweeted-image'>
+         <img src={picturePath} alt="" />
+        </div>
+       )}
+      </div>
+
      </div>
     )}
 

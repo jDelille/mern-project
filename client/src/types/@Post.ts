@@ -19,4 +19,6 @@ export type Post = {
 	retweetCount: number;
 	isQuoteRetweet: boolean;
 	quoteBody: string;
+	retweeter: string;
+	originalPost: string;
 };

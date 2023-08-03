@@ -33,7 +33,7 @@ const ProfileHeader: React.FC = () => {
    <div className='user-info'>
     <div className='user'>
      <Avatar
-      src={user?.avatar as string}
+      src={user?.avatar || '/images/placeholder.png'}
       alt='profile picture'
       username={user?.username}
      />

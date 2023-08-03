@@ -74,7 +74,7 @@ const QuoteRetweetModal = () => {
     method: "POST",
     headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-     userId: currentUser?._id,
+     username: currentUser?.username,
      isQuoteRetweet: true,
      quoteBody
     }),

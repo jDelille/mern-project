@@ -4,7 +4,8 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-
+	background-color: lime;
+	border: 1px solid red;
 	overflow-y: hidden;
 	.textarea {
 		padding: 10px;
@@ -14,9 +15,8 @@
 		resize: none;
 		border: none;
 		outline: none;
+		max-height: 300px;
 		position: relative;
-		margin-top: 1rem;
-		overflow-y: auto;
 		textarea {
 			width: 100%;
 			min-height: 50px !important;

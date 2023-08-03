@@ -42,10 +42,7 @@ const PostSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Post',
 		},
-		retweeter: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'User', // Replace 'User' with your actual User model name
-		},
+		retweeter: String,
 		retweetCount: {
 			type: Number,
 			default: 0,

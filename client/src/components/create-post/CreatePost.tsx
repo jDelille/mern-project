@@ -57,6 +57,9 @@ const CreatePost = () => {
     <div className="icon"  >
      <HiGif size={26} color="#606984" />
     </div>
+    <div className="post-body-count">
+     <p>{500 - postBody.length}</p>
+    </div>
    </div>
    <Button actionLabel="Post" onClick={handlePost} isDisabled={postBody.length === 0} />
   </div>

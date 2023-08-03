@@ -32,8 +32,10 @@ const RetweetPopup = () => {
   try {
    const response = await fetch(`http://localhost:3001/posts/${post?._id}/retweet`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}`, },
-    body: JSON.stringify({ userId: currentUser?._id }),
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+     username: currentUser?.username
+    }),
    })
 
    const data = await response.json();
