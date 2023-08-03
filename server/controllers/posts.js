@@ -27,6 +27,54 @@ export const createPost = async (req, res) => {
 	}
 };
 
+export const retweetPost = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const { userId } = req.body;
+		console.log(id);
+		const originalPost = await Post.findById(id);
+
+		if (!originalPost) {
+			return res.status(404).json({ message: 'Original post not found' });
+		}
+
+		const existingRetweet = await Post.findOne({
+			originalPost: id,
+			retweeter: userId,
+		});
+
+		if (existingRetweet) {
+			return res
+				.status(400)
+				.json({ message: 'You have already retweeted this post' });
+		}
+
+		const retweet = new Post({
+			userId: originalPost.userId,
+			name: originalPost.name,
+			username: originalPost.username,
+			location: originalPost.location,
+			body: originalPost.body,
+			picturePath: originalPost.picturePath,
+			avatar: originalPost.avatar,
+			isRetweet: true,
+			originalPost: originalPost._id,
+			retweeter: userId,
+			likes: {},
+			comments: [],
+		});
+
+		const savedRetweet = await retweet.save();
+
+		const retweetedPost = await Post.find();
+
+		return res.status(201).json(retweetedPost);
+	} catch (error) {
+		console.error('Error creating retweet post:', error);
+		return res.status(500).json({ message: 'Internal server error' });
+	}
+};
+
 /* READ */
 export const getFeedPosts = async (req, res) => {
 	try {
@@ -80,5 +128,34 @@ export const likePost = async (req, res) => {
 		res.status(200).json(updatedPost);
 	} catch (error) {
 		res.status(404).json({ message: error.message });
+	}
+};
+
+/* DELETE */
+export const deletePost = async (req, res) => {
+	const { postId } = req.params;
+	const { userId } = req.user;
+
+	console.log(postId);
+
+	try {
+		const post = await Post.findById(postId);
+
+		if (!post) {
+			return res.status(404).json({ message: 'Post not found' });
+		}
+
+		// if (post.userId.toString() !== userId) {
+		// 	return res
+		// 		.status(403)
+		// 		.json({ message: 'You are not authorized to delete this post' });
+		// }
+
+		await post.deleteOne({ _id: postId });
+
+		const updatedPosts = await Post.find();
+		res.status(200).json(updatedPosts);
+	} catch (error) {
+		res.status(500).json({ message: 'Internal server error' });
 	}
 };

@@ -14,6 +14,7 @@ const PostSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+
 		location: String,
 		body: String,
 		picturePath: String,
@@ -28,6 +29,18 @@ const PostSchema = new mongoose.Schema(
 				ref: 'Comment',
 			},
 		],
+		isRetweet: {
+			type: Boolean,
+			default: false,
+		},
+		originalPost: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Post',
+		},
+		retweeter: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User', // Replace 'User' with your actual User model name
+		},
 	},
 	{ timestamps: true }
 );

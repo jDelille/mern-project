@@ -15,4 +15,5 @@ export type Post = {
 	createdAt: string;
 	updatedAt: string;
 	picturePath: string;
+	isRetweet: string;
 };

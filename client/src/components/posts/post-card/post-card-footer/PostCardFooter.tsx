@@ -1,9 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setActivePost, setPost, setPostId } from "../../../../state";
 import { FaRegComment, FaFire, FaRetweet, FaShare } from 'react-icons/fa'
 import './PostCardFooter.scss';
 import useCommentModal from "../../../../hooks/useCommentModal";
 import { Post } from "types/@Post";
+import { AppState } from "types/@AppState";
 
 type LikesObject = {
  [userId: string]: boolean;
@@ -11,7 +12,6 @@ type LikesObject = {
 
 type Props = {
  postId: string;
- token: string;
  currentUserId: string;
  likes: LikesObject;
  comments: string[];
@@ -20,15 +20,15 @@ type Props = {
 
 
 
-const PostCardFooter: React.FC<Props> = ({ postId, token, currentUserId, likes, comments, post }) => {
+const PostCardFooter: React.FC<Props> = ({ postId, currentUserId, likes, comments, post }) => {
+
 
  const dispatch = useDispatch();
- const isLiked = Boolean(likes[currentUserId])
-
- const likeCount = Object.keys(likes).length;
-
+ const token = useSelector((state: AppState) => state.token)
  const commentModal = useCommentModal();
 
+ const isLiked = Boolean(likes[currentUserId]);
+ const likeCount = Object.keys(likes).length;
 
  const patchLike = async () => {
   const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
@@ -44,12 +44,29 @@ const PostCardFooter: React.FC<Props> = ({ postId, token, currentUserId, likes, 
   dispatch(setPost({ post: updatedPost }))
  }
 
+ const handleRetweet = async () => {
+  try {
+   const response = await fetch(`http://localhost:3001/posts/${postId}/retweet`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, },
+    body: JSON.stringify({ userId: currentUserId }),
+   })
+
+   const data = await response.json();
+   dispatch(setPost({ post: data }))
+
+  } catch (error) {
+   console.log(error)
+  }
+ }
+
  const openCommentModal = () => {
   dispatch(setPostId({ postId: postId }))
   dispatch(setActivePost({ activePost: post }))
 
   commentModal.onOpen();
  }
+
 
 
  return (
@@ -59,7 +76,7 @@ const PostCardFooter: React.FC<Props> = ({ postId, token, currentUserId, likes, 
     <p>{comments.length}</p>
    </div>
    <div className="control">
-    <FaRetweet onClick={patchLike} color="#606984" size={18} />
+    <FaRetweet onClick={handleRetweet} color="#606984" size={18} />
    </div>
    <div className="control">
     <FaFire onClick={patchLike} color={isLiked ? '#e2434b' : "#606984"} size={15} />

@@ -47,13 +47,16 @@
 		}
 		.post-info {
 			position: absolute;
-			right: 10px;
+			right: 0px;
 			top: 2px;
 			display: flex;
 			align-items: center;
 			gap: 5px;
 			span {
 				font-size: 12px;
+			}
+			svg {
+				cursor: pointer;
 			}
 		}
 	}
@@ -90,6 +93,63 @@
 			height: 100%;
 			object-fit: cover;
 			border-radius: 5px;
+		}
+	}
+	.retweeted-post {
+		width: calc(100% - 52px);
+		height: fit-content;
+		border: 1px solid $heather;
+		margin-left: 52px;
+		border-radius: 12px;
+		padding: 10px;
+		margin-bottom: 10px;
+		position: relative;
+		bottom: 5px;
+		.retweeted-post-header {
+			display: flex;
+			gap: 2px;
+			align-items: center;
+			margin-bottom: 5px;
+			position: relative;
+			img {
+				width: 20px;
+				height: 20px;
+				border-radius: 4px;
+				object-fit: cover;
+			}
+			.display-name {
+				display: flex;
+				height: 100%;
+				gap: 5px;
+				height: fit-content;
+				margin-bottom: auto;
+				align-items: center;
+				padding: 0 10px;
+				.username {
+					font-size: 13px;
+					font-weight: 600;
+				}
+				span {
+					color: $comet;
+					font-size: 10px;
+				}
+			}
+		}
+		.retweeted-post-body {
+			font-size: 13px;
+			width: 100%;
+			.retweeted-image {
+				width: 100%;
+				height: 300px;
+				padding-bottom: 10px;
+				position: relative;
+				margin-left: 0;
+				bottom: -10px;
+				img {
+					width: 100%;
+					height: 100%;
+				}
+			}
 		}
 	}
 	.timestamp {

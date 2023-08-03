@@ -8,9 +8,12 @@ import { Comment } from 'types/@Comment';
 import PostCardFooter from './post-card-footer/PostCardFooter';
 import CommentCard from './comment-card/CommentCard';
 import { Post } from 'types/@Post';
+import { BiDotsVertical } from 'react-icons/bi'
+import renderPostBodyWithLinks from '../../../utils/renderPostBodyWithLinks';
 
 import './PostCard.scss';
-import renderPostBodyWithLinks from '../../../utils/renderPostBodyWithLinks';
+import PostCardMenu from './post-card-menu/PostCardMenu';
+
 
 
 type Props = {
@@ -19,12 +22,9 @@ type Props = {
 }
 
 const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
-
- const currentUser = useSelector((state: AppState) => state.user)
- const token = useSelector((state: AppState) => state.token)
-
  const [postComments, setPostComments] = useState<Comment[]>([])
 
+ const currentUser = useSelector((state: AppState) => state.user)
 
  const { body, username, avatar, name, createdAt, likes, _id, picturePath, comments, } = post
 
@@ -69,23 +69,47 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
      <span>@{username}</span>
      <span>• {postCreationDate}</span>
     </div>
-    {/* <div className='post-info'>
-     <FaGlobeAmericas color="#606984" size
-      ={14} />
-     <span>{postCreationDate}</span>
-    </div> */}
+    <div className='post-info'>
+     <BiDotsVertical color="#606984" size
+      ={20} />
+     <PostCardMenu postId={post?._id} />
+    </div>
    </div>
    <div className='body'>
     <p>{renderedPostBody}</p>
    </div>
-   {picturePath && (
+   {post.isRetweet && (
+    <div className='retweeted-post'>
+     <div className='retweeted-post-header'>
+      <Avatar
+       src={avatar}
+       alt='profile-image'
+       username={username}
+      />
+      <div className='display-name'>
+       <p className='username'>{name}</p>
+       <span>@{username}</span>
+       <span>• {postCreationDate}</span>
+      </div>
+     </div>
+     <div className='retweeted-post-body'>
+      <p>{post.body}</p>
+      {picturePath && (
+       <div className='retweeted-image'>
+        <img src={picturePath} alt="" />
+       </div>
+      )}
+     </div>
+
+    </div>
+   )}
+   {picturePath && !post.isRetweet && (
     <div className='image'>
      <img src={picturePath} alt="" />
     </div>
    )}
    <PostCardFooter
     postId={_id}
-    token={token as string}
     currentUserId={currentUser?._id as string}
     likes={likes}
     comments={comments}
@@ -133,7 +157,6 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
 
     <PostCardFooter
      postId={_id}
-     token={token as string}
      currentUserId={currentUser?._id as string}
      likes={likes}
      comments={comments}
