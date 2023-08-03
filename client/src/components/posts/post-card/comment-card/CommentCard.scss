@@ -1,10 +1,13 @@
 @use '../../../../scss/variables' as *;
 
 .comment-card,
+.bottom-border-comment-card,
 .bordered-comment-card {
 	padding: 10px;
 	position: relative;
 	overflow-y: hidden;
+	background-color: $alabaster;
+	padding-top: 0;
 	.comment-line {
 		width: 1px;
 		background-color: $darkerMystic;
@@ -90,7 +93,9 @@
 		}
 	}
 }
-
 .bordered-comment-card {
+	border-bottom: 1px solid $heather;
+}
+.bottom-border-comment-card {
 	border-bottom: 1px solid $heather;
 }

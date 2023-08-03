@@ -15,9 +15,10 @@ import './PostCard.scss';
 
 type Props = {
  post: Post
+ isPostPage?: boolean;
 }
 
-const PostCard: React.FC<Props> = ({ post }) => {
+const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
 
  const currentUser = useSelector((state: AppState) => state.user)
  const token = useSelector((state: AppState) => state.token)
@@ -70,8 +71,8 @@ const PostCard: React.FC<Props> = ({ post }) => {
 
  return (
   <>
-   <div className='post-card'>
-    {comments && (
+   <div className={isPostPage || comments.length < 1 ? 'bordered-post-card' : 'post-card'} >
+    {comments.length >= 1 && !isPostPage && (
      <div className='comment-line'></div>
     )}
     <div className='post-card-header'>
@@ -111,13 +112,20 @@ const PostCard: React.FC<Props> = ({ post }) => {
      comments={comments}
      post={post}
     />
-   </div>
+   </div >
    <div className='comments'>
-    {postComments.map((comment, i) => {
-     if (i <= 1) {
-      return <CommentCard key={comment._id} comment={comment} hasSecondComment={comments.length > 1} isLastComment={i === 1} has3OrMoreReplies={comments.length >= 3} index={i} />
-     }
-    })}
+    {!isPostPage ? (
+     postComments.map((comment, i) => {
+      if (i <= 1) {
+       return <CommentCard key={comment._id} comment={comment} hasSecondComment={comments.length > 1} isLastComment={i === 1} has3OrMoreReplies={comments.length >= 3} index={i} totalComments={comments.length} isOnlyComment={comments.length === 1} />
+      }
+     })
+    ) : (
+     postComments.map((comment) => (
+      <CommentCard key={comment._id} comment={comment} totalComments={comments.length} isPostPage />
+     ))
+    )}
+
    </div>
   </>
 

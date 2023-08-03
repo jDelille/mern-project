@@ -3,6 +3,7 @@ import PostCard from "../../components/posts/post-card/PostCard";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Post } from "types/@Post";
+import './PostPage.scss';
 
 const PostPage: React.FC = () => {
  const { postId } = useParams();
@@ -30,8 +31,8 @@ const PostPage: React.FC = () => {
  }
 
  return (
-  <div>
-   <PostCard post={post as Post} />
+  <div className="post-page-content">
+   <PostCard post={post as Post} isPostPage />
   </div>
  );
 }

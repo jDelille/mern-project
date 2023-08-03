@@ -17,9 +17,12 @@ type Props = {
  isLastComment?: boolean;
  has3OrMoreReplies?: boolean;
  index?: number
+ totalComments?: number;
+ isPostPage?: boolean;
+ isOnlyComment?: boolean;
 }
 
-const Comment: React.FC<Props> = ({ comment, hasSecondComment, isLastComment, has3OrMoreReplies, index }) => {
+const Comment: React.FC<Props> = ({ comment, hasSecondComment, isLastComment, has3OrMoreReplies, index, totalComments, isPostPage, isOnlyComment }) => {
  const navigate = useNavigate();
 
  const currentUser = useSelector((state: AppState) => state.user)
@@ -33,9 +36,7 @@ const Comment: React.FC<Props> = ({ comment, hasSecondComment, isLastComment, ha
   body,
   likes,
   comments,
-
   postId,
-
  } = comment;
 
 
@@ -44,7 +45,7 @@ const Comment: React.FC<Props> = ({ comment, hasSecondComment, isLastComment, ha
  }, [createdAt]);
 
  return (
-  <div className={index === 1 ? 'bordered-comment-card' : 'comment-card'}>
+  <div className={index === 1 || isOnlyComment ? 'bottom-border-comment-card' : isPostPage ? 'bordered-comment-card' : 'comment-card'}>
    {hasSecondComment && has3OrMoreReplies && (
     <div className='comment-line'></div>
    )}
@@ -83,7 +84,7 @@ const Comment: React.FC<Props> = ({ comment, hasSecondComment, isLastComment, ha
      <div className='icon'>
       <FaRegComment size={14} color="#4a4de7" />
      </div>
-     <p onClick={() => navigate(`/post/${postId}`)}>View all 3 replies</p>
+     <p onClick={() => navigate(`/post/${postId}`)}>View all {totalComments} replies</p>
     </div>
    )}
   </div>

@@ -1,0 +1,8 @@
+@use '../../scss/variables' as *;
+
+.post-page-content {
+	background-color: $alabaster;
+	min-height: calc(100vh - 153px);
+	border: 1px solid $heather;
+	border-top: none;
+}

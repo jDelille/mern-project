@@ -9,8 +9,6 @@ type LikesObject = {
  [userId: string]: boolean;
 }
 
-
-
 type Props = {
  postId: string;
  token: string;
