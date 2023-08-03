@@ -1,18 +1,26 @@
 import { Comment } from 'types/@Comment';
 import Avatar from '../../../../ui/avatar/Avatar';
 import { FaGlobeAmericas } from 'react-icons/fa'
-import './CommentCard.scss';
 import { createdAtFormatter } from '../../../../utils/date';
 import { useMemo } from 'react';
 import PostCardFooter from '../post-card-footer/PostCardFooter';
 import { useSelector } from 'react-redux';
 import { AppState } from 'types/@AppState';
+import { FaRegComment } from 'react-icons/fa'
+
+import './CommentCard.scss';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
  comment: Comment
+ hasSecondComment?: boolean;
+ isLastComment?: boolean;
+ has3OrMoreReplies?: boolean;
+ index?: number
 }
 
-const Comment: React.FC<Props> = ({ comment }) => {
+const Comment: React.FC<Props> = ({ comment, hasSecondComment, isLastComment, has3OrMoreReplies, index }) => {
+ const navigate = useNavigate();
 
  const currentUser = useSelector((state: AppState) => state.user)
  const token = useSelector((state: AppState) => state.token)
@@ -30,12 +38,16 @@ const Comment: React.FC<Props> = ({ comment }) => {
 
  } = comment;
 
+
  const commentCreationDate = useMemo(() => {
   return createdAtFormatter(createdAt);
  }, [createdAt]);
 
  return (
-  <div className='comment-card'>
+  <div className={index === 1 ? 'bordered-comment-card' : 'comment-card'}>
+   {hasSecondComment && has3OrMoreReplies && (
+    <div className='comment-line'></div>
+   )}
    <div className='comment-header'>
     <Avatar
      src={avatar}
@@ -65,6 +77,15 @@ const Comment: React.FC<Props> = ({ comment }) => {
     likes={likes}
     comments={comments}
    />
+
+   {has3OrMoreReplies && isLastComment && (
+    <div className='view-all-comments'>
+     <div className='icon'>
+      <FaRegComment size={14} color="#4a4de7" />
+     </div>
+     <p onClick={() => navigate(`/post/${postId}`)}>View all 3 replies</p>
+    </div>
+   )}
   </div>
  );
 }

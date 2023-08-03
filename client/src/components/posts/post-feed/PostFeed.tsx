@@ -36,7 +36,6 @@ const PostFeed: React.FC<Props> = ({ username, isProfile = false }) => {
    }
   );
   const data = await response.json();
-  data.sort((a: Post, b: Post) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   dispatch(setPosts({ posts: data }));
  };
 
@@ -53,15 +52,6 @@ const PostFeed: React.FC<Props> = ({ username, isProfile = false }) => {
    {posts.map((post: Post) => (
     <PostCard
      key={post._id}
-     body={post.body}
-     name={post.name}
-     username={post.username}
-     avatar={post.avatar}
-     createdAt={post.createdAt}
-     likes={post.likes}
-     postId={post._id}
-     picturePath={post.picturePath}
-     comments={post.comments}
      post={post}
     />
    ))}

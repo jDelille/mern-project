@@ -1,9 +1,18 @@
 @use '../../../../scss/variables' as *;
 
-.comment-card {
-	border-bottom: 1px solid $heather;
+.comment-card,
+.bordered-comment-card {
 	padding: 10px;
-
+	position: relative;
+	overflow-y: hidden;
+	.comment-line {
+		width: 1px;
+		background-color: $darkerMystic;
+		height: 100%;
+		position: absolute;
+		left: 30px;
+		top: 50px;
+	}
 	.comment-header {
 		display: flex;
 		gap: 10px;
@@ -52,4 +61,36 @@
 		margin-bottom: 13px;
 		padding: 0 10px;
 	}
+	.view-all-comments {
+		margin-left: 8px;
+		display: flex;
+		align-items: center;
+		position: relative;
+		z-index: 9999;
+		font-size: 12px;
+		top: 10px;
+		padding-bottom: 10px;
+		background-color: $alabaster;
+		gap: 25px;
+		color: #4a4de7;
+		font-weight: 500;
+		.icon {
+			background: rgba(74, 77, 231, 0.1);
+			border: 1px solid rgba(74, 77, 231, 0.5);
+			padding: 2px;
+			border-radius: 50%;
+			height: 25px;
+			width: 25px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		p {
+			cursor: pointer;
+		}
+	}
+}
+
+.bordered-comment-card {
+	border-bottom: 1px solid $heather;
 }

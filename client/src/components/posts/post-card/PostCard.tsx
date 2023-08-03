@@ -7,34 +7,25 @@ import { useSelector } from 'react-redux';
 import { AppState } from 'types/@AppState';
 import { Comment } from 'types/@Comment';
 import PostCardFooter from './post-card-footer/PostCardFooter';
-import './PostCard.scss';
 import CommentCard from './comment-card/CommentCard';
 import { Post } from 'types/@Post';
 
-type LikesObject = {
- [userId: string]: boolean;
-}
+import './PostCard.scss';
+
 
 type Props = {
- body: string;
- username: string;
- name: string;
- avatar: string;
- createdAt: string;
- likes: LikesObject;
- postId: string;
- picturePath?: string;
- comments: string[];
  post: Post
 }
 
-const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, likes, postId, picturePath, comments, post }) => {
+const PostCard: React.FC<Props> = ({ post }) => {
 
  const currentUser = useSelector((state: AppState) => state.user)
  const token = useSelector((state: AppState) => state.token)
 
  const [postComments, setPostComments] = useState<Comment[]>([])
 
+
+ const { body, username, avatar, name, createdAt, likes, _id, picturePath, comments, } = post
 
  const getPostComments = async () => {
   try {
@@ -80,9 +71,9 @@ const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, li
  return (
   <>
    <div className='post-card'>
-    {/* {comments && (
-    <div className='comment-line'></div>
-   )} */}
+    {comments && (
+     <div className='comment-line'></div>
+    )}
     <div className='post-card-header'>
      <Avatar
       src={avatar}
@@ -113,20 +104,20 @@ const PostCard: React.FC<Props> = ({ body, username, avatar, name, createdAt, li
      </div>
     )}
     <PostCardFooter
-     postId={postId}
+     postId={_id}
      token={token as string}
      currentUserId={currentUser?._id as string}
      likes={likes}
      comments={comments}
      post={post}
     />
-
-
    </div>
    <div className='comments'>
-    {postComments.map((comment) => (
-     <CommentCard key={comment._id} comment={comment} />
-    ))}
+    {postComments.map((comment, i) => {
+     if (i <= 1) {
+      return <CommentCard key={comment._id} comment={comment} hasSecondComment={comments.length > 1} isLastComment={i === 1} has3OrMoreReplies={comments.length >= 3} index={i} />
+     }
+    })}
    </div>
   </>
 

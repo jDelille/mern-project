@@ -17,7 +17,7 @@ type Props = {
  currentUserId: string;
  likes: LikesObject;
  comments: string[];
- post: Post
+ post?: Post
 }
 
 
@@ -46,7 +46,6 @@ const PostCardFooter: React.FC<Props> = ({ postId, token, currentUserId, likes, 
 
  const openCommentModal = () => {
   dispatch(setPostId({ postId: postId }))
-  console.log(post)
   dispatch(setActivePost({ activePost: post }))
 
   commentModal.onOpen();

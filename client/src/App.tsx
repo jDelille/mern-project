@@ -18,6 +18,7 @@ import SportsBookPage from './scenes/sportsbookPage/SportsbookPage';
 import MatchPage from './scenes/matchPage/MatchPage';
 import CommentModal from './components/modal/comment-modal/CommentModal';
 import CreatePost from './components/create-post/CreatePost';
+import PostPage from './scenes/postPage/PostPage';
 
 
 function AppRouter() {
@@ -68,6 +69,7 @@ function AppRouter() {
           <Route path='/login' element={<LoginPage />} />
           <Route path='/' element={<HomePage />} />
           <Route path='/profile/:username' element={<ProfilePage />} />
+          <Route path='/post/:postId' element={<PostPage />} />
           <Route path='/sportsbook' element={<SportsBookPage />} />
           <Route path='/sportsbook/:matchId' element={<MatchPage />} />
 
