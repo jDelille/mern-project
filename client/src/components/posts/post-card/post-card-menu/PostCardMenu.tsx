@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import './PostCardMenu.scss';
 import { AppState } from 'types/@AppState';
 import { deletePost } from '../../../../state';
+import './PostCardMenu.scss';
 
 type Props = {
  postId: string;
@@ -33,9 +33,15 @@ const PostCardMenu: React.FC<Props> = ({ postId }) => {
  }
 
  return (
-  <div>
-   <p onClick={handleDeletePost}>Delete</p>
-  </div>
+  <div className='post-card-menu'>
+   <ul>
+    <li onClick={handleDeletePost}>Delete</li>
+    <li onClick={handleDeletePost}>Delete</li>
+    <li onClick={handleDeletePost}>Delete</li>
+    <li onClick={handleDeletePost}>Delete</li>
+    <li onClick={handleDeletePost}>Delete</li>
+   </ul>
+  </div >
  );
 }
 

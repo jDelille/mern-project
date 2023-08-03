@@ -26,6 +26,7 @@ type Props = {
 const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
  const [postComments, setPostComments] = useState<Comment[]>([])
  const [user, setUser] = useState<User>();
+ const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
  const navigate = useNavigate();
 
@@ -109,8 +110,10 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
     </div>
     <div className='post-info'>
      <BiDotsVertical color="#606984" size
-      ={20} />
-     <PostCardMenu postId={post?._id} />
+      ={20} onClick={() => setIsMenuOpen(!isMenuOpen)} />
+     {isMenuOpen && (
+      <PostCardMenu postId={post?._id} />
+     )}
     </div>
    </div>
    <div className='body'>
