@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import useRetweetPopup from '../../hooks/useRetweetPopup';
-import Popup from './Popup';
+import useRetweetPopup from '../../../hooks/useRetweetPopup';
+import Popup from '../Popup';
 import { AppState } from 'types/@AppState';
-import { setPost, setPosts } from '../../state';
+import { setPost, setPosts } from '../../../state';
 import { Post } from 'types/@Post';
-import Button from '../../ui/button/Button';
-import useQuoteRetweetModal from '../../hooks/useQuoteRetweetModal';
+import Button from '../../../ui/button/Button';
+import useQuoteRetweetModal from '../../../hooks/useQuoteRetweetModal';
+import './RetweetPopup.scss';
 
 
 const RetweetPopup = () => {
@@ -55,7 +56,7 @@ const RetweetPopup = () => {
 
 
  const bodyContent = (
-  <div>
+  <div className='retweet-popup-body'>
    <Button actionLabel='Retweet' onClick={handleRetweet} />
    <Button actionLabel='Quote Retweet' onClick={openQuoteRetweetModal} />
   </div>

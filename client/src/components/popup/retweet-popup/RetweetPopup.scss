@@ -1,0 +1,19 @@
+@use '../../../scss/variables' as *;
+
+.retweet-popup-body {
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	button {
+		&:nth-of-type(2) {
+			background-color: $alabaster;
+			color: $chetwodeBlue;
+			outline: 1px solid $chetwodeBlue;
+			&:hover {
+				background-color: $chetwodeBlue;
+				color: $alabaster;
+			}
+		}
+	}
+}

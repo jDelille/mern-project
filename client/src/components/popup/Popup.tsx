@@ -14,7 +14,6 @@ const Popup: React.FC<Props> = ({ body, isOpen, onClose, title }) => {
   return null;
  }
 
-
  return (
   <div className='overlay'>
    <div className='popup'>

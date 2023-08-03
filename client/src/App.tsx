@@ -19,7 +19,7 @@ import MatchPage from './scenes/matchPage/MatchPage';
 import CommentModal from './components/modal/comment-modal/CommentModal';
 import CreatePost from './components/create-post/CreatePost';
 import PostPage from './scenes/postPage/PostPage';
-import RetweetPopup from './components/popup/RetweetPopup';
+import RetweetPopup from './components/popup/retweet-popup/RetweetPopup';
 import QuoteRetweetModal from './components/modal/quote-retweet-modal/QuoteRetweetModal';
 
 
