@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Game } from 'types/@Game';
 import { getTopGames } from '../../api/sportsData';
-import SportsbookCard from '../../components/sportsbook-card/SportsbookCard';
+import MatchCard from '../../components/match-card/MatchCard';
+
 import './SportsbookPage.scss';
 
 
@@ -29,16 +30,6 @@ const SportsBookPage: React.FC = () => {
 
  return (
   <div className="sportsbook-page">
-   <div className='sports'>
-    <ul>
-     <li>MLB</li>
-     <li>NFL</li>
-     <li>NBA</li>
-     <li>MLS</li>
-     <li>NHL</li>
-     <li>UFC</li>
-    </ul>
-   </div>
    <div className='content'>
     {isLoading && (
      <div>Loading...</div>
@@ -46,7 +37,7 @@ const SportsBookPage: React.FC = () => {
 
 
     {matches.map((match) => (
-     <SportsbookCard match={match} />
+     <MatchCard match={match} key={match.id} />
     ))}
    </div>
 

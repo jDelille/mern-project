@@ -1,0 +1,88 @@
+@use '../../scss/variables' as *;
+
+.match-card {
+	display: flex;
+	width: 100%;
+	padding: 10px;
+	border-top: 1px solid $heather;
+	.teams {
+		width: 100%;
+		.label {
+			font-size: 13px;
+		}
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		.team {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			height: 30px;
+			strong {
+				font-weight: 500;
+			}
+			img {
+				max-width: 30px;
+				max-height: 30px;
+				object-fit: contain;
+			}
+			span {
+				font-size: 10px;
+				position: relative;
+				bottom: 10px;
+				left: -5px;
+			}
+		}
+	}
+	.odds {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		justify-content: center;
+		align-items: end;
+		.labels {
+			list-style-type: none;
+			display: flex;
+			font-size: 13px;
+			gap: 10px;
+
+			li {
+				border-radius: 4px;
+				text-transform: uppercase;
+				padding: 4px 2px;
+				border-radius: 4px;
+				width: 55px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+		.odds-list {
+			display: flex;
+			gap: 10px;
+			flex-direction: column;
+
+			ul {
+				list-style-type: none;
+				display: flex;
+				font-size: 13px;
+				gap: 10px;
+				li {
+					border-radius: 4px;
+					padding: 4px 2px;
+					border-radius: 4px;
+					width: 55px;
+					height: 30px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border: 1px solid $heather;
+					cursor: pointer;
+					&:hover {
+						background-color: darken($alabaster, 5%);
+					}
+				}
+			}
+		}
+	}
+}

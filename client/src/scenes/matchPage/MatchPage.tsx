@@ -26,7 +26,6 @@ const MatchPage: React.FC = () => {
     setIsLoading(true);
     const match = await getMatchInfo('football', 'nfl', matchId as string);
     setMatch(match);
-    setIsLoading(false);
 
     const homeTeamData = await getTeam(
      match.competitions[0].competitors[0].team.$ref
