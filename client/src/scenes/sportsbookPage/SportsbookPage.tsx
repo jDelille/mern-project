@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Game } from 'types/@Game';
 import { getTopGames } from '../../api/sportsData';
-import './SportsbookPage.scss';
 import SportsbookCard from '../../components/sportsbook-card/SportsbookCard';
+import './SportsbookPage.scss';
 
 
 const SportsBookPage: React.FC = () => {

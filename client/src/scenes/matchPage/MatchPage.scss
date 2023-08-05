@@ -9,11 +9,144 @@
 	.content {
 		.match-header {
 			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 1rem 0;
-			h1 {
+			padding: 2rem 20px;
+			gap: 1rem;
+			flex-direction: column;
+			.path {
+				font-size: 13px;
+				text-transform: uppercase;
+				display: flex;
+				gap: 5px;
+				justify-content: center;
+				a {
+					color: $charade;
+				}
+			}
+			.teams {
+				display: flex;
+				justify-content: space-between;
+				padding: 0 2rem;
+				.status {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					text-transform: uppercase;
+					font-size: 12px;
+					justify-content: center;
+					gap: 2px;
+				}
+				.home,
+				.away {
+					display: flex;
+					align-items: center;
+					gap: 4rem;
+					.display {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						gap: 5px;
+						img {
+							width: 46px;
+							height: 46px;
+							object-fit: contain;
+						}
+						strong {
+							font-size: 14px;
+							text-transform: uppercase;
+						}
+					}
+					.score {
+						font-size: 40px;
+					}
+				}
+			}
+		}
+		.odds {
+			padding: 2rem 20px;
+			display: flex;
+			flex-direction: column;
+			strong {
 				font-size: 20px;
+			}
+			.labels {
+				display: flex;
+				justify-content: space-between;
+				font-size: 12px;
+				text-transform: uppercase;
+				margin-top: 2rem;
+
+				ul {
+					list-style-type: none;
+					display: flex;
+					gap: 10px;
+					li {
+						border-radius: 4px;
+						text-transform: uppercase;
+						padding: 4px 2px;
+						border-radius: 4px;
+						width: 55px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+					}
+				}
+			}
+			.teams {
+				display: flex;
+				flex-direction: column;
+				margin-top: 10px;
+				.home,
+				.away {
+					height: 40px;
+					display: flex;
+					justify-content: space-between;
+					strong {
+						font-size: 16px;
+					}
+					.odds-data {
+						ul {
+							list-style-type: none;
+							display: flex;
+							gap: 10px;
+							li {
+								border: 1px solid $heather;
+								padding: 4px 2px;
+								border-radius: 4px;
+								font-size: 14px;
+								width: 55px;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+								cursor: pointer;
+								&:hover {
+									background-color: darken($alabaster, 5%);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		.predictions {
+			padding: 2rem 20px;
+			display: flex;
+			flex-direction: column;
+			.section-label {
+				font-size: 20px;
+				margin-bottom: 2rem;
+			}
+			.prediction {
+				display: flex;
+				flex-direction: column;
+				height: 50px;
+				gap: 10px;
+				strong {
+					font-size: 16px;
+					text-transform: uppercase;
+				}
+				span {
+					font-size: 14px;
+				}
 			}
 		}
 	}

@@ -1,14 +1,14 @@
 @use '../../scss/variables' as *;
 
 .profile-header {
-	height: calc(471px - 40px);
+	height: calc(445px - 40px);
 	background-color: $alabaster;
 	margin-top: 48px;
 	border: 1px solid $heather;
 	border-top: 0;
 	padding-bottom: 0;
 	color: $charade;
-
+	position: relative;
 	.cover-image {
 		width: 100%;
 		height: 160px;
@@ -24,7 +24,6 @@
 		.user {
 			display: flex;
 			gap: 7px;
-
 			flex-direction: column;
 			padding: 0 15px;
 			img {
@@ -61,38 +60,42 @@
 			margin: 1rem 0;
 			font-size: 14px;
 		}
+		.socials {
+			padding: 0 15px;
+			font-size: 12px;
+		}
 		.specialties {
 			display: flex;
 			flex-direction: column;
 			height: fit-content;
 			margin: 1rem 0;
 			padding: 0 15px;
-
 			width: 100%;
 			.specialties-label {
 				display: flex;
-				justify-content: space-between;
 				align-items: center;
+				gap: 5px;
 				strong {
-					font-weight: 500;
+					font-weight: 600;
 					font-size: 14px;
 				}
 				span {
 					color: $chetwodeBlue;
-					font-size: 14px;
+					font-size: 13px;
 					cursor: pointer;
 				}
 			}
 			ul {
 				list-style-type: none;
 				display: flex;
-				gap: 10px;
+				gap: 5px;
 				li {
-					padding: 2px 12px;
-					border-radius: 12px;
+					padding: 2px 14px;
+					border-radius: 4px;
 					font-size: 13px;
-					color: white;
-					background-color: $chetwodeBlue;
+					background: rgba(50, 115, 220, 0.1);
+					border: 1px solid rgba(50, 115, 220, 0.5);
+					color: #3273dc;
 				}
 			}
 		}
@@ -110,6 +113,27 @@
 				li {
 					font-size: 14px;
 				}
+			}
+		}
+		.action-buttons {
+			position: absolute;
+			right: 1rem;
+			top: 50px;
+			display: flex;
+			gap: 10px;
+			.btn {
+				background: rgba(50, 115, 220, 0.1);
+				border: 1px solid rgba(50, 115, 220, 0.5);
+				color: #3273dc;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 5px;
+				padding: 4px 10px;
+				border-radius: 4px;
+				width: fit-content;
+				font-size: 13px;
+				cursor: pointer;
 			}
 		}
 	}

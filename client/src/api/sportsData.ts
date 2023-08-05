@@ -33,3 +33,67 @@ export async function getMatchInfo(sport: string, league: string, id: string) {
 		throw error;
 	}
 }
+
+export async function getTeam(href: string) {
+	try {
+		const res = await fetch(href);
+
+		if (!res.ok) {
+			throw new Error('Failed to fetch team data.');
+		}
+
+		const data = await res.json();
+		return data;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function getOdds(href: string) {
+	try {
+		const res = await fetch(href);
+
+		if (!res.ok) {
+			throw new Error('Failed to fetch match odds.');
+		}
+
+		const data = await res.json();
+		return data.items;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function getScore(href: string) {
+	try {
+		const res = await fetch(href);
+
+		if (!res.ok) {
+			throw new Error('Failed to fetch team score.');
+		}
+
+		const data = await res.json();
+		return data;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function getPrediction(href: string) {
+	try {
+		const res = await fetch(href);
+
+		if (!res.ok) {
+			throw new Error('Failed to fetch team score.');
+		}
+
+		const data = await res.json();
+		return data;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
