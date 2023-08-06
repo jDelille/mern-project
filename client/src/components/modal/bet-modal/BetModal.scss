@@ -1,0 +1,85 @@
+@use '../../../scss/variables' as *;
+
+.bets {
+	padding: 10px;
+	max-height: 250px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	overflow-y: auto;
+	&::-webkit-scrollbar {
+		width: 5px;
+		border-radius: 12px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: darken($darkerMystic, 15%);
+		border-radius: 12px;
+
+		// outline: 1px solid $heather;
+	}
+	.bet {
+		border: 1px solid $heather;
+		padding: 10px;
+		font-size: 13px;
+		border-radius: 4px;
+		display: flex;
+		align-items: center;
+		background-color: white;
+		.bet-data {
+			flex: 1;
+			.stake {
+				padding: 5px 0;
+			}
+		}
+		.bet-wager {
+			display: flex;
+			flex-direction: column;
+			gap: 5px;
+			input {
+				height: 40px;
+				width: 90px;
+				border-radius: 4px;
+				outline: none;
+				border: 1px solid $heather;
+				padding: 0 5px;
+			}
+			span {
+				font-size: 12px;
+			}
+			.payout {
+				display: flex;
+				gap: 5px;
+			}
+		}
+	}
+}
+.tags-container {
+	padding: 10px;
+	list-style-type: none;
+	display: flex;
+	gap: 10px;
+	flex-direction: column;
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 5px;
+	}
+	.tag,
+	.selected-tag {
+		border: 1px solid $heather;
+		border-radius: 22px;
+		padding: 3px 8px;
+		font-size: 12px;
+		background-color: white;
+		cursor: pointer;
+		&:hover {
+			background-color: darken(white, 5%);
+		}
+	}
+	.selected-tag {
+		background: rgba(50, 115, 220, 0.1);
+		border: 1px solid rgba(50, 115, 220, 0.5);
+		color: #3273dc;
+	}
+}

@@ -21,6 +21,7 @@ import CreatePost from './components/create-post/CreatePost';
 import PostPage from './scenes/postPage/PostPage';
 import RetweetPopup from './components/popup/retweet-popup/RetweetPopup';
 import QuoteRetweetModal from './components/modal/quote-retweet-modal/QuoteRetweetModal';
+import BetModal from './components/modal/bet-modal/BetModal';
 
 
 function AppRouter() {
@@ -59,6 +60,7 @@ function AppRouter() {
         <CommentModal />
         <RetweetPopup />
         <QuoteRetweetModal />
+        <BetModal />
         {!hideSidebar && (
           <>
             <FeedHeader label={headerLabel} icon={FaHashtag} />

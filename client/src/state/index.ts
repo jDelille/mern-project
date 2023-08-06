@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Bet } from 'types/@Bet';
 import { Post } from 'types/@Post';
 import { User } from 'types/@User';
 
@@ -10,6 +11,7 @@ interface AuthState {
 	users: User[];
 	postId: string;
 	activePost: Post | null;
+	betSlip: Bet[];
 }
 
 const initialState: AuthState = {
@@ -20,6 +22,7 @@ const initialState: AuthState = {
 	users: [],
 	postId: '',
 	activePost: null,
+	betSlip: [],
 };
 
 export const authSlice = createSlice({
@@ -71,6 +74,22 @@ export const authSlice = createSlice({
 			const postIdToDelete = action.payload;
 			state.posts = state.posts.filter((post) => post._id !== postIdToDelete);
 		},
+		addBetToSlip: (state, action) => {
+			state.betSlip = [...state.betSlip, action.payload];
+		},
+		updateBetSlip: (state, action) => {
+			const { betIndex, updatedBet } = action.payload;
+			state.betSlip[betIndex] = updatedBet;
+		},
+		removeBetFromSlip: (state, action) => {
+			const betIndexToRemove = action.payload;
+			state.betSlip = state.betSlip.filter(
+				(_, index) => index !== betIndexToRemove
+			);
+		},
+		clearBetSlip: (state) => {
+			state.betSlip = [];
+		},
 	},
 });
 
@@ -85,6 +104,10 @@ export const {
 	setPostId,
 	setActivePost,
 	deletePost,
+	addBetToSlip,
+	updateBetSlip,
+	removeBetFromSlip,
+	clearBetSlip,
 } = authSlice.actions;
 
 export default authSlice.reducer;

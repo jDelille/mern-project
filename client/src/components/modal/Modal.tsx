@@ -11,10 +11,12 @@ type Props = {
  actionLabel: string;
  disableActionButton?: boolean;
  isComment?: boolean;
+ secondaryActionLabel?: string;
+ secondaryAction?: () => void;
 }
 
 
-const Modal: React.FC<Props> = ({ title, body, actionLabel, onSubmit, isOpen, onClose, isComment }) => {
+const Modal: React.FC<Props> = ({ title, body, actionLabel, onSubmit, isOpen, onClose, isComment, secondaryAction, secondaryActionLabel }) => {
 
  if (!isOpen) {
   return null;
@@ -33,7 +35,11 @@ const Modal: React.FC<Props> = ({ title, body, actionLabel, onSubmit, isOpen, on
     </div>
     {isComment ? (
      <div className='comment-action'>
+      {secondaryActionLabel && (
+       <Button actionLabel={secondaryActionLabel} onClick={secondaryAction} />
+      )}
       <Button actionLabel={actionLabel} onClick={onSubmit} />
+
      </div>
     ) : (
      <div className='action'>

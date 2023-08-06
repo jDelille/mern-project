@@ -4,6 +4,7 @@ import { setLogout } from "../../state";
 import { FaHashtag, FaFlagCheckered, FaAward, FaInfoCircle } from 'react-icons/fa'
 import { AppState } from "types/@AppState";
 import './Navbar.scss';
+import { MdLogout } from "react-icons/md";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -51,8 +52,12 @@ const Navbar = () => {
       <ul className="auth-links">
         {currentUser ? (
           <>
-            <button onClick={() => dispatch(setLogout())}>
-              Log Out</button>
+            <li onClick={() => dispatch(setLogout())}
+              className="logout"
+            >
+              <MdLogout />
+              Log Out
+            </li>
           </>
         ) : (
           <>

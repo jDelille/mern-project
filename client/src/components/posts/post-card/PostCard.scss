@@ -171,6 +171,24 @@
 		gap: 1rem;
 		margin-bottom: 10px;
 	}
+	.tags {
+		list-style-type: none;
+		display: flex;
+		gap: 5px;
+		margin-left: 52px;
+		padding-bottom: 15px;
+		position: relative;
+		bottom: 5px;
+		li {
+			font-size: 12px;
+			border: 1px solid $heather;
+			padding: 3px 8px;
+			border-radius: 12px;
+			background: rgba(50, 115, 220, 0.1);
+			border: 1px solid rgba(50, 115, 220, 0.5);
+			color: #3273dc;
+		}
+	}
 }
 
 .bordered-post-card {

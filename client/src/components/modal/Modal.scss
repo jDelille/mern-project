@@ -15,7 +15,7 @@
 	.modal {
 		background-color: $alabaster;
 		width: 500px;
-		height: 600px;
+		height: 650px;
 		position: relative;
 		z-index: 9999;
 		border-radius: 12px;
@@ -41,6 +41,8 @@
 			position: absolute;
 			right: 10px;
 			bottom: 15px;
+			display: flex;
+			gap: 10px;
 			button {
 				width: fit-content;
 				padding: 7px 24px;

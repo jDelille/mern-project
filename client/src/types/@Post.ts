@@ -21,4 +21,6 @@ export type Post = {
 	quoteBody: string;
 	retweeter: string;
 	originalPost: string;
+	betId: string;
+	isBet: boolean;
 };

@@ -1,3 +1,5 @@
+import Bet from '../models/Bet.js';
+import Parlay from '../models/Parlay.js';
 import Post from '../models/Post.js';
 import User from '../models/User.js';
 
@@ -77,6 +79,42 @@ export const retweetPost = async (req, res) => {
 	}
 };
 
+export const betPost = async (req, res) => {
+	const { userId, body, selectedBet, tags, isParlay, payout, wager } = req.body;
+	const user = await User.findById(userId);
+	try {
+		const newPost = new Post({
+			userId,
+			name: user.name,
+			username: user.username,
+			location: user.location,
+			avatar: user.avatar,
+			body,
+			likes: {},
+			comments: [],
+			isBet: true,
+		});
+
+		if (isParlay) {
+			const newParlay = new Parlay({
+				userId,
+				bets: selectedBet,
+				totalWager: wager,
+				potentialPayout: payout,
+				tags,
+			});
+			await newParlay.save();
+			newPost.betId = newParlay._id;
+		}
+		await newPost.save();
+
+		const post = await Post.find();
+		res.status(201).json(post);
+	} catch (error) {
+		res.status(409).json({ message: error.message });
+	}
+};
+
 /* READ */
 export const getFeedPosts = async (req, res) => {
 	try {
@@ -102,6 +140,16 @@ export const getPost = async (req, res) => {
 		const { postId } = req.params;
 		const post = await Post.findById({ _id: postId });
 		res.status(200).json(post);
+	} catch (error) {
+		res.status(404).json({ message: error.message });
+	}
+};
+
+export const getBet = async (req, res) => {
+	try {
+		const { betId } = req.params;
+		const parlay = await Parlay.findById({ _id: betId });
+		res.status(200).json(parlay);
 	} catch (error) {
 		res.status(404).json({ message: error.message });
 	}

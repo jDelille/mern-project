@@ -47,6 +47,14 @@ const PostSchema = new mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
+		isBet: {
+			type: Boolean,
+			default: false,
+		},
+		betId: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Bet',
+		},
 	},
 	{ timestamps: true }
 );

@@ -1,0 +1,45 @@
+@use '../../scss/variables' as *;
+
+.bet-slip {
+	background-color: white;
+	width: 100%;
+	height: 500px;
+	position: absolute;
+	right: 0;
+	bottom: 2rem;
+	border: 1px solid $heather;
+	border-radius: 6px;
+	padding: 10px;
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		span {
+			font-size: 12px;
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+	.bets {
+		display: flex;
+		flex-direction: column;
+		margin: 1rem 0;
+		.bet {
+			border: 1px solid $heather;
+			padding: 10px;
+			font-size: 13px;
+			border-radius: 4px;
+			.bet-data {
+				background-color: rebeccapurple;
+				.stake {
+					padding: 5px 0;
+				}
+			}
+			.bet-wager {
+				background-color: green;
+			}
+		}
+	}
+}

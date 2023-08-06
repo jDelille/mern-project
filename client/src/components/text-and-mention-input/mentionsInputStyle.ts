@@ -6,7 +6,7 @@ const mentionsInputStyle = {
 
 	'&multiLine': {
 		control: {
-			fontFamily: 'Open Sans, sans-serif',
+			fontFamily: 'DM Sans, sans-serif',
 		},
 		highlighter: {
 			padding: 7,
@@ -15,7 +15,7 @@ const mentionsInputStyle = {
 		input: {
 			padding: 10,
 			border: 'none',
-			fontFamily: 'Open Sans, sans-serif',
+			fontFamily: 'DM Sans, sans-serif',
 			fontSize: 14,
 		},
 	},

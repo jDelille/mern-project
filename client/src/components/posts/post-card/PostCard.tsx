@@ -15,6 +15,8 @@ import './PostCard.scss';
 import PostCardMenu from './post-card-menu/PostCardMenu';
 import { User } from 'types/@User';
 import { useNavigate } from 'react-router-dom';
+import PostCardParlay from './post-card-parlay/PostCardParlay';
+import { Parlay } from 'types/@Parlay';
 
 
 
@@ -27,6 +29,7 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
  const [postComments, setPostComments] = useState<Comment[]>([])
  const [user, setUser] = useState<User>();
  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+ const [postBet, setPostBet] = useState<Parlay>()
 
  const navigate = useNavigate();
 
@@ -34,7 +37,6 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
 
  const { body, username, avatar, name, createdAt, likes, _id, picturePath, comments, quoteBody, retweeter } = post
 
- console.log(post)
 
  const getPostComments = async () => {
   try {
@@ -49,9 +51,32 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
   }
  }
 
+ const getPostBet = async () => {
+  try {
+   const response = await fetch(`http://localhost:3001/posts/bet/${post.betId}`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+   });
+
+   if (response.ok) {
+    const betData = await response.json();
+    console.log(betData)
+    setPostBet(betData)
+   }
+  } catch (error) {
+   console.log(error)
+  }
+ }
+
  useEffect(() => {
-  getPostComments();
+  if (comments) {
+   getPostComments();
+  }
+  if (post.betId) {
+   getPostBet()
+  }
  }, [post])
+
 
  const getUser = async () => {
   const response = await fetch(`http://localhost:3001/users/${retweeter}`, {
@@ -174,6 +199,17 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
      </div>
 
     </div>
+   )}
+   {post.isBet && (
+    <>
+     <ul className='tags'>
+      {postBet?.tags.map((tag) => (
+       <li>{tag}</li>
+      ))}
+     </ul>
+     <PostCardParlay parlay={postBet} />
+    </>
+
    )}
    {picturePath && !post.isRetweet && (
     <div className='image'>

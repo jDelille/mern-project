@@ -4,16 +4,27 @@ import { Odds } from 'types/@Odds';
 import { getMatchInfo, getOdds } from '../../api/sportsData';
 
 import './MatchCard.scss';
+import { useDispatch } from 'react-redux';
+import { addBetToSlip } from '../../state';
+import useBetModal from '../../hooks/useBetModal';
 
 type Props = {
  match: Game
 }
 
 const MatchCard: React.FC<Props> = ({ match }) => {
+ const dispatch = useDispatch();
+
  const [isLoading, setIsLoading] = useState(false)
 
  const [odds, setOdds] = useState<Odds[]>();
  const [matchInfo, setMatchInfo] = useState<Game>();
+
+ const betModal = useBetModal();
+
+
+
+
 
  useEffect(() => {
   async function fetchData() {
@@ -45,6 +56,24 @@ const MatchCard: React.FC<Props> = ({ match }) => {
 
   fetchOddsData();
  }, [matchInfo]);
+
+ const handleAddBet = (type: string, odds: number, team: string, abbreviation: string) => {
+
+  const selectedBet = {
+   type,
+   odds,
+   teamName: team,
+   logo: '',
+   matchup: match.name,
+   abbreviation
+  }
+
+  betModal.onOpen();
+
+  dispatch(addBetToSlip(selectedBet))
+ }
+
+
 
 
  const lowerTeam = {
@@ -123,7 +152,7 @@ const MatchCard: React.FC<Props> = ({ match }) => {
     </ul>
     <div className='odds-list'>
      <ul>
-      <li>
+      <li onClick={() => handleAddBet('Spread', Number(matchOdds.spread), upperTeam.name, upperTeam.abbrv)}>
        {matchOdds.homeTeam.favorite ? 'o' : 'u'}
        {matchOdds.spread}
       </li>
