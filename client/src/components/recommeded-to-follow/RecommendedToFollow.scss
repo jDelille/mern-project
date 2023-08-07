@@ -1,0 +1,57 @@
+@use '../../scss/variables' as *;
+
+.follow-card {
+	border-bottom: 1px solid $heather;
+	background-color: $alabaster;
+	border-top: 0;
+	color: $charade;
+	position: relative;
+	padding: 10px;
+	display: flex;
+	justify-content: space-between;
+
+	.header {
+		display: flex;
+		gap: 2px;
+		align-items: center;
+		margin-bottom: 5px;
+		position: relative;
+		img {
+			width: 40px;
+			height: 40px;
+			border-radius: 4px;
+			object-fit: cover;
+			position: absolute;
+			top: 0px;
+		}
+		.display-name {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			height: fit-content;
+			margin-bottom: auto;
+			padding: 0 10px;
+			margin-left: 42px;
+			.recommended-label {
+				font-size: 12px;
+				color: $chetwodeBlue;
+				font-style: italic;
+			}
+			.username {
+				font-size: 15px;
+				font-weight: 600;
+			}
+			span {
+				color: $comet;
+				font-size: 13px;
+			}
+		}
+	}
+	.follow-btn {
+		button {
+			width: fit-content;
+			padding: 4px 20px;
+			height: 40px;
+		}
+	}
+}

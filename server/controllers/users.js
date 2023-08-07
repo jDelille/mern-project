@@ -28,6 +28,21 @@ export const getUsers = async (req, res) => {
 	}
 };
 
+export const getRecommendedUsers = async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const recommendedUsers = await User.find({ _id: { $ne: id } }).limit(5);
+		if (recommendedUsers) {
+			res.status(200).json(recommendedUsers);
+		} else {
+			res.status(404).json({ message: 'Users not found' });
+		}
+	} catch (error) {
+		res.status(404).json({ message: 'Server error' });
+	}
+};
+
 export const getUserFollowing = async (req, res) => {
 	try {
 		const { id } = req.params;
