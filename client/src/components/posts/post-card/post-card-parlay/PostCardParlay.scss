@@ -29,7 +29,9 @@
 			font-size: 14px;
 		}
 	}
-	.bet {
+	.bet,
+	.bet-won,
+	.bet-loss {
 		border: 1px solid $heather;
 		padding: 10px;
 		border-radius: 6px;
@@ -45,6 +47,12 @@
 			font-size: 13px;
 			color: #3273dc;
 		}
+	}
+	.bet-won {
+		border: 1px solid #17b978;
+	}
+	.bet-loss {
+		border: 1px solid #ff304f;
 	}
 }
 

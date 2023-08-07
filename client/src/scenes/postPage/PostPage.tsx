@@ -10,7 +10,6 @@ const PostPage: React.FC = () => {
 
  const [post, setPost] = useState<Post>()
 
- console.log(postId)
 
  const getPost = async () => {
   const response = await fetch(`http://localhost:3001/posts/${postId}`, {

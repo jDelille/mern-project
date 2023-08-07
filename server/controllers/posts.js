@@ -102,6 +102,7 @@ export const betPost = async (req, res) => {
 				totalWager: wager,
 				potentialPayout: payout,
 				tags,
+				outcome: '',
 			});
 			await newParlay.save();
 			newPost.betId = newParlay._id;

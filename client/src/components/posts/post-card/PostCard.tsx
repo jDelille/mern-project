@@ -60,7 +60,6 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
 
    if (response.ok) {
     const betData = await response.json();
-    console.log(betData)
     setPostBet(betData)
    }
   } catch (error) {
@@ -200,7 +199,7 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
 
     </div>
    )}
-   {post.isBet && (
+   {post.isBet && postBet && (
     <>
      <ul className='tags'>
       {postBet?.tags.map((tag) => (

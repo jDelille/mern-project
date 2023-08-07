@@ -27,8 +27,6 @@ const MatchPage: React.FC = () => {
     const match = await getMatchInfo('football', 'nfl', matchId as string);
     setMatch(match);
 
-    console.log(match)
-
     const homeTeamData = await getTeam(
      match.competitions[0].competitors[0].team.$ref
     );
@@ -64,7 +62,6 @@ const MatchPage: React.FC = () => {
   fetchData();
  }, []);
 
- // console.log(prediction);
 
  const matchHeader = {
   homeTeam: {

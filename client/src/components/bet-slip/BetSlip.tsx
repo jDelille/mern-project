@@ -1,17 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
-import './BetSlip.scss';
 import { AppState } from 'types/@AppState';
 import { clearBetSlip } from '../../state';
+import './BetSlip.scss';
 
 const BetSlip: React.FC = () => {
 
  const dispatch = useDispatch();
 
  const bet = useSelector((state: AppState) => state.betSlip)
- console.log(bet)
 
  const handleClearBet = () => {
-  console.log('clicked')
   dispatch(clearBetSlip())
  }
 

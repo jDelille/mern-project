@@ -7,6 +7,10 @@ export type Parlay = {
 			odds: number;
 			teamName: string;
 			abbreviation: string;
+			statusLink: string;
+			homeScore: string;
+			awayScore: string;
+			location: string;
 		}
 	];
 	potentialPayout: number;
@@ -14,4 +18,5 @@ export type Parlay = {
 	totalWager: number;
 	userId: string;
 	_id: string;
+	outcome: string;
 };
