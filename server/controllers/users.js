@@ -32,7 +32,11 @@ export const getRecommendedUsers = async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		const recommendedUsers = await User.find({ _id: { $ne: id } }).limit(5);
+		const currentUser = await User.findOne({ _id: id });
+
+		const recommendedUsers = await User.find({
+			_id: { $ne: currentUser._id, $nin: currentUser.following },
+		}).limit(5);
 		if (recommendedUsers) {
 			res.status(200).json(recommendedUsers);
 		} else {
@@ -73,10 +77,10 @@ export const addRemoveFollowing = async (req, res) => {
 		const follow = await User.findById(followingId);
 
 		if (user.following.includes(followingId)) {
-			user.following = user.followings.filter((id) => id !== followId);
+			user.following = user.followings.filter((id) => id !== follow._id);
 			follow.followers = follow.followers.filter((id) => id !== id);
 		} else {
-			user.following.push(followId);
+			user.following.push(follow._id);
 			follow.followers.push(id);
 		}
 

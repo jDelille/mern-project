@@ -4,8 +4,8 @@ export type User = {
 	username: string;
 	email: string;
 	avatar: string;
-	followers: string[];
 	following: string[];
+	followers: string[];
 	specialties: string[];
 	location: string;
 	bio: string;

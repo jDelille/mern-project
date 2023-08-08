@@ -50,6 +50,7 @@ export const authSlice = createSlice({
 				console.error('user following non existent');
 			}
 		},
+
 		setPosts: (state, action) => {
 			state.posts = action.payload.posts;
 		},

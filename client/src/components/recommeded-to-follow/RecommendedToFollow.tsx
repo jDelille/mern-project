@@ -1,13 +1,35 @@
 import { User } from 'types/@User';
-import './RecommendedToFollow.scss';
 import Avatar from '../../ui/avatar/Avatar';
 import Button from '../../ui/button/Button';
+import { useSelector } from 'react-redux';
+import { AppState } from 'types/@AppState';
+import useFollow from '../../hooks/useFollow';
+import './RecommendedToFollow.scss';
 
 type Props = {
  user: User | null
 }
 
 const RecommendedToFollow: React.FC<Props> = ({ user }) => {
+ const currentUser = useSelector((state: AppState) => state.user)
+
+ const { followUser } = useFollow();
+
+ const handleFollow = async () => {
+  const successfulFollow = await followUser(currentUser?._id as string, user?._id as string);
+  if (successfulFollow) {
+   console.log(true)
+  }
+ };
+
+ const isFollowing = currentUser?.following.includes(user?._id as string)
+
+
+ if (!user) {
+  return null
+ }
+
+
  return (
   <div className='follow-card'>
    <div className="header">
@@ -25,7 +47,7 @@ const RecommendedToFollow: React.FC<Props> = ({ user }) => {
     </div>
    </div>
    <div className='follow-btn'>
-    <Button actionLabel='Follow' onClick={() => { }} />
+    <Button actionLabel={isFollowing ? 'Unfollow' : 'Follow'} onClick={handleFollow} />
    </div>
 
   </div>
