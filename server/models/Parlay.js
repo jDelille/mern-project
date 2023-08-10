@@ -10,6 +10,7 @@ const ParlaySchema = new mongoose.Schema({
 	potentialPayout: Number,
 	tags: [String],
 	outcome: String,
+	odds: Number,
 });
 
 const Parlay = mongoose.model('Parlay', ParlaySchema);

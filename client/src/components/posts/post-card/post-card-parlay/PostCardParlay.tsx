@@ -55,11 +55,8 @@ const PostCardParlay: React.FC<Props> = ({ parlay }) => {
         isWinner: true,
       };
 
-      console.log('bet completed: ' + updatedBet.isCompleted)
-
       if (bet.type === 'Spread' && updatedBet.isCompleted) {
-        updatedBet.isWinner = checkSpread(bet.odds, homeScore, awayScore, bet.location, bet.isFavorite) || false;
-        console.log('updated bet outcome: ' + updatedBet.isWinner)
+        updatedBet.isWinner = checkSpread(bet.value, homeScore, awayScore, bet.location, bet.isFavorite) || false;
       }
 
       return updatedBet;
@@ -121,12 +118,9 @@ const PostCardParlay: React.FC<Props> = ({ parlay }) => {
       <div className='header'>
         <div className="text">
           <h3>{header}</h3>
-          {isWinningParlay && (
-            <div className='win-badge'>Win</div>
-          )}
-          {isLosingParlay && (
-            <div className='loss-badge'>Loss</div>
-          )}
+          <div>{parlay.odds}</div>
+          <div>${parlay.potentialPayout}</div>
+          <div>${parlay.totalWager}</div>
           <div className='win-loss-count'>
             {winCount > 0 && (
               <span>{winCount} win{winCount > 1 ? 's' : ''}</span>
@@ -149,7 +143,7 @@ const PostCardParlay: React.FC<Props> = ({ parlay }) => {
         <li className={bet.isCompleted ? (bet.isWinner ? 'bet-won' : 'bet-loss') : 'bet'}>
           <div className='display-name'>
             <img src={bet.logo} alt="logo" />
-            <h3>{bet.abbreviation} {bet.teamName} • {bet.type} {bet.odds}</h3>
+            <h3>{bet.abbreviation} {bet.teamName} • {bet.type} {bet.isFavorite ? '-' : '+'}{bet.value}</h3>
           </div>
 
           <span>{bet.matchup}</span>

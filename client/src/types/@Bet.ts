@@ -15,4 +15,5 @@ export type Bet = {
 	isWinner?: boolean;
 	isFavorite: boolean;
 	isLost?: boolean;
+	value: number;
 };

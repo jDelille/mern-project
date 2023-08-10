@@ -6,6 +6,7 @@ import Modal from '../Modal';
 import { removeBetFromSlip, setPost } from '../../../state';
 import './BetModal.scss';
 import TextAndMentionInput from '../../../components/text-and-mention-input/TextAndMentionInput';
+import calculateParlayOddsAmerican from '../../../utils/parlayUtils';
 
 const BetModal = () => {
  const betModal = useBetModal();
@@ -25,9 +26,17 @@ const BetModal = () => {
   betModal.onClose();
  };
 
+ const oddsArray = [];
+ for (const betItem of bet) {
+  oddsArray.push(betItem.odds);
+ }
+ const parlayOdds = calculateParlayOddsAmerican(oddsArray)
+
+
  const handlePlaceBet = async () => {
   if (currentUser) {
    try {
+
     const response = await fetch(`http://localhost:3001/posts/bet`, {
      method: 'POST',
      headers: {
@@ -39,9 +48,10 @@ const BetModal = () => {
       body: betBody,
       selectedBet: bet,
       tags: selectedTags,
-      wager: 100,
-      payout: 1000,
-      isParlay: true
+      wager: wager,
+      payout: payout,
+      isParlay: true,
+      odds: parlayOdds
      }),
     })
     if (response.ok) {
@@ -58,6 +68,15 @@ const BetModal = () => {
  const handleRemoveBet = (betIndex: number) => {
   dispatch(removeBetFromSlip(betIndex));
  };
+
+ const handleWagerChange = (e) => {
+  const newValue = parseFloat(e.target.value);
+  setWager(newValue)
+
+  const potentialProfit = newValue * (parlayOdds / 100);
+  const calculatedPayout = newValue + potentialProfit;
+  setPayout(calculatedPayout)
+ }
 
  useEffect(() => {
   if (bet.length === 0) {
@@ -108,10 +127,10 @@ const BetModal = () => {
       </div>
       {bet.length === 1 && (
        <div className='bet-wager'>
-        <input type='number' placeholder='0.00' />
+        <input type='number' placeholder='0.00' onChange={handleWagerChange} value={wager} />
         <div className='payout'>
          <span>Payout:</span>
-         <span>$14000</span>
+         <span>${payout}</span>
         </div>
        </div>
       )}

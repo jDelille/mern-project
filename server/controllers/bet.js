@@ -6,8 +6,6 @@ export const updateBetOutcome = async (req, res) => {
 		const { parlayId } = req.params;
 		const { outcome, bets } = req.body;
 		const parlay = await Parlay.findById({ _id: parlayId });
-
-		console.log(bets);
 		const updatedParlay = await Parlay.findByIdAndUpdate(parlayId, {
 			outcome: outcome,
 			bets: bets,

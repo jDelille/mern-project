@@ -16,4 +16,7 @@ export type Odds = {
 	overUnder: number;
 	spread: number;
 	spreadWinner: number;
+	provider: {
+		name: string;
+	};
 };

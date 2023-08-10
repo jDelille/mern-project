@@ -14,17 +14,14 @@ type Props = {
 
 const MatchCard: React.FC<Props> = ({ match }) => {
  const dispatch = useDispatch();
+ const betModal = useBetModal();
 
  const [isLoading, setIsLoading] = useState(false)
-
  const [odds, setOdds] = useState<Odds[]>();
  const [matchInfo, setMatchInfo] = useState<Game>();
 
- const betModal = useBetModal();
 
-
-
-
+ console.log(odds)
 
  useEffect(() => {
   async function fetchData() {
@@ -57,10 +54,11 @@ const MatchCard: React.FC<Props> = ({ match }) => {
   fetchOddsData();
  }, [matchInfo]);
 
- const handleAddBet = (type: string, odds: number, team: string, abbreviation: string, location: string, logo: string, isFavorite: boolean) => {
+ const handleAddBet = (type: string, value: number, odds: number, team: string, abbreviation: string, location: string, logo: string, isFavorite: boolean) => {
 
   const selectedBet = {
    type,
+   value,
    odds,
    teamName: team,
    logo,
@@ -78,45 +76,47 @@ const MatchCard: React.FC<Props> = ({ match }) => {
   dispatch(addBetToSlip(selectedBet))
  }
 
-
-
+ const homeTeam = match.competitions[0].competitors[0]
+ const awayTeam = match.competitions[0].competitors[1]
 
  const lowerTeam = {
-  name: match.competitions[0].competitors[0].team.name,
-  longName: match.competitions[0].competitors[0].team.name,
-  record: match.competitions[0].competitors[0].records?.[0].summary,
-  score: match.competitions[0].competitors[0].score,
+  name: homeTeam.team.name,
+  longName: homeTeam.team.name,
+  record: homeTeam.records?.[0].summary,
+  score: homeTeam.score,
   imageAltText: 'logo',
-  logoUrl: match.competitions[0].competitors[0].team.logo,
-  id: match.competitions[0].competitors[0].team.id,
-  abbrv: match.competitions[0].competitors[0].team.abbreviation,
+  logoUrl: homeTeam.team.logo,
+  id: homeTeam.team.id,
+  abbrv: homeTeam.team.abbreviation,
  };
 
  const upperTeam = {
-  name: match.competitions[0].competitors[1].team.name,
-  longName: match.competitions[0].competitors[1].team.name,
-  record: match.competitions[0].competitors[1].records?.[0].summary,
-  score: match.competitions[0].competitors[1].score,
+  name: awayTeam.team.name,
+  longName: awayTeam.team.name,
+  record: awayTeam.records?.[0].summary,
+  score: awayTeam.score,
   imageAltText: 'logo',
-  logoUrl: match.competitions[0].competitors[1].team.logo,
-  id: match.competitions[0].competitors[1].team.id,
-  abbrv: match.competitions[0].competitors[1].team.abbreviation,
+  logoUrl: awayTeam.team.logo,
+  id: awayTeam.team.id,
+  abbrv: awayTeam.team.abbreviation,
  };
 
  const matchOdds = {
-  details: odds?.[0].details,
-  overOdds: odds?.[0].overOdds,
-  overUnder: odds?.[0].overUnder,
-  spread: odds?.[0].spread,
-  underOdds: odds?.[0].underOdds,
-  provider: odds?.[0].provider.name,
+  details: odds?.[odds?.length - 1].details,
+  overOdds: odds?.[odds?.length - 1].overOdds,
+  overUnder: odds?.[odds?.length - 1].overUnder,
+  spread: odds?.[odds?.length - 1].spread,
+  underOdds: odds?.[odds?.length - 1].underOdds,
+  provider: odds?.[odds?.length - 1].provider.name,
   homeTeam: {
-   favorite: odds?.[0].homeTeamOdds.favorite,
-   moneyLine: odds?.[0].homeTeamOdds.moneyLine,
+   favorite: odds?.[odds?.length - 1].homeTeamOdds.favorite,
+   moneyLine: odds?.[odds?.length - 1].homeTeamOdds.moneyLine,
+   spreadOdds: odds?.[odds?.length - 1].homeTeamOdds.spreadOdds
   },
   awayTeam: {
-   favorite: odds?.[0].awayTeamOdds.favorite,
-   moneyLine: odds?.[0].awayTeamOdds.moneyLine,
+   favorite: odds?.[odds?.length - 1].awayTeamOdds.favorite,
+   moneyLine: odds?.[odds?.length - 1].awayTeamOdds.moneyLine,
+   spreadOdds: odds?.[odds?.length - 1].awayTeamOdds.spreadOdds
   }
  }
 
@@ -151,46 +151,58 @@ const MatchCard: React.FC<Props> = ({ match }) => {
 
    <div className='odds'>
     <ul className='labels'>
+     <li>To Win</li>
      <li>Spread</li>
      <li>Total</li>
-     <li>To Win</li>
     </ul>
     <div className='odds-list'>
      <ul>
-      <li onClick={() => handleAddBet(
-       'Spread',
-       Number(matchOdds.spread),
-       upperTeam.name,
-       upperTeam.abbrv,
-       'away',
-       upperTeam.logoUrl,
-       matchOdds.awayTeam.favorite as boolean
-      )}
-      >
-       {matchOdds.awayTeam.favorite ? '-' : '+'}
-       {matchOdds.spread}
-      </li>
-      <li>o{matchOdds.overUnder}</li>
-      <li>
+      <li className='odd'>
        {matchOdds.awayTeam.moneyLine}
       </li>
+      <li
+       onClick={() => handleAddBet(
+        'Spread',
+        Number(matchOdds.spread),
+        Number(matchOdds.awayTeam.spreadOdds),
+        upperTeam.name,
+        upperTeam.abbrv,
+        'away',
+        upperTeam.logoUrl,
+        matchOdds.awayTeam.favorite as boolean,
+       )}
+      >
+       <span>{matchOdds.spread}</span>
+       <span className='odd'>{matchOdds.awayTeam.spreadOdds}</span>
+      </li>
+      <li>
+       <span>u{matchOdds.overUnder}</span>
+       <span className='odd'>{matchOdds.underOdds}</span>
+      </li>
+
      </ul>
      <ul>
+
+      <li className='odd'>
+       {matchOdds.homeTeam.moneyLine}
+      </li>
       <li onClick={() => handleAddBet(
        'Spread',
        Number(matchOdds.spread),
+       Number(matchOdds.homeTeam.spreadOdds),
        lowerTeam.name,
        lowerTeam.abbrv,
        'home',
        lowerTeam.logoUrl,
-       matchOdds.homeTeam.favorite as boolean
+       matchOdds.homeTeam.favorite as boolean,
       )}>
-       {matchOdds.homeTeam.favorite ? '-' : '+'}
-       {matchOdds.spread}
+       <span>{matchOdds.spread}</span>
+       <span className='odd'>{matchOdds.homeTeam.spreadOdds}</span>
       </li>
-      <li>u{matchOdds.overUnder}</li>
+
       <li>
-       {matchOdds.homeTeam.moneyLine}
+       <span>o{matchOdds.overUnder}</span>
+       <span className='odd'>{matchOdds.underOdds}</span>
       </li>
      </ul>
 

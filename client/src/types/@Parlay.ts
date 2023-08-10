@@ -17,6 +17,7 @@ export type Parlay = {
 			isWinner?: boolean;
 			isFavorite: boolean;
 			isLost?: boolean;
+			value: number;
 		}
 	];
 	potentialPayout: number;
@@ -25,4 +26,5 @@ export type Parlay = {
 	userId: string;
 	_id: string;
 	outcome: string;
+	odds: number;
 };

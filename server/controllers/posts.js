@@ -80,7 +80,10 @@ export const retweetPost = async (req, res) => {
 };
 
 export const betPost = async (req, res) => {
-	const { userId, body, selectedBet, tags, isParlay, payout, wager } = req.body;
+	const { userId, body, selectedBet, tags, isParlay, payout, wager, odds } =
+		req.body;
+
+	console.log('odds' + odds);
 	const user = await User.findById(userId);
 	try {
 		const newPost = new Post({
@@ -103,6 +106,7 @@ export const betPost = async (req, res) => {
 				potentialPayout: payout,
 				tags,
 				outcome: '',
+				odds: odds,
 			});
 			await newParlay.save();
 			newPost.betId = newParlay._id;
