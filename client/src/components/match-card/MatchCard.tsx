@@ -57,19 +57,20 @@ const MatchCard: React.FC<Props> = ({ match }) => {
   fetchOddsData();
  }, [matchInfo]);
 
- const handleAddBet = (type: string, odds: number, team: string, abbreviation: string, location: string) => {
+ const handleAddBet = (type: string, odds: number, team: string, abbreviation: string, location: string, logo: string, isFavorite: boolean) => {
 
   const selectedBet = {
    type,
    odds,
    teamName: team,
-   logo: '',
+   logo,
    matchup: match.name,
    abbreviation,
    statusLink: matchInfo?.competitions[0].status?.$ref,
    homeScore: matchInfo?.competitions[0].competitors[0].score.$ref,
    awayScore: matchInfo?.competitions[0].competitors[1].score.$ref,
-   location
+   location,
+   isFavorite
   }
 
   betModal.onOpen();
@@ -156,18 +157,35 @@ const MatchCard: React.FC<Props> = ({ match }) => {
     </ul>
     <div className='odds-list'>
      <ul>
-      <li onClick={() => handleAddBet('Spread', Number(matchOdds.spread), upperTeam.name, upperTeam.abbrv, 'home')}>
-       {matchOdds.homeTeam.favorite ? 'o' : 'u'}
+      <li onClick={() => handleAddBet(
+       'Spread',
+       Number(matchOdds.spread),
+       upperTeam.name,
+       upperTeam.abbrv,
+       'away',
+       upperTeam.logoUrl,
+       matchOdds.awayTeam.favorite as boolean
+      )}
+      >
+       {matchOdds.awayTeam.favorite ? '-' : '+'}
        {matchOdds.spread}
       </li>
       <li>o{matchOdds.overUnder}</li>
       <li>
-       {matchOdds.homeTeam.moneyLine}
+       {matchOdds.awayTeam.moneyLine}
       </li>
      </ul>
      <ul>
-      <li>
-       {matchOdds.awayTeam.favorite ? 'o' : 'u'}
+      <li onClick={() => handleAddBet(
+       'Spread',
+       Number(matchOdds.spread),
+       lowerTeam.name,
+       lowerTeam.abbrv,
+       'home',
+       lowerTeam.logoUrl,
+       matchOdds.homeTeam.favorite as boolean
+      )}>
+       {matchOdds.homeTeam.favorite ? '-' : '+'}
        {matchOdds.spread}
       </li>
       <li>u{matchOdds.overUnder}</li>

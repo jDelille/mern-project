@@ -2,13 +2,38 @@ const checkSpread = (
 	spread: number,
 	homeScore: number,
 	awayScore: number,
-	location: string
+	location: string,
+	isFavorite: boolean
 ) => {
-	if (location === 'home') {
-		if (homeScore + spread > awayScore) {
-			return false;
+	console.log('is team favorite: ' + isFavorite);
+
+	if (location === 'away') {
+		if (isFavorite) {
+			if (awayScore - spread > homeScore) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
-			return true;
+			if (awayScore + spread > homeScore) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	} else {
+		if (isFavorite) {
+			if (homeScore - spread > awayScore) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			if (homeScore + spread > awayScore) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 };

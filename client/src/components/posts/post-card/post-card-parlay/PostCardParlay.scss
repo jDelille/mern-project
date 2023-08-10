@@ -9,50 +9,105 @@
 	border: 1px solid $heather;
 	padding: 20px;
 	border-radius: 6px;
+	list-style-type: none;
+	position: relative;
+	bottom: 10px;
 	.header {
 		display: flex;
-		justify-content: space-between;
-		.info {
+		align-items: center;
+		gap: 10px;
+		.bet-logos {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			border: 1px solid $heather;
 			display: flex;
-			flex-direction: column;
-			strong {
-				font-size: 14px;
-			}
-			span {
-				font-size: 13px;
-				color: $comet;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			.logos {
+				display: grid;
+				grid-template-columns: repeat(
+					3,
+					1fr
+				); /* Adjust the number of columns as needed */
+				grid-gap: 10px; /* Adjust the gap between logo circles */
+				width: 200px; /* Adjust the width of the container as needed */
+				margin: 0 auto;
+				justify-content: center;
+				align-items: center;
+				.team-logo-circle {
+					width: 14px;
+					height: 14px;
+					border-radius: 50%;
+					justify-self: center;
+					align-self: center;
+					transition: transform 0.3s ease;
+				}
 			}
 		}
-		.odds {
+		.text {
 			display: flex;
 			flex-direction: column;
-			font-size: 14px;
+			gap: 5px;
+			h3 {
+				font-size: 14px;
+			}
+			.win-badge,
+			.loss-badge {
+				width: fit-content;
+				font-size: 14px;
+				padding: 3px 6px;
+				border-radius: 4px;
+			}
+			.win-badge {
+				background: rgba(35, 138, 103, 0.1);
+				border: 1px solid rgba(35, 138, 103, 0.5);
+				color: #238a67;
+			}
+			.loss-badge {
+				background: rgba(223, 64, 90, 0.1);
+				border: 1px solid rgba(223, 64, 90, 0.5);
+				color: #df405a;
+			}
+			.win-loss-count {
+				display: flex;
+				align-items: center;
+			}
+			span {
+				font-size: 12px;
+			}
 		}
 	}
 	.bet,
 	.bet-won,
 	.bet-loss {
 		border: 1px solid $heather;
-		padding: 10px;
 		border-radius: 6px;
-		display: flex;
-		flex-direction: column;
-		gap: 0px;
+		padding: 10px;
+		.display-name {
+			display: flex;
+			gap: 5px;
+			align-items: center;
+			img {
+				max-width: 16px;
+				max-height: 16px;
+			}
+			h3 {
+				font-size: 14px;
+			}
+		}
 
-		font-size: 13px;
 		span {
 			font-size: 12px;
 		}
-		.odds {
-			font-size: 13px;
-			color: #3273dc;
-		}
 	}
+
 	.bet-won {
-		border: 1px solid #17b978;
+		border: 1px solid #88d498;
 	}
 	.bet-loss {
-		border: 1px solid #ff304f;
+		border: 1px solid #ff5959;
 	}
 }
 

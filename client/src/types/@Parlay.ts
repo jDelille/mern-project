@@ -11,6 +11,12 @@ export type Parlay = {
 			homeScore: string;
 			awayScore: string;
 			location: string;
+			isCompleted: boolean;
+			wager: number;
+			teamLogo: string;
+			isWinner?: boolean;
+			isFavorite: boolean;
+			isLost?: boolean;
 		}
 	];
 	potentialPayout: number;

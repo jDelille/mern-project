@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Parlay } from 'types/@Parlay';
 import { getGameStatus, getScore } from '../../../../api/checkBet';
+import { Bet } from 'types/@Bet';
 import checkSpread from '../../../../utils/checkBet';
 import './PostCardParlay.scss';
 
@@ -11,108 +12,152 @@ type Props = {
 
 const PostCardParlay: React.FC<Props> = ({ parlay }) => {
 
-  const [bets, setBets] = useState([])
-
-  async function fetchStatus() {
-    if (parlay.outcome !== '') {
-      return;
-    }
-
-    if (parlay && parlay.bets) {
-      for (const bet of parlay.bets) {
-        try {
-          const response = await getGameStatus(bet.statusLink);
-          if (response.type.completed) {
-            console.log(true)
-          } else {
-            console.log(false)
-          }
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    }
-  }
-
-  async function fetchScores() {
-    if (parlay.outcome !== '') {
-      return;
-    }
-
-    if (parlay && parlay.bets) {
-      for (const bet of parlay.bets) {
-        try {
-          const homeScore = await getScore(bet.homeScore);
-          const awayScore = await getScore(bet.awayScore)
-          console.log('homescore: ', homeScore.value)
-          console.log('awayscore: ', awayScore.value)
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    }
-  }
-
-  async function checkAndUpdateParlay() {
-    let allOutcomesTrue = true;
-
-    for (const bet of bets) {
-      if (!bet.outcome) {
-        allOutcomesTrue = false;
-        break;
-      }
-    }
-
-    const updatedOutcome = allOutcomesTrue ? 'win' : 'loss';
-    const id = parlay._id
-    const res = await fetch(`http://localhost:3001/bets/${id}/update`, {
-      method: 'PATCH',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ outcome: updatedOutcome })
-    })
-
-    const updatedParlay = await res.json();
-  }
+  const [bets, setBets] = useState<Bet[]>([])
 
   useEffect(() => {
-    fetchStatus();
-    fetchScores();
-  }, [])
+    async function fetchAndUpdateBets() {
+      if (parlay && parlay.outcome === "") {
+        const updatedBets = await Promise.all(parlay.bets.map(fetchGameStatus));
 
+        const filteredBets = updatedBets.filter(bet => bet !== null);
+        setBets(filteredBets as Bet[]);
+
+        const allBetsCompleted = filteredBets.every(bet => bet?.isCompleted);
+        const someBetsCompleted = filteredBets.some(bet => bet?.isCompleted);
+        if (someBetsCompleted || allBetsCompleted) {
+          const allBetsWon = filteredBets.every(bet => bet?.isWinner);
+          const updatedOutcome = allBetsWon ? 'win' : 'loss';
+          if (parlay.outcome === '' && allBetsCompleted) {
+
+            await updateParlayOutcome(parlay._id, updatedOutcome);
+          }
+
+          await updateIndividualBet(parlay._id, filteredBets as Bet[]);
+
+        }
+      }
+    }
+
+    fetchAndUpdateBets();
+  }, [parlay]);
+
+  async function fetchGameStatus(bet: Bet) {
+    try {
+      const response = await getGameStatus(bet.statusLink);
+      const homeScore = await getScore(bet.homeScore);
+      const awayScore = await getScore(bet.awayScore);
+
+      const updatedBet = {
+        ...bet,
+        isCompleted: response.type.completed,
+        homeScore: homeScore.value,
+        awayScore: awayScore.value,
+        isWinner: true,
+      };
+
+      console.log('bet completed: ' + updatedBet.isCompleted)
+
+      if (bet.type === 'Spread' && updatedBet.isCompleted) {
+        updatedBet.isWinner = checkSpread(bet.odds, homeScore, awayScore, bet.location, bet.isFavorite) || false;
+        console.log('updated bet outcome: ' + updatedBet.isWinner)
+      }
+
+      return updatedBet;
+    } catch (error) {
+      console.error(error);
+      return null; // Returning null for failed bets
+    }
+  }
+
+  async function updateIndividualBet(parlayId: string, updatedBets: Bet[]) {
+    try {
+      const res = await fetch(`http://localhost:3001/bets/${parlayId}/update`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ bets: updatedBets }),
+      });
+
+      const updatedParlay = await res.json();
+      console.log(updatedParlay);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function updateParlayOutcome(parlayId: string, updatedOutcome: string) {
+    try {
+      // Update the parlay outcome in the database
+      const res = await fetch(`http://localhost:3001/bets/${parlayId}/update`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ outcome: updatedOutcome }),
+      });
+
+      const updatedParlay = await res.json();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   if (!parlay) {
     return null;
   }
 
+  const parlayBets = parlay?.bets;
+  const header = parlayBets.length > 1 ? `${parlayBets.length}-Leg Parlay` : 'Single Bet';
+  const isWinningParlay = parlay.outcome === 'win';
+  const isLosingParlay = parlay.outcome === 'loss';
 
-  const testing = bets || parlay?.bets
+  const winCount = parlay.bets.filter(bet => bet.isWinner).length;
+  const lossCount = parlay.bets.filter(bet => !bet.isWinner).length;
+  const openCount = parlay.bets.filter(bet => !bet.isCompleted).length;
 
   return (
-    <div className='parlay'>
+    <ul className='parlay'>
       <div className='header'>
-        <div className='info'>
-          <strong>{parlay?.bets.length}-Leg Parlay</strong>
-          <span>4 open</span>
+        <div className="text">
+          <h3>{header}</h3>
+          {isWinningParlay && (
+            <div className='win-badge'>Win</div>
+          )}
+          {isLosingParlay && (
+            <div className='loss-badge'>Loss</div>
+          )}
+          <div className='win-loss-count'>
+            {winCount > 0 && (
+              <span>{winCount} win{winCount > 1 ? 's' : ''}</span>
+            )}
+            {winCount > 0 && lossCount > 0 && (
+              <span> - </span>
+            )}
+            {lossCount > 0 && (
+              <span>{lossCount} loss{lossCount > 1 ? 'es' : ''}</span>
+            )}
+            {openCount > 0 && (
+              <span>{openCount} open</span>
+            )}
+          </div>
+
         </div>
 
-        <div className='odds'>
-          <strong>${parlay?.totalWager}</strong>
-          <strong>${parlay?.potentialPayout}</strong>
-        </div>
       </div>
-      {/* {testing.map((bet) => (
-        <div className={bet.outcome ? 'bet-won' : 'bet'} key={bet._id}>
-          <strong>{bet.abbreviation} {bet.teamName} • {bet.type} {bet.odds}</strong>
-          <p>{bet.status.type.description}</p>
-          <span>{bet.matchup}</span>
-          <div className='odds'>
-            <strong></strong>
+      {parlayBets.map((bet) => (
+        <li className={bet.isCompleted ? (bet.isWinner ? 'bet-won' : 'bet-loss') : 'bet'}>
+          <div className='display-name'>
+            <img src={bet.logo} alt="logo" />
+            <h3>{bet.abbreviation} {bet.teamName} • {bet.type} {bet.odds}</h3>
           </div>
-        </div>
-      ))} */}
-    </div>
+
+          <span>{bet.matchup}</span>
+        </li>
+      ))
+      }
+
+    </ul >
   );
 }
 

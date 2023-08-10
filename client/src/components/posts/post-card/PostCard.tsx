@@ -140,15 +140,18 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
      )}
     </div>
    </div>
-   <div className='body'>
-    {post.isQuoteRetweet && (
-     <p>{renderedQuoteBody}</p>
-    )}
+   {post.body && (
+    <div className='body'>
+     {post.isQuoteRetweet && (
+      <p>{renderedQuoteBody}</p>
+     )}
 
-    {!post.isRetweet && !post.isQuoteRetweet && (
-     <p>{renderedPostBody}</p>
-    )}
-   </div>
+     {!post.isRetweet && !post.isQuoteRetweet && (
+      <p>{renderedPostBody}</p>
+     )}
+    </div>
+   )}
+
    {post.isQuoteRetweet && (
     <div className='retweeted-post' onClick={() => navigate(`/post/${post.originalPost}`)}>
      <div className='retweeted-post-header'>
@@ -201,11 +204,14 @@ const PostCard: React.FC<Props> = ({ post, isPostPage }) => {
    )}
    {post.isBet && postBet && (
     <>
-     <ul className='tags'>
-      {postBet?.tags.map((tag) => (
-       <li>{tag}</li>
-      ))}
-     </ul>
+     {postBet.tags.length > 0 && (
+      <ul className='tags'>
+       {postBet?.tags.map((tag) => (
+        <li>{tag}</li>
+       ))}
+      </ul>
+     )}
+
      <PostCardParlay parlay={postBet} />
     </>
 
